@@ -1,10 +1,13 @@
 package com.ring.myguide.login.view;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
 import com.ring.myguide.R;
 import com.ring.myguide.base.BaseActivity;
 import com.ring.myguide.entity.User;
@@ -15,10 +18,15 @@ import com.ring.myguide.main.view.MainActivity;
 public class LoginActivity extends BaseActivity<LoginPresenter, LoginContract.View>
         implements LoginContract.View {
 
+    private static final String TAG = "LoginActivity";
+
     //用户名
     private EditText mUserNameEdit;
     //密码
     private EditText mPasswordEdit;
+
+    private String username;
+    private String password;
 
     @Override
     protected int getIdResource() {
@@ -46,8 +54,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter, LoginContract.Vi
             //登录按钮
             case R.id.btn_login:
                 //获取用户名和密码
-                String username = mUserNameEdit.getText().toString().trim();
-                String password = mPasswordEdit.getText().toString().trim();
+                username = mUserNameEdit.getText().toString().trim();
+                password = mPasswordEdit.getText().toString().trim();
                 //登录
                 mPresenter.doLogin(username, password);
                 break;
@@ -68,6 +76,31 @@ public class LoginActivity extends BaseActivity<LoginPresenter, LoginContract.Vi
     public void loginSuccess(User user) {
         startActivity(new Intent(LoginActivity.this, MainActivity.class));
         finish();
+    }
+
+    /**
+     * 调用环信登录接口，开启聊天功能
+     */
+    @Override
+    public void loginChat() {
+        EMClient.getInstance().login(username, password, new EMCallBack() {//回调
+            @Override
+            public void onSuccess() {
+                EMClient.getInstance().groupManager().loadAllGroups();
+                EMClient.getInstance().chatManager().loadAllConversations();
+                Log.i(TAG, "登录聊天服务器成功！");
+            }
+
+            @Override
+            public void onProgress(int progress, String status) {
+
+            }
+
+            @Override
+            public void onError(int code, String message) {
+                Log.d(TAG, "登录聊天服务器失败！");
+            }
+        });
     }
 
     /**

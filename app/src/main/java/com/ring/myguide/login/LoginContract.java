@@ -18,6 +18,8 @@ public interface LoginContract {
     interface View extends BaseView {
         void loginSuccess(User user);
 
+        void loginChat();
+
         void loginFailed();
     }
 

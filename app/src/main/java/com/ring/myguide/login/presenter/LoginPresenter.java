@@ -44,6 +44,8 @@ public class LoginPresenter extends LoginContract.Presenter {
                         mView.get().loginSuccess(data);
                         if (data.getBadge() == 1) {
                             mView.get().showToast(R.string.login_manager);
+                        } else {
+                            mView.get().loginChat();
                         }
                     }
                 }
