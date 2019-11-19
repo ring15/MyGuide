@@ -16,6 +16,15 @@
     <string name="login_username_not_null">用户名不能为空</string>
     <string name="login_password_not_null">密码不能为空</string>
 
+    <string name="register_title">注册</string>
+    <string name="register_user_name">输入用户名</string>
+    <string name="register_password">输入密码</string>
+    <string name="register_password_again">再输入一次密码</string>
+    <string name="register_text">立即注册</string>
+    <string name="register_username_not_null">用户名不能为空</string>
+    <string name="register_password_not_null">密码不能为空</string>
+    <string name="register_password_not_match">两次输入的密码不相同</string>
+
     <string name="skip_splash">跳过</string>
 
     <string name="location">天津市</string>

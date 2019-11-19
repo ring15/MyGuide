@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".login.view.LoginActivity">
+    tools:context=".register.view.RegisterActivity">
+
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolBar"
@@ -24,35 +25,17 @@
             android:paddingLeft="14dp"
             android:paddingRight="14dp"
             android:scaleType="centerInside"
-            android:src="@drawable/icon_left_arrow"
-            android:visibility="gone"
-            tools:visibility="visible" />
+            android:src="@drawable/icon_left_arrow" />
 
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/login_title"
+            android:text="@string/register_title"
             android:textColor="@color/white"
             android:textSize="17sp"
             android:textStyle="bold" />
-
-
-        <TextView
-            android:id="@+id/btn_skip"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="right"
-            android:layout_marginEnd="15dp"
-            android:onClick="onClick"
-            android:paddingStart="5dp"
-            android:paddingTop="10dp"
-            android:paddingEnd="5dp"
-            android:paddingBottom="10dp"
-            android:text="@string/login_skip"
-            android:textColor="@color/white"
-            android:textSize="12sp" />
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -79,7 +62,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginStart="10dp"
             android:background="@null"
-            android:hint="@string/login_user_name"
+            android:hint="@string/register_user_name"
             android:textColor="@color/black"
             android:textColorHint="@color/gray"
             android:textSize="14sp" />
@@ -115,7 +98,44 @@
             android:layout_gravity="center_vertical"
             android:layout_marginStart="10dp"
             android:background="@null"
-            android:hint="@string/login_password"
+            android:hint="@string/register_password"
+            android:inputType="textPassword"
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="75dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="75dp"
+        android:background="@color/gray" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="80dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/icon_lock_gray" />
+
+        <EditText
+            android:id="@+id/et_password_again"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:background="@null"
+            android:hint="@string/register_password_again"
             android:inputType="textPassword"
             android:textColor="@color/black"
             android:textColorHint="@color/gray"
@@ -132,7 +152,7 @@
         android:background="@color/gray" />
 
     <Button
-        android:id="@+id/btn_login"
+        android:id="@+id/btn_register"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginStart="80dp"
@@ -140,34 +160,8 @@
         android:layout_marginEnd="80dp"
         android:background="@drawable/btn_shape_red_selector"
         android:onClick="onClick"
-        android:text="@string/login_text"
+        android:text="@string/register_text"
         android:textColor="@color/white"
         android:textSize="14sp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/login_goto_register_title"
-            android:textColor="@color/black"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/tv_goto_register"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onClick"
-            android:text="@string/login_goto_register"
-            android:textColor="@color/colorPrimary"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
 
 </LinearLayout>

@@ -13,6 +13,8 @@ import com.ring.myguide.login.view.LoginActivity;
 import com.ring.myguide.main.view.MainActivity;
 import com.ring.myguide.utils.CacheUtils;
 
+import static com.ring.myguide.login.view.LoginActivity.FROM_SPLASH;
+
 public class SplashActivity extends AppCompatActivity {
 
     private Handler mHandler;
@@ -60,7 +62,9 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(new Intent(SplashActivity.this, MainActivity.class));
                 finish();
             } else {
-                startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                intent.putExtra("from", FROM_SPLASH);
+                startActivity(intent);
                 finish();
             }
         }
