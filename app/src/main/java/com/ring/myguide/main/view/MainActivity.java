@@ -40,6 +40,8 @@ public class MainActivity extends BaseActivity<MainPresenter, MainContract.View>
     private ImageView mAddImg;
     //搜索按钮
     private ImageView mSearchImg;
+    //消息界面菜单按钮
+    private ImageView mMenuImg;
     //切换版块
     private ViewPager mViewPager;
     //首页版块
@@ -95,6 +97,7 @@ public class MainActivity extends BaseActivity<MainPresenter, MainContract.View>
         mTitleText = findViewById(R.id.tv_title);
         mAddImg = findViewById(R.id.btn_add);
         mSearchImg = findViewById(R.id.btn_search);
+        mMenuImg = findViewById(R.id.btn_menu);
         mViewPager = findViewById(R.id.home_view_pager);
         mHomeLayout = findViewById(R.id.layout_home);
         mHomeImg = findViewById(R.id.img_home);
@@ -182,6 +185,39 @@ public class MainActivity extends BaseActivity<MainPresenter, MainContract.View>
         mImageViews[count].setSelected(true);
         mTextViews[count].setTextColor(ContextCompat.getColor(this, R.color.foreGround));
         mTitleText.setText(mTitleTexts[count]);
+    }
+
+    /**
+     * 当前界面为首页时图标显示
+     */
+    @Override
+    public void setHome() {
+        mLocalLayout.setVisibility(View.VISIBLE);
+        mAddImg.setVisibility(View.VISIBLE);
+        mSearchImg.setVisibility(View.VISIBLE);
+        mMenuImg.setVisibility(View.GONE);
+    }
+
+    /**
+     * 当前界面为消息时图标显示
+     */
+    @Override
+    public void setMessage() {
+        mLocalLayout.setVisibility(View.GONE);
+        mAddImg.setVisibility(View.GONE);
+        mSearchImg.setVisibility(View.GONE);
+        mMenuImg.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * 当前界面为我的时图标显示
+     */
+    @Override
+    public void setMe() {
+        mLocalLayout.setVisibility(View.GONE);
+        mAddImg.setVisibility(View.GONE);
+        mSearchImg.setVisibility(View.GONE);
+        mMenuImg.setVisibility(View.GONE);
     }
 
     @Override

@@ -15,6 +15,12 @@ public interface MainContract {
         void setNormalTab(int count);
 
         void setSelectedTab(int count);
+
+        void setHome();
+
+        void setMessage();
+
+        void setMe();
     }
 
     abstract class Presenter extends BasePresenter<View> {
