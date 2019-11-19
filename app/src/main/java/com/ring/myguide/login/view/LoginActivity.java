@@ -83,6 +83,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter, LoginContract.Vi
      */
     @Override
     public void loginChat() {
+        EMClient.getInstance().logout(true);
         EMClient.getInstance().login(username, password, new EMCallBack() {//回调
             @Override
             public void onSuccess() {
