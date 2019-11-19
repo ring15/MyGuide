@@ -13,7 +13,7 @@ public class User implements Serializable {
     @JSONField(name = "uuid")
     private String uid;
     //用户名
-    @JSONField(name = "user_name")
+    @JSONField(name = "username")
     private String userName;
     //用户昵称
     @JSONField(name = "nickname")
