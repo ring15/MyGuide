@@ -29,6 +29,15 @@
 
     <string name="location">天津市</string>
 
+    <string name="me_user_nickname">点击登录</string>
+    <string name="me_username">登录后您可享受更多特权</string>
+    <string name="me_introduction_title">个人介绍：</string>
+    <string name="me_introduction_content">您很懒什么也没留下</string>
+    <string name="me_post_list_title">我的帖子</string>
+    <string name="me_favorite_list_title">我的收藏</string>
+    <string name="me_like_list_title">我的点赞</string>
+    <string name="me_setting_title">设置</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

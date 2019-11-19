@@ -20,7 +20,7 @@ import com.ring.myguide.base.MyFragmentPagerAdapter;
 import com.ring.myguide.home.HomeFragment;
 import com.ring.myguide.main.MainContract;
 import com.ring.myguide.main.presenter.MainPresenter;
-import com.ring.myguide.me.MeFragment;
+import com.ring.myguide.me.view.MeFragment;
 import com.ring.myguide.message.MessageFragment;
 
 public class MainActivity extends BaseActivity<MainPresenter, MainContract.View> implements MainContract.View,
