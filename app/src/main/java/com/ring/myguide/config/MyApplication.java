@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMOptions;
+import com.ring.myguide.utils.CacheUtils;
 
 /**
  * Created by ring on 2019/11/1.
@@ -24,5 +25,8 @@ public class MyApplication extends Application {
         EMClient.getInstance().init(this, options);
         //在做打包混淆时，关闭debug模式，避免消耗不必要的资源
         EMClient.getInstance().setDebugMode(true);
+
+        //初始化缓存工具类
+        CacheUtils.init(this);
     }
 }
