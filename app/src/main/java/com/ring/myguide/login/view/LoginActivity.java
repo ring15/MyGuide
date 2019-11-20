@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -38,6 +39,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter, LoginContract.Vi
     private EditText mPasswordEdit;
     //返回按钮
     private ImageView mReturnImg;
+    //跳过按钮
+    private TextView mSkipText;
 
     private String username;
     private String password;
@@ -57,6 +60,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter, LoginContract.Vi
         mUserNameEdit = findViewById(R.id.et_username);
         mPasswordEdit = findViewById(R.id.et_password);
         mReturnImg = findViewById(R.id.img_return);
+        mSkipText = findViewById(R.id.btn_skip);
     }
 
     @Override
@@ -65,9 +69,11 @@ public class LoginActivity extends BaseActivity<LoginPresenter, LoginContract.Vi
         if (FROM_SPLASH == from) {
             //从启动页打开的登录界面没有返回按钮
             mReturnImg.setVisibility(View.GONE);
+            mSkipText.setVisibility(View.VISIBLE);
         } else {
             //从设置界面打开的登录界面有返回按钮
             mReturnImg.setVisibility(View.VISIBLE);
+            mSkipText.setVisibility(View.GONE);
         }
     }
 

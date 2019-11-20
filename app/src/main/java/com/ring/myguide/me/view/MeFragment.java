@@ -1,6 +1,7 @@
 package com.ring.myguide.me.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
@@ -19,6 +21,7 @@ import com.ring.myguide.base.BaseFragment;
 import com.ring.myguide.entity.User;
 import com.ring.myguide.me.MeContract;
 import com.ring.myguide.me.presenter.MePresenter;
+import com.ring.myguide.setting.view.SettingActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,7 +32,7 @@ import com.ring.myguide.me.presenter.MePresenter;
  * create an instance of this fragment.
  */
 public class MeFragment extends BaseFragment<MePresenter, MeContract.View>
-        implements MeContract.View {
+        implements MeContract.View , View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -40,6 +43,9 @@ public class MeFragment extends BaseFragment<MePresenter, MeContract.View>
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    //刷新
+    private SwipeRefreshLayout mRefreshLayout;
 
     //用户头像
     private ImageView mUserAvatar;
@@ -53,6 +59,17 @@ public class MeFragment extends BaseFragment<MePresenter, MeContract.View>
     private LinearLayout mIntroduceLayout;
     //个人简介内容
     private TextView mIntroduceText;
+
+    //个人资料
+    private LinearLayout mUserInfoLayout;
+    //我的帖子
+    private LinearLayout mMyPostLayout;
+    //我的收藏
+    private LinearLayout mFavoriteLayout;
+    //我的点赞
+    private LinearLayout mLikeLayout;
+    //设置
+    private LinearLayout mSettingLayout;
 
     //判断是否为已登录状态
     private boolean isLogin = false;
@@ -95,17 +112,32 @@ public class MeFragment extends BaseFragment<MePresenter, MeContract.View>
 
     @Override
     protected void findView(View view) {
+        mRefreshLayout = view.findViewById(R.id.layout_refresh);
+
         mUserAvatar = view.findViewById(R.id.img_user_avatar);
         mNickName = view.findViewById(R.id.tv_nickname);
         mManagerImg = view.findViewById(R.id.img_manager);
         mUserName = view.findViewById(R.id.tv_username);
         mIntroduceLayout = view.findViewById(R.id.layout_introduce);
         mIntroduceText = view.findViewById(R.id.tv_introduce);
+
+        mUserInfoLayout = view.findViewById(R.id.layout_user_info);
+        mMyPostLayout = view.findViewById(R.id.layout_my_post);
+        mFavoriteLayout = view.findViewById(R.id.layout_favorite);
+        mLikeLayout = view.findViewById(R.id.layout_like);
+        mSettingLayout = view.findViewById(R.id.layout_setting);
     }
 
     @Override
     protected void init() {
-
+        mRefreshLayout.setOnRefreshListener(() -> {
+            mPresenter.init();
+        });
+        mUserInfoLayout.setOnClickListener(this);
+        mMyPostLayout.setOnClickListener(this);
+        mFavoriteLayout.setOnClickListener(this);
+        mLikeLayout.setOnClickListener(this);
+        mSettingLayout.setOnClickListener(this);
     }
 
     @Override
@@ -119,6 +151,8 @@ public class MeFragment extends BaseFragment<MePresenter, MeContract.View>
         return new MePresenter();
     }
 
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_user_info:
@@ -130,6 +164,7 @@ public class MeFragment extends BaseFragment<MePresenter, MeContract.View>
             case R.id.layout_like:
                 break;
             case R.id.layout_setting:
+                startActivity(new Intent(getActivity(), SettingActivity.class));
                 break;
         }
     }
@@ -190,6 +225,7 @@ public class MeFragment extends BaseFragment<MePresenter, MeContract.View>
         } else {
             mManagerImg.setVisibility(View.GONE);
         }
+        mRefreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -203,6 +239,7 @@ public class MeFragment extends BaseFragment<MePresenter, MeContract.View>
         mUserName.setText(getString(R.string.me_username));
         mIntroduceLayout.setVisibility(View.GONE);
         mManagerImg.setVisibility(View.GONE);
+        mRefreshLayout.setRefreshing(false);
     }
 
     /**
