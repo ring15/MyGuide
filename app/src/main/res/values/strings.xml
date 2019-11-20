@@ -41,6 +41,9 @@
     <string name="friends_no_friends">还没有好友，快去添加好友吧！</string>
     <string name="friends_nickname">昵称</string>
 
+    <string name="black_list_title">黑名单</string>
+    <string name="black_no_blacks">黑名单里空空如也~</string>
+
     <string name="me_user_nickname">点击登录</string>
     <string name="me_username">登录后您可享受更多特权</string>
     <string name="me_introduction_title">个人介绍：</string>

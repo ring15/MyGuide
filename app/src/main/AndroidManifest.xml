@@ -11,7 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".friends_list.view.FriendsListActivity"></activity>
+        <activity android:name=".blacklist.view.BlackListActivity"></activity>
+        <activity android:name=".friends_list.view.FriendsListActivity" />
         <activity android:name=".setting.view.SettingActivity" />
         <activity android:name=".register.view.RegisterActivity" />
         <activity android:name=".login.view.LoginActivity" />

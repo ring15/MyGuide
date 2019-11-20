@@ -42,4 +42,13 @@ public interface RetrofitService {
     @GET(Constants.GET_FRIENDS)
     Observable<ResponseBody> getFriendsList(@QueryMap Map<String, String> map);
 
+    /**
+     * 获取黑名单
+     *
+     * @param map query数据
+     * @return okhttp返回结果
+     */
+    @GET(Constants.GET_BLACKLIST)
+    Observable<ResponseBody> getBlackList(@QueryMap Map<String, String> map);
+
 }

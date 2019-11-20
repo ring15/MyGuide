@@ -14,5 +14,7 @@ public class Constants {
     public static final String USER_LOGIN = "user_login";
     //获取好友列表接口
     public static final String GET_FRIENDS = "friend_list";
+    //获取黑名单接口
+    public static final String GET_BLACKLIST = "blacklist";
 
 }

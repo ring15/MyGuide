@@ -24,6 +24,7 @@ import com.hyphenate.chat.EMMessage;
 import com.ring.myguide.R;
 import com.ring.myguide.base.BaseActivity;
 import com.ring.myguide.base.MyFragmentPagerAdapter;
+import com.ring.myguide.blacklist.view.BlackListActivity;
 import com.ring.myguide.friends_list.view.FriendsListActivity;
 import com.ring.myguide.home.HomeFragment;
 import com.ring.myguide.main.MainContract;
@@ -203,7 +204,7 @@ public class MainActivity extends BaseActivity<MainPresenter, MainContract.View>
                 break;
 
             case R.id.item_black_list:
-                Toast.makeText(this, "黑名单···", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this, BlackListActivity.class));
                 break;
             default:
                 break;
