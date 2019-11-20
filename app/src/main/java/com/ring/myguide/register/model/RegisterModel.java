@@ -29,7 +29,7 @@ public class RegisterModel implements RegisterContract.Model {
     public void requestRegister(String userName, String password, CallbackListener<User> listener) {
         RetrofitService service = RetrofitUtil.getInstance().createService(RetrofitService.class);
         LinkedHashMap<String, String> params = new LinkedHashMap<>();
-        params.put("user_name", userName);
+        params.put("username", userName);
         params.put("password", password);
         service.doRegisterUser(params)
                 .subscribeOn(Schedulers.newThread())

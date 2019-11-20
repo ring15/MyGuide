@@ -17,10 +17,7 @@ import java.util.LinkedHashMap;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.ResponseBody;
 
 /**
  * Created by ring on 2019/11/19.
@@ -33,7 +30,7 @@ public class LoginModel implements LoginContract.Model {
     public void requestLogin(String userName, String password, CallbackListener<User> listener) {
         RetrofitService service = RetrofitUtil.getInstance().createService(RetrofitService.class);
         LinkedHashMap<String, String> params = new LinkedHashMap<>();
-        params.put("user_name", userName);
+        params.put("username", userName);
         params.put("password", password);
         service.doLogin(params)
                 .subscribeOn(Schedulers.newThread())
