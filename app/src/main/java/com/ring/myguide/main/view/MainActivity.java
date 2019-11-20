@@ -1,6 +1,9 @@
 package com.ring.myguide.main.view;
 
+import android.content.Intent;
 import android.net.Uri;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -8,24 +11,31 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.PopupMenu;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.hyphenate.EMMessageListener;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMMessage;
 import com.ring.myguide.R;
 import com.ring.myguide.base.BaseActivity;
 import com.ring.myguide.base.MyFragmentPagerAdapter;
+import com.ring.myguide.friends_list.view.FriendsListActivity;
 import com.ring.myguide.home.HomeFragment;
 import com.ring.myguide.main.MainContract;
 import com.ring.myguide.main.presenter.MainPresenter;
 import com.ring.myguide.me.view.MeFragment;
-import com.ring.myguide.message.MessageFragment;
+import com.ring.myguide.message.view.MessageFragment;
+
+import java.util.List;
 
 public class MainActivity extends BaseActivity<MainPresenter, MainContract.View> implements MainContract.View,
         HomeFragment.OnFragmentInteractionListener, MessageFragment.OnFragmentInteractionListener,
-        MeFragment.OnFragmentInteractionListener {
+        MeFragment.OnFragmentInteractionListener, PopupMenu.OnMenuItemClickListener {
 
     //版块的数量
     public static final int TAB_COUNTS = 3;
@@ -142,6 +152,9 @@ public class MainActivity extends BaseActivity<MainPresenter, MainContract.View>
 
         //设置当前选中版块
         mPresenter.setCurrentItem(mCurrentItem);
+
+        //注册环信消息监听
+        EMClient.getInstance().chatManager().addMessageListener(msgListener);
     }
 
     public void onClick(View view) {
@@ -161,7 +174,41 @@ public class MainActivity extends BaseActivity<MainPresenter, MainContract.View>
                 mViewPager.setCurrentItem(mCurrentItem);
                 mPresenter.setCurrentItem(mCurrentItem);
                 break;
+            case R.id.btn_menu:
+                //创建弹出式菜单对象（最低版本11）
+                PopupMenu popup = new PopupMenu(this, mMenuImg);//第二个参数是绑定的那个view
+                //获取菜单填充器
+                MenuInflater inflater = popup.getMenuInflater();
+                //填充菜单
+                inflater.inflate(R.menu.menu_main, popup.getMenu());
+                //绑定菜单项的点击事件
+                popup.setOnMenuItemClickListener(this);
+                popup.show(); //这一行代码不要忘记了
+                break;
         }
+    }
+
+
+    //弹出式菜单的单击事件处理
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        // TODO Auto-generated method stub
+        switch (item.getItemId()) {
+            case R.id.item_search_friend:
+                Toast.makeText(this, "查询···", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.item_friend_list:
+                startActivity(new Intent(MainActivity.this, FriendsListActivity.class));
+                break;
+
+            case R.id.item_black_list:
+                Toast.makeText(this, "黑名单···", Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                break;
+        }
+        return false;
     }
 
     /**
@@ -237,8 +284,54 @@ public class MainActivity extends BaseActivity<MainPresenter, MainContract.View>
      */
     @Override
     public void onFragmentInteraction(Uri uri) {
-
+        String text = uri.toString();
+        if ("false".equals(text)) {
+            mMenuImg.setClickable(false);
+        } else if ("true".equals(text)) {
+            mMenuImg.setClickable(true);
+        }
     }
+
+    //环信消息监听
+    EMMessageListener msgListener = new EMMessageListener() {
+
+        @Override
+        public void onMessageReceived(List<EMMessage> messages) {
+            //收到消息
+            ((MessageFragment) mFragments[1]).onMessageReceived(messages);
+            mRedPoint.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        public void onCmdMessageReceived(List<EMMessage> messages) {
+            //收到透传消息
+            ((MessageFragment) mFragments[1]).onCmdMessageReceived(messages);
+        }
+
+        @Override
+        public void onMessageRead(List<EMMessage> messages) {
+            //收到已读回执
+            ((MessageFragment) mFragments[1]).onMessageRead(messages);
+        }
+
+        @Override
+        public void onMessageDelivered(List<EMMessage> message) {
+            //收到已送达回执
+            ((MessageFragment) mFragments[1]).onMessageDelivered(message);
+        }
+
+        @Override
+        public void onMessageRecalled(List<EMMessage> messages) {
+            //消息被撤回
+            ((MessageFragment) mFragments[1]).onMessageRecalled(messages);
+        }
+
+        @Override
+        public void onMessageChanged(EMMessage message, Object change) {
+            //消息状态变动
+            ((MessageFragment) mFragments[1]).onMessageChanged(message, change);
+        }
+    };
 
     /**
      * ViewPager滑动监听事件
@@ -260,5 +353,12 @@ public class MainActivity extends BaseActivity<MainPresenter, MainContract.View>
         public void onPageScrollStateChanged(int state) {
 
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //在不需要的时候移除listener，如在activity的onDestroy()时
+        EMClient.getInstance().chatManager().removeMessageListener(msgListener);
     }
 }

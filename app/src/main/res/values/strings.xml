@@ -29,6 +29,18 @@
 
     <string name="location">天津市</string>
 
+    <string name="message_not_login">您还没有登录，登录后可接受消息</string>
+    <string name="message_already_read">标为已读</string>
+    <string name="message_delete">全部删除</string>
+    <string name="message_no_message">还没有开始新会话，点击右上角和好友开始聊天吧！</string>
+    <string name="message_search_friend">查找好友</string>
+    <string name="message_friend_list">好友列表</string>
+    <string name="message_black_list">黑名单</string>
+
+    <string name="friends_list_title">好友列表</string>
+    <string name="friends_no_friends">还没有好友，快去添加好友吧！</string>
+    <string name="friends_nickname">昵称</string>
+
     <string name="me_user_nickname">点击登录</string>
     <string name="me_username">登录后您可享受更多特权</string>
     <string name="me_introduction_title">个人介绍：</string>

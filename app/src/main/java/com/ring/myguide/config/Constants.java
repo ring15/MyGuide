@@ -12,5 +12,7 @@ public class Constants {
     public static final String REGISTER_USER = "register_user";
     //用户登录接口
     public static final String USER_LOGIN = "user_login";
+    //获取好友列表接口
+    public static final String GET_FRIENDS = "friend_list";
 
 }

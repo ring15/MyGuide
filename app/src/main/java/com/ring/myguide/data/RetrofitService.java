@@ -33,4 +33,13 @@ public interface RetrofitService {
     @GET(Constants.USER_LOGIN)
     Observable<ResponseBody> doLogin(@QueryMap Map<String, String> map);
 
+    /**
+     * 获取好友列表
+     *
+     * @param map query数据
+     * @return okhttp返回结果
+     */
+    @GET(Constants.GET_FRIENDS)
+    Observable<ResponseBody> getFriendsList(@QueryMap Map<String, String> map);
+
 }
