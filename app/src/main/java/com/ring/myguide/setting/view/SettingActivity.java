@@ -18,7 +18,7 @@ import com.ring.myguide.setting.presenter.SettingPresenter;
 import com.ring.myguide.utils.CacheUtils;
 import com.ring.myguide.utils.FileUtils;
 
-import static com.ring.myguide.login.view.LoginActivity.FROM_SETTIGN;
+import static com.ring.myguide.login.view.LoginActivity.FROM_SETTING;
 
 public class SettingActivity extends BaseActivity<SettingPresenter, SettingContract.View>
         implements SettingContract.View {
@@ -107,7 +107,7 @@ public class SettingActivity extends BaseActivity<SettingPresenter, SettingContr
         mLogoutBtn.setText(R.string.login);
         mLogoutBtn.setOnClickListener(v -> {
             Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
-            intent.putExtra("from", FROM_SETTIGN);
+            intent.putExtra("from", FROM_SETTING);
             startActivity(intent);
         });
     }

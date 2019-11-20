@@ -28,7 +28,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter, LoginContract.Vi
 
     //判断从哪里打开的登录界面
     public static final int FROM_SPLASH = 0;
-    public static final int FROM_SETTIGN = 1;
+    public static final int FROM_SETTING = 1;
+    public static final int FROM_MEFRAGMENT= 2;
 
     //跳转到注册界面的请求码
     public static final int REQUEST_REGISTER_CODE = 0x01;

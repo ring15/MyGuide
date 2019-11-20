@@ -19,9 +19,12 @@ import com.bumptech.glide.request.RequestOptions;
 import com.ring.myguide.R;
 import com.ring.myguide.base.BaseFragment;
 import com.ring.myguide.entity.User;
+import com.ring.myguide.login.view.LoginActivity;
 import com.ring.myguide.me.MeContract;
 import com.ring.myguide.me.presenter.MePresenter;
 import com.ring.myguide.setting.view.SettingActivity;
+
+import static com.ring.myguide.login.view.LoginActivity.FROM_MEFRAGMENT;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -156,6 +159,13 @@ public class MeFragment extends BaseFragment<MePresenter, MeContract.View>
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_user_info:
+                if (isLogin){
+
+                } else {
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    intent.putExtra("from", FROM_MEFRAGMENT);
+                    startActivity(intent);
+                }
                 break;
             case R.id.layout_my_post:
                 break;
