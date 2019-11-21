@@ -93,12 +93,22 @@ public interface RetrofitService {
 
 
     /**
-     * 查询用户
+     * 查询用户（校验用户之间的关系）
      *
      * @param map query数据
      * @return okhttp返回结果
      */
     @GET(Constants.QUERY_USER)
     Observable<ResponseBody> queryUser(@QueryMap Map<String, String> map);
+
+
+    /**
+     * 查询用户（搜索）
+     *
+     * @param map query数据
+     * @return okhttp返回结果
+     */
+    @GET(Constants.GET_USER)
+    Observable<ResponseBody> getUser(@QueryMap Map<String, String> map);
 
 }

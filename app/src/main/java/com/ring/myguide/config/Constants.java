@@ -26,5 +26,7 @@ public class Constants {
     public static final String DELETE_BLACK = "delete_black";
     //查询用户接口
     public static final String QUERY_USER = "query_user";
+    //获取用户接口
+    public static final String GET_USER = "get_user";
 
 }

@@ -31,6 +31,7 @@ import com.ring.myguide.main.MainContract;
 import com.ring.myguide.main.presenter.MainPresenter;
 import com.ring.myguide.me.view.MeFragment;
 import com.ring.myguide.message.view.MessageFragment;
+import com.ring.myguide.query_user.view.QueryUserActivity;
 
 import java.util.List;
 
@@ -196,7 +197,7 @@ public class MainActivity extends BaseActivity<MainPresenter, MainContract.View>
         // TODO Auto-generated method stub
         switch (item.getItemId()) {
             case R.id.item_search_friend:
-                Toast.makeText(this, "查询···", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this, QueryUserActivity.class));
                 break;
 
             case R.id.item_friend_list:

@@ -44,6 +44,12 @@
     <string name="black_list_title">黑名单</string>
     <string name="black_no_blacks">黑名单里空空如也~</string>
 
+    <string name="query_search">搜索</string>
+    <string name="query_history_title">历史搜索记录</string>
+    <string name="query_no_history">暂无搜索记录</string>
+    <string name="query_not_empty">搜索不能为空</string>
+    <string name="query_clear">清空</string>
+
     <string name="user_detail_title">详情</string>
     <string name="user_detail_send_msg">发送消息</string>
     <string name="user_detail_add_friend">添加好友</string>
