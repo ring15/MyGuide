@@ -1,6 +1,7 @@
 package com.ring.myguide.blacklist.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.ring.myguide.R;
 import com.ring.myguide.entity.User;
+import com.ring.myguide.user_detail.view.UserDetailActivity;
 
 import java.util.List;
 
@@ -69,7 +71,10 @@ public class BlacksAdapter extends RecyclerView.Adapter<BlacksAdapter.MyAdapter>
                 holder.mManagerImg.setVisibility(View.GONE);
             }
             holder.itemView.setOnClickListener(v -> {
-                //TODO 跳转到黑名单人员详情界面
+                //跳转到黑名单人员详情界面
+                Intent intent = new Intent(mContext, UserDetailActivity.class);
+                intent.putExtra("user", user);
+                mContext.startActivity(intent);
             });
         }
     }

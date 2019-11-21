@@ -48,8 +48,6 @@ public class BlackListActivity extends BaseActivity<BlackListPresenter, BlacksCo
 
     @Override
     protected void init() {
-        //获取好友列表
-        mPresenter.getBlacks();
         //刷新监听事件
         mRefreshLayout.setOnRefreshListener(() -> mPresenter.getBlacks());
         //初始化adapter
@@ -58,6 +56,13 @@ public class BlackListActivity extends BaseActivity<BlackListPresenter, BlacksCo
         mBlacksRecyclerView.setAdapter(mAdapter);
         //设置布局格式
         mBlacksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //获取好友列表
+        mPresenter.getBlacks();
     }
 
     public void onClick(View view) {

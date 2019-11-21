@@ -48,8 +48,6 @@ public class FriendsListActivity extends BaseActivity<FriendsListPresenter, Frie
 
     @Override
     protected void init() {
-        //获取好友列表
-        mPresenter.getFriends();
         //刷新监听事件
         mRefreshLayout.setOnRefreshListener(() -> mPresenter.getFriends());
         //初始化adapter
@@ -58,6 +56,13 @@ public class FriendsListActivity extends BaseActivity<FriendsListPresenter, Frie
         mFriendsRecyclerView.setAdapter(mAdapter);
         //设置布局格式
         mFriendsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //获取好友列表
+        mPresenter.getFriends();
     }
 
     public void onClick(View view) {

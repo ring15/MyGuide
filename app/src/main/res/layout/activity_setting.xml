@@ -85,7 +85,7 @@
         android:layout_marginStart="80dp"
         android:layout_marginTop="35dp"
         android:layout_marginEnd="80dp"
-        android:background="@drawable/btn_shape_red_selector"
+        android:background="@drawable/btn_shape_blue_selector"
         android:text="@string/logout"
         android:textColor="@color/white"
         android:textSize="15sp" />

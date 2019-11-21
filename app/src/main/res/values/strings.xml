@@ -44,6 +44,17 @@
     <string name="black_list_title">黑名单</string>
     <string name="black_no_blacks">黑名单里空空如也~</string>
 
+    <string name="user_detail_title">详情</string>
+    <string name="user_detail_send_msg">发送消息</string>
+    <string name="user_detail_add_friend">添加好友</string>
+    <string name="user_detail_delete_friend">移除好友</string>
+    <string name="user_detail_add_black">添加黑名单</string>
+    <string name="user_detail_delete_black">移除黑名单</string>
+    <string name="user_detail_nickname">昵称</string>
+    <string name="user_detail_username">用户名</string>
+    <string name="user_detail_introduction_title">个人介绍：</string>
+    <string name="user_detail_introduction_content">您很懒什么也没留下</string>
+
     <string name="me_user_nickname">点击登录</string>
     <string name="me_username">登录后您可享受更多特权</string>
     <string name="me_introduction_title">个人介绍：</string>

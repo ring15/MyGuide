@@ -7,6 +7,7 @@
     <color name="foreGroundDark">#cbcd07</color>
     <color name="white">#ffffff</color>
     <color name="red">#ff0000</color>
+    <color name="redDark">#c01b1b</color>
     <color name="gray">#88b6b6b6</color>
     <color name="black">#000000</color>
 </resources>

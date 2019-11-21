@@ -51,4 +51,54 @@ public interface RetrofitService {
     @GET(Constants.GET_BLACKLIST)
     Observable<ResponseBody> getBlackList(@QueryMap Map<String, String> map);
 
+
+    /**
+     * 添加好友
+     *
+     * @param map query数据
+     * @return okhttp返回结果
+     */
+    @GET(Constants.ADD_FRIEND)
+    Observable<ResponseBody> addFriend(@QueryMap Map<String, String> map);
+
+
+    /**
+     * 删除好友
+     *
+     * @param map query数据
+     * @return okhttp返回结果
+     */
+    @GET(Constants.DELETE_FRIEND)
+    Observable<ResponseBody> deleteFriend(@QueryMap Map<String, String> map);
+
+
+    /**
+     * 添加到黑名单
+     *
+     * @param map query数据
+     * @return okhttp返回结果
+     */
+    @GET(Constants.ADD_BLACK)
+    Observable<ResponseBody> addBlack(@QueryMap Map<String, String> map);
+
+
+    /**
+     * 从黑名单中删除
+     *
+     * @param map query数据
+     * @return okhttp返回结果
+     */
+    @GET(Constants.DELETE_BLACK)
+    Observable<ResponseBody> deleteBlack(@QueryMap Map<String, String> map);
+
+
+    /**
+     * 查询用户
+     *
+     * @param map query数据
+     * @return okhttp返回结果
+     */
+    @GET(Constants.QUERY_USER)
+    Observable<ResponseBody> queryUser(@QueryMap Map<String, String> map);
+
 }

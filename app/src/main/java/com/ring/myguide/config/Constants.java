@@ -16,5 +16,15 @@ public class Constants {
     public static final String GET_FRIENDS = "friend_list";
     //获取黑名单接口
     public static final String GET_BLACKLIST = "blacklist";
+    //添加好友接口
+    public static final String ADD_FRIEND = "add_friend";
+    //删除好友接口
+    public static final String DELETE_FRIEND = "delete_friend";
+    //添加到黑名单接口
+    public static final String ADD_BLACK = "add_black";
+    //从黑名单中删除接口
+    public static final String DELETE_BLACK = "delete_black";
+    //查询用户接口
+    public static final String QUERY_USER = "query_user";
 
 }
