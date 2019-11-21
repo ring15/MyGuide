@@ -24,7 +24,7 @@ public class UserDetailPresenter extends UserDetailContract.Presenter {
     @Override
     public void init(String queryUserName) {
         User user = mModel.getUserFromCache();
-        if (user == null || user.getUid() == null) {
+        if (user == null || user.getUid() == null || queryUserName.equals(user.getUserName())) {
             mView.get().setOthers();
             return;
         }
