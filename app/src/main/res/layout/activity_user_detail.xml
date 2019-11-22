@@ -152,7 +152,9 @@
         android:onClick="onClick"
         android:text="@string/user_detail_add_friend"
         android:textColor="@color/white"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:visibility="gone"
+        tools:visibility="visible" />
 
 
     <Button
@@ -166,7 +168,9 @@
         android:onClick="onClick"
         android:text="@string/user_detail_send_msg"
         android:textColor="@color/white"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:visibility="gone"
+        tools:visibility="visible" />
 
 
     <Button
@@ -180,7 +184,9 @@
         android:onClick="onClick"
         android:text="@string/user_detail_delete_friend"
         android:textColor="@color/white"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:visibility="gone"
+        tools:visibility="visible" />
 
 
     <Button
@@ -194,7 +200,9 @@
         android:onClick="onClick"
         android:text="@string/user_detail_add_black"
         android:textColor="@color/white"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:visibility="gone"
+        tools:visibility="visible" />
 
 
     <Button
@@ -208,6 +216,8 @@
         android:onClick="onClick"
         android:text="@string/user_detail_delete_black"
         android:textColor="@color/white"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:visibility="gone"
+        tools:visibility="visible" />
 
 </LinearLayout>
