@@ -89,7 +89,14 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (mEMMessages != null && mEMMessages.size() > i) {
             if (viewHolder instanceof MeViewHolder) {
                 MeViewHolder holder = (MeViewHolder) viewHolder;
-                holder.tvTime.setText(DateUtil.getDateToString(mEMMessages.get(i).getMsgTime(), "yyyy-MM-dd HH:mm:ss"));
+                long time = mEMMessages.get(i).getMsgTime();
+                String pattern;
+                if (System.currentTimeMillis() - time <= 86400000) {
+                    pattern = "HH:mm:ss";
+                } else {
+                    pattern = "yyyy-MM-dd";
+                }
+                holder.tvTime.setText(DateUtil.getDateToString(time, pattern));
                 if (mEMMessages.get(i).getBody() instanceof EMTextMessageBody) {
                     holder.tvMailContent.setText(((EMTextMessageBody) mEMMessages.get(i).getBody()).getMessage());
                 }
@@ -100,7 +107,15 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         .into(holder.ivUserAvatar);
             } else if (viewHolder instanceof SomeOneViewHolder) {
                 SomeOneViewHolder holder = (SomeOneViewHolder) viewHolder;
-                holder.tvTime.setText(DateUtil.getDateToString(mEMMessages.get(i).getMsgTime(), "yyyy-MM-dd HH:mm:ss"));
+                long time = mEMMessages.get(i).getMsgTime();
+                String pattern;
+                if (System.currentTimeMillis() - time <= 86400000) {
+                    time = System.currentTimeMillis() - time;
+                    pattern = "HH:mm:ss";
+                } else {
+                    pattern = "yyyy-MM-dd";
+                }
+                holder.tvTime.setText(DateUtil.getDateToString(time, pattern));
                 if (mEMMessages.get(i).getBody() instanceof EMTextMessageBody) {
                     holder.tvMailContent.setText(((EMTextMessageBody) mEMMessages.get(i).getBody()).getMessage());
                 }
