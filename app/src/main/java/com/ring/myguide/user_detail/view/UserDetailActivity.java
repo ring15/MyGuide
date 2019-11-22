@@ -1,5 +1,6 @@
 package com.ring.myguide.user_detail.view;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -12,6 +13,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.ring.myguide.R;
 import com.ring.myguide.base.BaseActivity;
+import com.ring.myguide.chat.view.ChatActivity;
 import com.ring.myguide.entity.User;
 import com.ring.myguide.user_detail.UserDetailContract;
 import com.ring.myguide.user_detail.presenter.UserDetailPresenter;
@@ -109,6 +111,9 @@ public class UserDetailActivity extends BaseActivity<UserDetailPresenter, UserDe
                 break;
             case R.id.btn_send_msg:
                 //发送消息
+                Intent intent = new Intent(UserDetailActivity.this, ChatActivity.class);
+                intent.putExtra("user", mUser);
+                startActivity(intent);
                 break;
             case R.id.btn_delete_friend:
                 //删除好友

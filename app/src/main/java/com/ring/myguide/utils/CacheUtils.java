@@ -5,6 +5,7 @@ import android.util.Base64;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.ring.myguide.entity.MessageList;
 import com.ring.myguide.entity.User;
 
 import java.util.LinkedList;
@@ -18,6 +19,7 @@ public class CacheUtils {
 
     private final static String CACHE_USER = "user";                //最近登录user
     private final static String QUERY_USER = "query_user";                //最近登录user
+    private final static String MESSAGE_LIST = "message_list";                //最近登录user
 
     private static ACache mAppCache;
 
@@ -83,7 +85,41 @@ public class CacheUtils {
                 username = new LinkedList<>(list);
             }
         } catch (Exception e) {
-            Log.e(TAG, "getUserList解析失败");
+            Log.e(TAG, "getQueryUser解析失败");
+        }
+        return username;
+    }
+
+    /**
+     * 缓存消息列表
+     *
+     * @param username
+     */
+    public static void putMessageLists(LinkedList<MessageList> username) {
+        String jsonStr = JSON.toJSONString(username);
+        if (mAppCache != null) {
+            mAppCache.put(MESSAGE_LIST, jsonStr);
+        } else {
+            Log.e(TAG, "Cache is null");
+        }
+    }
+
+    /**
+     * 获取消息列表信息
+     *
+     * @return
+     */
+    public static LinkedList<MessageList> getMessageLists() {
+        LinkedList<MessageList> username = null;
+        String jsonStr;
+        try {
+            jsonStr = mAppCache.getAsString(MESSAGE_LIST);
+            List<MessageList> list = JSON.parseArray(jsonStr, MessageList.class);
+            if (list != null) {
+                username = new LinkedList<>(list);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "getMessageLists解析失败");
         }
         return username;
     }

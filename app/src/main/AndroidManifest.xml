@@ -11,7 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".query_user.view.QueryUserActivity"></activity>
+        <activity android:name=".chat.view.ChatActivity"></activity>
+        <activity android:name=".query_user.view.QueryUserActivity" />
         <activity android:name=".user_detail.view.UserDetailActivity" />
         <activity android:name=".blacklist.view.BlackListActivity" />
         <activity android:name=".friends_list.view.FriendsListActivity" />

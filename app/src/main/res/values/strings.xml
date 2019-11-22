@@ -50,6 +50,12 @@
     <string name="query_not_empty">搜索不能为空</string>
     <string name="query_clear">清空</string>
 
+    <string name="chat_title">昵称</string>
+    <string name="chat_send">发送</string>
+    <string name="chat_time">2019-11-14 10:57:32</string>
+    <string name="chat_message_not_empty">发送的消息不能为空</string>
+    <string name="chat_no_message">暂无消息，快和好友聊天吧</string>
+
     <string name="user_detail_title">详情</string>
     <string name="user_detail_send_msg">发送消息</string>
     <string name="user_detail_add_friend">添加好友</string>
