@@ -84,6 +84,19 @@
                     android:textSize="10sp"
                     tools:text="@string/chat_time" />
 
+                <TextView
+                    android:id="@+id/tv_num"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/design_red_point"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="5sp"
+                    tools:text="@string/chat_num" />
+
 
                 <ImageView
                     android:layout_width="20dp"

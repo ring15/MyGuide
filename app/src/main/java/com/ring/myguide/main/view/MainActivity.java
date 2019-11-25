@@ -301,7 +301,7 @@ public class MainActivity extends BaseActivity<MainPresenter, MainContract.View>
         public void onMessageReceived(List<EMMessage> messages) {
             //收到消息
             ((MessageFragment) mFragments[1]).onMessageReceived(messages);
-            mRedPoint.setVisibility(View.VISIBLE);
+//            mRedPoint.setVisibility(View.VISIBLE);
         }
 
         @Override

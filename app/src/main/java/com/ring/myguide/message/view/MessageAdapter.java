@@ -14,11 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
+import com.hyphenate.chat.EMClient;
 import com.ring.myguide.R;
 import com.ring.myguide.chat.view.ChatActivity;
 import com.ring.myguide.entity.MessageList;
 import com.ring.myguide.entity.User;
-import com.ring.myguide.user_detail.view.UserDetailActivity;
 import com.ring.myguide.utils.DateUtil;
 
 import java.util.LinkedList;
@@ -31,14 +31,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
     private Context mContext;
 
     //消息列表数据源
-    private LinkedList<MessageList> mMessageLists;
+    private LinkedList<MessageList> mMessageLists = new LinkedList<>();
 
     public MessageAdapter(Context context) {
         mContext = context;
     }
 
     public void setMessageLists(LinkedList<MessageList> messageLists) {
-        mMessageLists = messageLists;
+        mMessageLists.clear();
+        mMessageLists.addAll(messageLists);
     }
 
     @NonNull
@@ -52,6 +53,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         if (mMessageLists != null && mMessageLists.size() > position) {
             User user = mMessageLists.get(position).getUser();
+
+//            EMConversation conversation = EMClient.getInstance().chatManager().getConversation(user.getNickname(),
+//                    EMConversation.EMConversationType.Chat,
+//                    true);
 
             //设置头像图片
             Glide.with(mContext)
@@ -69,11 +74,23 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
                 holder.mManagerImg.setVisibility(View.GONE);
             }
             holder.itemView.setOnClickListener(v -> {
+//                conversation.markAllMessagesAsRead();
+//                notifyItemChanged(position);
                 //跳转到好友详情界面
                 Intent intent = new Intent(mContext, ChatActivity.class);
                 intent.putExtra("user", user);
                 mContext.startActivity(intent);
             });
+            int num = EMClient.getInstance().chatManager().getUnreadMessageCount();
+            if (num <= 0) {
+                holder.mNumText.setVisibility(View.GONE);
+            } else if (num < 99) {
+                holder.mNumText.setVisibility(View.VISIBLE);
+                holder.mNumText.setText(num + "");
+            } else {
+                holder.mNumText.setVisibility(View.VISIBLE);
+                holder.mNumText.setText(R.string.chat_num);
+            }
 
             //设置消息内容
             holder.mContent.setText(mMessageLists.get(position).getContent());
@@ -106,6 +123,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
         private ImageView mManagerImg;
         //时间
         private TextView mTimeText;
+        //未读消息数量
+        private TextView mNumText;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -114,6 +133,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
             mManagerImg = itemView.findViewById(R.id.img_manager);
             mContent = itemView.findViewById(R.id.tv_message);
             mTimeText = itemView.findViewById(R.id.tv_time);
+            mNumText = itemView.findViewById(R.id.tv_num);
         }
     }
 }

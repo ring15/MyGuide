@@ -110,12 +110,7 @@ public class MessageFragment extends BaseFragment<MessagePresenter, MessageContr
         mMessageAdapter = new MessageAdapter(getContext());
         mMessageRecyclerView.setAdapter(mMessageAdapter);
         mMessageRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mPresenter.getMessageList();
-            }
-        });
+        mRefreshLayout.setOnRefreshListener(() -> mPresenter.getMessageList());
     }
 
     @Override
@@ -157,6 +152,7 @@ public class MessageFragment extends BaseFragment<MessagePresenter, MessageContr
 
     public void onMessageReceived(List<EMMessage> messages) {
         //收到消息
+        mPresenter.updateMessageList(messages);
     }
 
     public void onCmdMessageReceived(List<EMMessage> messages) {
