@@ -43,6 +43,6 @@ public interface MessageContract {
 
         public abstract void updateMessageList(List<EMMessage> messages);
 
-        public abstract void deleteMessageList();
+        public abstract void deleteMessageList(LinkedList<MessageList> messageLists);
     }
 }

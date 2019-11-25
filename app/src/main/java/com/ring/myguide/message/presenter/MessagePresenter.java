@@ -1,5 +1,6 @@
 package com.ring.myguide.message.presenter;
 
+import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMTextMessageBody;
 import com.ring.myguide.base.CallbackListener;
@@ -86,7 +87,12 @@ public class MessagePresenter extends MessageContract.Presenter {
     }
 
     @Override
-    public void deleteMessageList() {
+    public void deleteMessageList(LinkedList<MessageList> messageLists) {
+        if (messageLists != null && messageLists.size() > 0) {
+            for (MessageList messageList : messageLists) {
+                EMClient.getInstance().chatManager().deleteConversation(messageList.getUser().getUserName(), false);
+            }
+        }
         mModel.putMessageList(new LinkedList<>());
     }
 }

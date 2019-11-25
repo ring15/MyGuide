@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
 import com.ring.myguide.R;
 import com.ring.myguide.base.BaseFragment;
@@ -22,8 +23,10 @@ import com.ring.myguide.entity.User;
 import com.ring.myguide.message.MessageContract;
 import com.ring.myguide.message.presenter.MessagePresenter;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -61,6 +64,9 @@ public class MessageFragment extends BaseFragment<MessagePresenter, MessageContr
 
 
     private OnFragmentInteractionListener mListener;
+
+    //数据源
+    private LinkedList<MessageList> mMessageLists = new LinkedList<>();
 
     public MessageFragment() {
         // Required empty public constructor
@@ -114,6 +120,16 @@ public class MessageFragment extends BaseFragment<MessagePresenter, MessageContr
         mRefreshLayout.setOnRefreshListener(() -> mPresenter.getMessageList());
         mReadText.setOnClickListener(this);
         mDeleteText.setOnClickListener(this);
+
+        Map<String, EMConversation> conversations = EMClient.getInstance().chatManager().getAllConversations();
+        List<EMMessage> emMessages = new ArrayList<>();
+        for (String username : conversations.keySet()){
+            EMConversation conversation = conversations.get(username);
+            if (conversation != null){
+                emMessages.add(conversation.getLastMessage());
+            }
+        }
+        mPresenter.updateMessageList(emMessages);
     }
 
     public void onClick(View view){
@@ -126,7 +142,7 @@ public class MessageFragment extends BaseFragment<MessagePresenter, MessageContr
                 break;
             case R.id.tv_delete:
                 //删除对话列表
-                mPresenter.deleteMessageList();
+                mPresenter.deleteMessageList(mMessageLists);
                 //所有未读消息数清零
                 EMClient.getInstance().chatManager().markAllConversationsAsRead();
                 mPresenter.getMessageList();
@@ -221,6 +237,7 @@ public class MessageFragment extends BaseFragment<MessagePresenter, MessageContr
 
     @Override
     public void setMessageList(LinkedList<MessageList> messageList) {
+        mMessageLists = messageList;
         mMessageAdapter.setMessageLists(messageList);
         mMessageAdapter.notifyDataSetChanged();
         mNoMessageLayout.setVisibility(View.GONE);
