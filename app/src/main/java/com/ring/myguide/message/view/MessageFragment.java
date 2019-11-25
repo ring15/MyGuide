@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
 import com.ring.myguide.R;
 import com.ring.myguide.base.BaseFragment;
@@ -33,7 +34,7 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class MessageFragment extends BaseFragment<MessagePresenter, MessageContract.View>
-        implements MessageContract.View {
+        implements MessageContract.View , View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -111,6 +112,27 @@ public class MessageFragment extends BaseFragment<MessagePresenter, MessageContr
         mMessageRecyclerView.setAdapter(mMessageAdapter);
         mMessageRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRefreshLayout.setOnRefreshListener(() -> mPresenter.getMessageList());
+        mReadText.setOnClickListener(this);
+        mDeleteText.setOnClickListener(this);
+    }
+
+    public void onClick(View view){
+        switch (view.getId()){
+            case R.id.tv_read:
+                //所有未读消息数清零
+                EMClient.getInstance().chatManager().markAllConversationsAsRead();
+                mPresenter.getMessageList();
+                setRedPoitVisible(Uri.parse("gone"));
+                break;
+            case R.id.tv_delete:
+                //删除对话列表
+                mPresenter.deleteMessageList();
+                //所有未读消息数清零
+                EMClient.getInstance().chatManager().markAllConversationsAsRead();
+                mPresenter.getMessageList();
+                setRedPoitVisible(Uri.parse("gone"));
+                break;
+        }
     }
 
     @Override
@@ -128,6 +150,12 @@ public class MessageFragment extends BaseFragment<MessagePresenter, MessageContr
     }
 
     public void setMenuClickable(Uri uri) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(uri);
+        }
+    }
+
+    public void setRedPoitVisible(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }

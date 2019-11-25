@@ -84,4 +84,9 @@ public class MessagePresenter extends MessageContract.Presenter {
             });
         }
     }
+
+    @Override
+    public void deleteMessageList() {
+        mModel.putMessageList(new LinkedList<>());
+    }
 }

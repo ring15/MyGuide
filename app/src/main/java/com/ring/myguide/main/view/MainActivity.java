@@ -320,6 +320,11 @@ public class MainActivity extends BaseActivity<MainPresenter, MainContract.View>
         } else if ("true".equals(text)) {
             mMenuImg.setClickable(true);
         }
+        if ("visible".equals(text)){
+            mRedPoint.setVisibility(View.VISIBLE);
+        } else if ("gone".equals(text)){
+            mRedPoint.setVisibility(View.GONE);
+        }
     }
 
     //环信消息监听
