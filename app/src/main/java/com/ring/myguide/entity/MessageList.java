@@ -13,12 +13,6 @@ public class MessageList implements Serializable {
 
     private long time;
 
-    public MessageList(User user, String content, long time) {
-        mUser = user;
-        this.content = content;
-        this.time = time;
-    }
-
     public User getUser() {
         return mUser;
     }

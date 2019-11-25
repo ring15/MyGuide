@@ -1,7 +1,6 @@
 package com.ring.myguide.utils;
 
 import android.content.Context;
-import android.util.Base64;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
@@ -110,17 +109,17 @@ public class CacheUtils {
      * @return
      */
     public static LinkedList<MessageList> getMessageLists() {
-        LinkedList<MessageList> username = null;
+        LinkedList<MessageList> messageLists = null;
         String jsonStr;
         try {
             jsonStr = mAppCache.getAsString(MESSAGE_LIST);
             List<MessageList> list = JSON.parseArray(jsonStr, MessageList.class);
             if (list != null) {
-                username = new LinkedList<>(list);
+                messageLists = new LinkedList<>(list);
             }
         } catch (Exception e) {
             Log.e(TAG, "getMessageLists解析失败");
         }
-        return username;
+        return messageLists;
     }
 }
