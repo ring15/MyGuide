@@ -1,6 +1,7 @@
 package com.ring.myguide.chat.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMTextMessageBody;
 import com.ring.myguide.R;
 import com.ring.myguide.entity.User;
+import com.ring.myguide.user_detail.view.UserDetailActivity;
 import com.ring.myguide.utils.DateUtil;
 
 import java.util.List;
@@ -26,7 +28,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_FIRST_ME = 0;
     private static final int TYPE_FIRST_SOMEONE = 1;
 
-    private Context mContect;
+    private Context mContext;
     //消息
     private List<EMMessage> mEMMessages;
     //当前登录用户
@@ -35,11 +37,11 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private User mOtherUser;
 
     public ChatAdapter(Context context) {
-        mContect = context;
+        mContext = context;
     }
 
     public void setEMMessages(List<EMMessage> EMMessages) {
-        if (mEMMessages != null){
+        if (mEMMessages != null) {
             mEMMessages.clear();
         }
         this.mEMMessages = EMMessages;
@@ -73,11 +75,11 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         RecyclerView.ViewHolder viewHolder = null;
         switch (i) {
             case TYPE_FIRST_ME:
-                view = LayoutInflater.from(mContect).inflate(R.layout.item_chat_me, viewGroup, false);
+                view = LayoutInflater.from(mContext).inflate(R.layout.item_chat_me, viewGroup, false);
                 viewHolder = new MeViewHolder(view);
                 break;
             case TYPE_FIRST_SOMEONE:
-                view = LayoutInflater.from(mContect).inflate(R.layout.item_chat_someone, viewGroup, false);
+                view = LayoutInflater.from(mContext).inflate(R.layout.item_chat_someone, viewGroup, false);
                 viewHolder = new SomeOneViewHolder(view);
                 break;
         }
@@ -100,11 +102,17 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 if (mEMMessages.get(i).getBody() instanceof EMTextMessageBody) {
                     holder.tvMailContent.setText(((EMTextMessageBody) mEMMessages.get(i).getBody()).getMessage());
                 }
-                Glide.with(mContect)
+                Glide.with(mContext)
                         .load(mUser.getUserImg())
                         .placeholder(R.drawable.icon_avatar_default)
                         .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                         .into(holder.ivUserAvatar);
+                //点击头像跳转到用户详情界面
+                holder.ivUserAvatar.setOnClickListener(v -> {
+                    Intent intent = new Intent(mContext, UserDetailActivity.class);
+                    intent.putExtra("user", mUser);
+                    mContext.startActivity(intent);
+                });
             } else if (viewHolder instanceof SomeOneViewHolder) {
                 SomeOneViewHolder holder = (SomeOneViewHolder) viewHolder;
                 long time = mEMMessages.get(i).getMsgTime();
@@ -119,11 +127,17 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 if (mEMMessages.get(i).getBody() instanceof EMTextMessageBody) {
                     holder.tvMailContent.setText(((EMTextMessageBody) mEMMessages.get(i).getBody()).getMessage());
                 }
-                Glide.with(mContect)
+                Glide.with(mContext)
                         .load(mOtherUser.getUserImg())
                         .placeholder(R.drawable.icon_avatar_default)
                         .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                         .into(holder.ivUserAvatar);
+                //点击头像跳转到用户详情界面
+                holder.ivUserAvatar.setOnClickListener(v -> {
+                    Intent intent = new Intent(mContext, UserDetailActivity.class);
+                    intent.putExtra("user", mOtherUser);
+                    mContext.startActivity(intent);
+                });
             }
         }
     }
