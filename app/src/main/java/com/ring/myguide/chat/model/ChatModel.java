@@ -18,11 +18,11 @@ public class ChatModel implements ChatContract.Model {
 
     @Override
     public LinkedList<MessageList> getMessageList() {
-        return CacheUtils.getMessageLists();
+        return CacheUtils.getMessageLists(CacheUtils.getUser().getUserName());
     }
 
     @Override
     public void putMessageList(LinkedList<MessageList> messageLists) {
-        CacheUtils.putMessageLists(messageLists);
+        CacheUtils.putMessageLists(messageLists, CacheUtils.getUser().getUserName());
     }
 }

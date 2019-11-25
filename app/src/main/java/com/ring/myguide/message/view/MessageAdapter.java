@@ -54,10 +54,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
         if (mMessageLists != null && mMessageLists.size() > position) {
             User user = mMessageLists.get(position).getUser();
 
-//            EMConversation conversation = EMClient.getInstance().chatManager().getConversation(user.getNickname(),
-//                    EMConversation.EMConversationType.Chat,
-//                    true);
-
             //设置头像图片
             Glide.with(mContext)
                     .load(user.getUserImg())
@@ -74,8 +70,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
                 holder.mManagerImg.setVisibility(View.GONE);
             }
             holder.itemView.setOnClickListener(v -> {
-//                conversation.markAllMessagesAsRead();
-//                notifyItemChanged(position);
                 //跳转到好友详情界面
                 Intent intent = new Intent(mContext, ChatActivity.class);
                 intent.putExtra("user", user);

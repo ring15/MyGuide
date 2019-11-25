@@ -18,7 +18,6 @@ public class CacheUtils {
 
     private final static String CACHE_USER = "user";                //最近登录user
     private final static String QUERY_USER = "query_user";                //最近登录user
-    private final static String MESSAGE_LIST = "message_list";                //最近登录user
 
     private static ACache mAppCache;
 
@@ -92,12 +91,13 @@ public class CacheUtils {
     /**
      * 缓存消息列表
      *
-     * @param username
+     * @param messageLists
+     * @param userName
      */
-    public static void putMessageLists(LinkedList<MessageList> username) {
-        String jsonStr = JSON.toJSONString(username);
+    public static void putMessageLists(LinkedList<MessageList> messageLists, String userName) {
+        String jsonStr = JSON.toJSONString(messageLists);
         if (mAppCache != null) {
-            mAppCache.put(MESSAGE_LIST, jsonStr);
+            mAppCache.put(userName, jsonStr);
         } else {
             Log.e(TAG, "Cache is null");
         }
@@ -106,13 +106,14 @@ public class CacheUtils {
     /**
      * 获取消息列表信息
      *
+     * @param userName
      * @return
      */
-    public static LinkedList<MessageList> getMessageLists() {
+    public static LinkedList<MessageList> getMessageLists(String userName) {
         LinkedList<MessageList> messageLists = null;
         String jsonStr;
         try {
-            jsonStr = mAppCache.getAsString(MESSAGE_LIST);
+            jsonStr = mAppCache.getAsString(userName);
             List<MessageList> list = JSON.parseArray(jsonStr, MessageList.class);
             if (list != null) {
                 messageLists = new LinkedList<>(list);
