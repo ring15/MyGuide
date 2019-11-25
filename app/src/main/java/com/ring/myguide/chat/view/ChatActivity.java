@@ -23,7 +23,6 @@ import com.ring.myguide.entity.User;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class ChatActivity extends BaseActivity<ChatPresenter, ChatContract.View>
@@ -52,7 +51,6 @@ public class ChatActivity extends BaseActivity<ChatPresenter, ChatContract.View>
 
 
     protected EMConversation conversation;
-    private ExecutorService fetchQueue;
 
     private ChatAdapter mAdapter;
 
@@ -83,8 +81,6 @@ public class ChatActivity extends BaseActivity<ChatPresenter, ChatContract.View>
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRefreshLayout.setOnRefreshListener(() -> mPresenter.init());
-        fetchQueue = Executors.newSingleThreadExecutor();
-//        onConversationInit();
         mPresenter.init();
     }
 
@@ -137,6 +133,11 @@ public class ChatActivity extends BaseActivity<ChatPresenter, ChatContract.View>
         EMClient.getInstance().chatManager().saveMessage(message);
         mMessageEdit.setText("");
         onConversationInit();
+        if (conversation != null && conversation.getAllMessages().size() > 0) {
+            mPresenter.updateMessageList(mOtherUser,
+                    ((EMTextMessageBody) conversation.getLastMessage().getBody()).getMessage(),
+                    conversation.getLastMessage().getMsgTime());
+        }
     }
 
     private void onConversationInit() {
@@ -155,9 +156,6 @@ public class ChatActivity extends BaseActivity<ChatPresenter, ChatContract.View>
         }
         if (conversation != null && conversation.getAllMessages().size() > 0) {
             mRecyclerView.smoothScrollToPosition(conversation.getAllMessages().size() - 1);
-            mPresenter.updateMessageList(mOtherUser,
-                    ((EMTextMessageBody) conversation.getLastMessage().getBody()).getMessage(),
-                    conversation.getLastMessage().getMsgTime());
             mAdapter.setEMMessages(conversation.getAllMessages());
             //更新数据you
             mAdapter.notifyDataSetChanged();

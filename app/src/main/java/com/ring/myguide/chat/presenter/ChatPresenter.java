@@ -41,21 +41,28 @@ public class ChatPresenter extends ChatContract.Presenter {
                 return;
             }
             mView.get().sendTextMessage(content);
-            LinkedList<MessageList> messageLists = mModel.getMessageList();
         }
     }
 
     @Override
     public void updateMessageList(User user, String content, long time) {
         if (isViewAttached()) {
-            MessageList messageList = new MessageList(user, content, time);
+            MessageList messageList = new MessageList();
+            messageList.setUser(user);
+            messageList.setContent(content);
+            messageList.setTime(time);
             LinkedList<MessageList> messageLists = mModel.getMessageList();
             if (messageLists == null) {
                 messageLists = new LinkedList<>();
                 messageLists.add(messageList);
                 mModel.putMessageList(messageLists);
             } else {
-                messageLists.remove(messageList);
+                LinkedList<MessageList> newMessageLists = new LinkedList<>(messageLists);
+                for (MessageList list : newMessageLists) {
+                    if (list.getUser().getUid().equals(messageList.getUser().getUid())) {
+                        messageLists.remove(list);
+                    }
+                }
                 messageLists.add(0, messageList);
                 mModel.putMessageList(messageLists);
             }

@@ -9,16 +9,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.hyphenate.chat.EMMessage;
 import com.ring.myguide.R;
 import com.ring.myguide.base.BaseFragment;
+import com.ring.myguide.entity.MessageList;
 import com.ring.myguide.entity.User;
 import com.ring.myguide.message.MessageContract;
 import com.ring.myguide.message.presenter.MessagePresenter;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -53,6 +56,8 @@ public class MessageFragment extends BaseFragment<MessagePresenter, MessageContr
     //对话列表
     private RecyclerView mMessageRecyclerView;
 
+    private MessageAdapter mMessageAdapter;
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -82,6 +87,7 @@ public class MessageFragment extends BaseFragment<MessagePresenter, MessageContr
     public void onResume() {
         super.onResume();
         mPresenter.init();
+        mPresenter.getMessageList();
     }
 
     @Override
@@ -101,10 +107,13 @@ public class MessageFragment extends BaseFragment<MessagePresenter, MessageContr
 
     @Override
     protected void init() {
+        mMessageAdapter = new MessageAdapter(getContext());
+        mMessageRecyclerView.setAdapter(mMessageAdapter);
+        mMessageRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
+                mPresenter.getMessageList();
             }
         });
     }
@@ -184,6 +193,22 @@ public class MessageFragment extends BaseFragment<MessagePresenter, MessageContr
         mNoMessageLayout.setVisibility(View.GONE);
         mNotLoginLayout.setVisibility(View.VISIBLE);
         setMenuClickable(Uri.parse("false"));
+    }
+
+    @Override
+    public void setMessageList(LinkedList<MessageList> messageList) {
+        mMessageAdapter.setMessageLists(messageList);
+        mMessageAdapter.notifyDataSetChanged();
+        mNoMessageLayout.setVisibility(View.GONE);
+        mNotLoginLayout.setVisibility(View.GONE);
+        mRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void setNoMessageList() {
+        mNoMessageLayout.setVisibility(View.VISIBLE);
+        mNotLoginLayout.setVisibility(View.GONE);
+        mRefreshLayout.setRefreshing(false);
     }
 
 
