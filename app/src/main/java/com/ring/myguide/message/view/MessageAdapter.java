@@ -3,12 +3,14 @@ package com.ring.myguide.message.view;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -31,6 +33,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
 
     private Context mContext;
 
+    private MessageFragment.OnChangeListener mListener;
+
     //消息列表数据源
     private LinkedList<MessageList> mMessageLists = new LinkedList<>();
 
@@ -41,6 +45,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
     public void setMessageLists(LinkedList<MessageList> messageLists) {
         mMessageLists.clear();
         mMessageLists.addAll(messageLists);
+    }
+
+    public void setListener(MessageFragment.OnChangeListener listener) {
+        mListener = listener;
     }
 
     @NonNull
@@ -70,14 +78,46 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
             } else {
                 holder.mManagerImg.setVisibility(View.GONE);
             }
+            //点击事件
             holder.itemView.setOnClickListener(v -> {
                 //跳转到好友详情界面
                 Intent intent = new Intent(mContext, ChatActivity.class);
                 intent.putExtra("user", user);
                 mContext.startActivity(intent);
             });
+            //长按事件
+            holder.itemView.setOnLongClickListener(v -> {
+                //创建弹出式菜单对象（最低版本11）
+                PopupMenu popup = new PopupMenu(mContext, holder.itemView);//第二个参数是绑定的那个view
+                //获取菜单填充器
+                MenuInflater inflater = popup.getMenuInflater();
+                //填充菜单
+                inflater.inflate(R.menu.menu_message, popup.getMenu());
+                //绑定菜单项的点击事件
+                popup.setOnMenuItemClickListener(item -> {
+                    switch (item.getItemId()) {
+                        case R.id.item_read:
+                            if (mListener != null) {
+                                mListener.onRead(user.getUserName());
+                            }
+                            break;
+
+                        case R.id.item_delete:
+                            if (mListener != null) {
+                                mListener.onDelete(user.getUserName());
+                            }
+                            break;
+
+                        default:
+                            break;
+                    }
+                    return false;
+                });
+                popup.show(); //这一行代码不要忘记了
+                return true;
+            });
             EMConversation conversation = EMClient.getInstance().chatManager().getConversation(user.getUserName());
-            int num = conversation.getUnreadMsgCount();
+            int num = conversation == null ? 0 : conversation.getUnreadMsgCount();
             if (num <= 0) {
                 holder.mNumText.setVisibility(View.GONE);
             } else if (num < 99) {

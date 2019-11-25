@@ -37,7 +37,7 @@ import java.util.Map;
  * create an instance of this fragment.
  */
 public class MessageFragment extends BaseFragment<MessagePresenter, MessageContract.View>
-        implements MessageContract.View , View.OnClickListener {
+        implements MessageContract.View, View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -121,34 +121,54 @@ public class MessageFragment extends BaseFragment<MessagePresenter, MessageContr
         mReadText.setOnClickListener(this);
         mDeleteText.setOnClickListener(this);
 
+        mMessageAdapter.setListener(new OnChangeListener() {
+            @Override
+            public void onRead(String userName) {
+                EMConversation conversation = EMClient.getInstance().chatManager().getConversation(userName);
+                conversation.markAllMessagesAsRead();
+                updateUI();
+            }
+
+            @Override
+            public void onDelete(String userName) {
+                EMConversation conversation = EMClient.getInstance().chatManager().getConversation(userName);
+                conversation.markAllMessagesAsRead();
+                mPresenter.deleteMessage(userName);
+                updateUI();
+            }
+        });
+
         Map<String, EMConversation> conversations = EMClient.getInstance().chatManager().getAllConversations();
         List<EMMessage> emMessages = new ArrayList<>();
-        for (String username : conversations.keySet()){
+        for (String username : conversations.keySet()) {
             EMConversation conversation = conversations.get(username);
-            if (conversation != null){
+            if (conversation != null) {
                 emMessages.add(conversation.getLastMessage());
             }
         }
         mPresenter.updateMessageList(emMessages);
     }
 
-    public void onClick(View view){
-        switch (view.getId()){
+    public void onClick(View view) {
+        switch (view.getId()) {
             case R.id.tv_read:
                 //所有未读消息数清零
                 EMClient.getInstance().chatManager().markAllConversationsAsRead();
-                mPresenter.getMessageList();
-                setRedPoitVisible(Uri.parse("gone"));
+                updateUI();
                 break;
             case R.id.tv_delete:
                 //删除对话列表
                 mPresenter.deleteMessageList(mMessageLists);
                 //所有未读消息数清零
                 EMClient.getInstance().chatManager().markAllConversationsAsRead();
-                mPresenter.getMessageList();
-                setRedPoitVisible(Uri.parse("gone"));
+                updateUI();
                 break;
         }
+    }
+
+    private void updateUI() {
+        mPresenter.getMessageList();
+        setRedPoitVisible(Uri.parse("gone"));
     }
 
     @Override
@@ -276,5 +296,11 @@ public class MessageFragment extends BaseFragment<MessagePresenter, MessageContr
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public interface OnChangeListener {
+        void onRead(String userName);
+
+        void onDelete(String userName);
     }
 }

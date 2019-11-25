@@ -38,6 +38,8 @@
     <string name="message_black_list">黑名单</string>
     <string name="message_nickname">昵称</string>
     <string name="message_content">消息内容</string>
+    <string name="message_item_read">标为已读</string>
+    <string name="message_item_delete">删除</string>
 
     <string name="friends_list_title">好友列表</string>
     <string name="friends_no_friends">还没有好友，快去添加好友吧！</string>

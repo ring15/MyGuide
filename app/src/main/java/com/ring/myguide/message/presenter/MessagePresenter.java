@@ -95,4 +95,19 @@ public class MessagePresenter extends MessageContract.Presenter {
         }
         mModel.putMessageList(new LinkedList<>());
     }
+
+    @Override
+    public void deleteMessage(String username) {
+        EMClient.getInstance().chatManager().deleteConversation(username, false);
+        LinkedList<MessageList> messageLists = mModel.getMessageList();
+        if (messageLists != null) {
+            LinkedList<MessageList> newMessageLists = new LinkedList<>(messageLists);
+            for (MessageList list : newMessageLists) {
+                if (list.getUser().getUserName().equals(username)) {
+                    messageLists.remove(list);
+                }
+            }
+            mModel.putMessageList(messageLists);
+        }
+    }
 }
