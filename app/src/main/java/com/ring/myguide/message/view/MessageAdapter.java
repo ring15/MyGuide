@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMConversation;
 import com.ring.myguide.R;
 import com.ring.myguide.chat.view.ChatActivity;
 import com.ring.myguide.entity.MessageList;
@@ -75,7 +76,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
                 intent.putExtra("user", user);
                 mContext.startActivity(intent);
             });
-            int num = EMClient.getInstance().chatManager().getUnreadMessageCount();
+            EMConversation conversation = EMClient.getInstance().chatManager().getConversation(user.getUserName());
+            int num = conversation.getUnreadMsgCount();
             if (num <= 0) {
                 holder.mNumText.setVisibility(View.GONE);
             } else if (num < 99) {

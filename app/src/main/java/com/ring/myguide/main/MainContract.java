@@ -21,9 +21,15 @@ public interface MainContract {
         void setMessage();
 
         void setMe();
+
+        void noUnreadMessage();
+
+        void hasUnreadMessage();
     }
 
     abstract class Presenter extends BasePresenter<View> {
         public abstract void setCurrentItem(int currentItem);
+
+        public abstract void init(int unreadCount);
     }
 }

@@ -2,6 +2,8 @@ package com.ring.myguide.main.view;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Message;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -92,6 +94,15 @@ public class MainActivity extends BaseActivity<MainPresenter, MainContract.View>
     //标题名
     private int[] mTitleTexts = {R.string.home, R.string.message, R.string.me};
 
+    //刷新主线程
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            mRedPoint.setVisibility(View.VISIBLE);
+        }
+    };
+
     @Override
     protected int getIdResource() {
         return R.layout.activity_main;
@@ -150,13 +161,20 @@ public class MainActivity extends BaseActivity<MainPresenter, MainContract.View>
         mViewPager.setAdapter(new MyFragmentPagerAdapter(mFManager, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, mFragments));
         mViewPager.setOffscreenPageLimit(TAB_COUNTS);
         mViewPager.setCurrentItem(mCurrentItem);
-        mViewPager.addOnPageChangeListener(new MyOnPageChangeListner());
+        mViewPager.addOnPageChangeListener(new MyOnPageChangeListener());
 
         //设置当前选中版块
         mPresenter.setCurrentItem(mCurrentItem);
 
         //注册环信消息监听
         EMClient.getInstance().chatManager().addMessageListener(msgListener);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        int num = EMClient.getInstance().chatManager().getUnreadMessageCount();
+        mPresenter.init(num);
     }
 
     public void onClick(View view) {
@@ -270,6 +288,16 @@ public class MainActivity extends BaseActivity<MainPresenter, MainContract.View>
     }
 
     @Override
+    public void noUnreadMessage() {
+        mRedPoint.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void hasUnreadMessage() {
+        mRedPoint.setVisibility(View.VISIBLE);
+    }
+
+    @Override
     public void showToast(int resId) {
         Toast.makeText(this, resId, Toast.LENGTH_SHORT).show();
     }
@@ -301,7 +329,7 @@ public class MainActivity extends BaseActivity<MainPresenter, MainContract.View>
         public void onMessageReceived(List<EMMessage> messages) {
             //收到消息
             ((MessageFragment) mFragments[1]).onMessageReceived(messages);
-//            mRedPoint.setVisibility(View.VISIBLE);
+            mHandler.sendEmptyMessage(0x01);
         }
 
         @Override
@@ -338,7 +366,7 @@ public class MainActivity extends BaseActivity<MainPresenter, MainContract.View>
     /**
      * ViewPager滑动监听事件
      */
-    private class MyOnPageChangeListner implements ViewPager.OnPageChangeListener {
+    private class MyOnPageChangeListener implements ViewPager.OnPageChangeListener {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
