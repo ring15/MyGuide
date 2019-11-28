@@ -7,6 +7,8 @@ import java.io.Serializable;
  */
 public class MessageList implements Serializable {
 
+    private static final long serialVersionUID = 4648549783386131716L;
+
     private User mUser;
 
     private String content;

@@ -9,6 +9,8 @@ import java.io.Serializable;
  */
 public class User implements Serializable {
 
+    private static final long serialVersionUID = -6182762570138213816L;
+
     //用户UID
     @JSONField(name = "uuid")
     private String uid;
