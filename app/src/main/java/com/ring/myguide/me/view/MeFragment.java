@@ -14,10 +14,12 @@ import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.ring.myguide.R;
 import com.ring.myguide.base.BaseFragment;
+import com.ring.myguide.center.view.CenterActivity;
 import com.ring.myguide.entity.User;
 import com.ring.myguide.login.view.LoginActivity;
 import com.ring.myguide.me.MeContract;
@@ -35,7 +37,7 @@ import static com.ring.myguide.login.view.LoginActivity.FROM_MEFRAGMENT;
  * create an instance of this fragment.
  */
 public class MeFragment extends BaseFragment<MePresenter, MeContract.View>
-        implements MeContract.View , View.OnClickListener {
+        implements MeContract.View, View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -159,8 +161,8 @@ public class MeFragment extends BaseFragment<MePresenter, MeContract.View>
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.layout_user_info:
-                if (isLogin){
-
+                if (isLogin) {
+                    startActivity(new Intent(getActivity(), CenterActivity.class));
                 } else {
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                     intent.putExtra("from", FROM_MEFRAGMENT);
@@ -216,12 +218,7 @@ public class MeFragment extends BaseFragment<MePresenter, MeContract.View>
     @Override
     public void setUser(User user) {
         isLogin = true;
-        Glide.with(this)
-                .load(user.getUserImg())
-                .error(R.drawable.icon_avatar_default)
-                .placeholder(R.drawable.icon_avatar_default)
-                .apply(RequestOptions.bitmapTransform(new CircleCrop()))
-                .into(mUserAvatar);
+        mPresenter.getImg(user.getUserImg(), getActivity().getCacheDir().getPath(), user.getUserName() + ".jpg");
         mNickName.setText(user.getNickname());
         mUserName.setText(user.getUserName());
         mIntroduceLayout.setVisibility(View.VISIBLE);
@@ -250,6 +247,23 @@ public class MeFragment extends BaseFragment<MePresenter, MeContract.View>
         mIntroduceLayout.setVisibility(View.GONE);
         mManagerImg.setVisibility(View.GONE);
         mRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void getImgSuccess(String path) {
+        Glide.with(this)
+                .load(path)
+                .error(R.drawable.icon_avatar_default)
+                .placeholder(R.drawable.icon_avatar_default)
+                .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                .skipMemoryCache(true) // 不使用内存缓存
+                .diskCacheStrategy(DiskCacheStrategy.NONE) // 不使用磁盘缓存
+                .into(mUserAvatar);
+    }
+
+    @Override
+    public void getImgFailed() {
+
     }
 
     /**

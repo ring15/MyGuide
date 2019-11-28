@@ -81,6 +81,30 @@
     <string name="me_like_list_title">我的点赞</string>
     <string name="me_setting_title">设置</string>
 
+    <string name="center_title">个人资料</string>
+    <string name="center_save">保存</string>
+    <string name="center_avatar_title">头像</string>
+    <string name="center_nickname_title">昵称</string>
+    <string name="center_nickname">我是昵称</string>
+    <string name="center_birthday_title">生日</string>
+    <string name="center_birthday">%1d-%2d-%3d</string>
+    <string name="center_sex_title">性别</string>
+    <string name="center_sex_man">男</string>
+    <string name="center_sex_woman">女</string>
+    <string name="center_sex_unknown">未知</string>
+    <string name="center_introduce_title">个人介绍</string>
+    <string name="center_introduce">您很懒什么也没留下</string>
+    <string name="center_notice">点击保存按钮才可提交修改~</string>
+    <string name="center_change_nickname">修改昵称</string>
+    <string name="center_change_introduction">修改个人介绍</string>
+    <string name="center_not_login">您尚未登录</string>
+    <string name="center_error">请退出重试</string>
+    <string name="center_success">修改成功</string>
+
+    <string name="dialog_title">标题</string>
+    <string name="dialog_sure">确定</string>
+    <string name="dialog_cancel">取消</string>
+
     <string name="setting_title">设置</string>
     <string name="setting_clean_cache">清除缓存</string>
     <string name="setting_clean_cache_message">是否清除缓存？</string>

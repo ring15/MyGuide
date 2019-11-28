@@ -28,5 +28,11 @@ public class Constants {
     public static final String QUERY_USER = "query_user";
     //获取用户接口
     public static final String GET_USER = "get_user";
+    //更新用户信息接口
+    public static final String UPDATE_USER = "update_user";
+    //更新头像
+    public static final String UPDATE_AVATAR = "update_avatar";
+    //获取图片
+    public static final String GET_IMG= "get_img";
 
 }

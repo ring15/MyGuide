@@ -45,11 +45,10 @@
             android:layout_height="match_parent"
             android:layout_gravity="right"
             android:layout_marginEnd="15dp"
+            android:gravity="center_vertical"
             android:onClick="onClick"
             android:paddingStart="5dp"
-            android:paddingTop="10dp"
             android:paddingEnd="5dp"
-            android:paddingBottom="10dp"
             android:text="@string/login_skip"
             android:textColor="@color/white"
             android:textSize="12sp" />

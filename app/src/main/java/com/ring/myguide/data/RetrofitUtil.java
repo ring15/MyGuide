@@ -16,7 +16,9 @@ public class RetrofitUtil {
     private Retrofit mRetrofit;
 
     private RetrofitUtil() {
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder()
+                .addNetworkInterceptor(new NetInterceptor())
+                .retryOnConnectionFailure(true);
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(Constants.mHost)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create());
@@ -25,6 +27,7 @@ public class RetrofitUtil {
 
     /**
      * 获取RetrofitUtil单一实例
+     *
      * @return
      */
     public static RetrofitUtil getInstance() {

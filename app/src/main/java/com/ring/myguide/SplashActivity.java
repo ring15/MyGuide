@@ -1,17 +1,24 @@
 package com.ring.myguide;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.hyphenate.chat.EMClient;
 import com.ring.myguide.entity.User;
 import com.ring.myguide.login.view.LoginActivity;
 import com.ring.myguide.main.view.MainActivity;
 import com.ring.myguide.utils.CacheUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.ring.myguide.login.view.LoginActivity.FROM_SPLASH;
 
@@ -20,11 +27,28 @@ public class SplashActivity extends AppCompatActivity {
     private Handler mHandler;
     private Runnable mRunnable;
 
+    private String[] permissions = {Manifest.permission.READ_PHONE_STATE
+            , Manifest.permission.WRITE_EXTERNAL_STORAGE
+            , Manifest.permission.CAMERA};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         init();
+        requestPermission();
+    }
+
+    private void requestPermission() {
+        List<String> permissionList = new ArrayList<>();
+        for (String permission : permissions) {
+            if (ContextCompat.checkSelfPermission(SplashActivity.this, permission) != PackageManager.PERMISSION_GRANTED) {
+                permissionList.add(permission);
+            }
+        }
+        if (permissionList.size() != 0) {
+            ActivityCompat.requestPermissions(this, permissionList.toArray(new String[0]), 1001);
+        }
     }
 
     private void init() {
