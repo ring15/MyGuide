@@ -77,11 +77,11 @@ public class SplashActivity extends AppCompatActivity {
      * 判断跳转主界面或者跳转登录界面
      */
     private void enter() {
-        if (EMClient.getInstance().isLoggedInBefore()) {
+        User user = CacheUtils.getUser();
+        if (user != null && user.getUserName() != null && EMClient.getInstance().isLoggedInBefore()) {
             startActivity(new Intent(SplashActivity.this, MainActivity.class));
             finish();
         } else {
-            User user = CacheUtils.getUser();
             if (user != null && user.getBadge() == 1) {
                 startActivity(new Intent(SplashActivity.this, MainActivity.class));
                 finish();
