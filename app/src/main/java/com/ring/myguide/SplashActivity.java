@@ -6,12 +6,15 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.hyphenate.chat.EMClient;
+import com.ring.myguide.center.view.CenterActivity;
 import com.ring.myguide.entity.User;
 import com.ring.myguide.login.view.LoginActivity;
 import com.ring.myguide.main.view.MainActivity;
@@ -24,6 +27,8 @@ import static com.ring.myguide.login.view.LoginActivity.FROM_SPLASH;
 
 public class SplashActivity extends AppCompatActivity {
 
+    private static final int REQUEST_CODE = 0x01;
+
     private Handler mHandler;
     private Runnable mRunnable;
 
@@ -35,7 +40,6 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        init();
         requestPermission();
     }
 
@@ -47,7 +51,9 @@ public class SplashActivity extends AppCompatActivity {
             }
         }
         if (permissionList.size() != 0) {
-            ActivityCompat.requestPermissions(this, permissionList.toArray(new String[0]), 1001);
+            ActivityCompat.requestPermissions(this, permissionList.toArray(new String[0]), REQUEST_CODE);
+        } else {
+            init();
         }
     }
 
@@ -91,6 +97,20 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case REQUEST_CODE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    init();
+                } else {
+                    Toast.makeText(SplashActivity.this, "可在设置中开启权限", Toast.LENGTH_SHORT).show();
+                    init();
+                }
         }
     }
 }
