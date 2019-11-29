@@ -28,8 +28,12 @@ public class UserDetailActivity extends BaseActivity<UserDetailPresenter, UserDe
     private TextView mNickName;
     //管理员图标
     private ImageView mManagerImg;
+    //性别
+    private ImageView mSexImg;
     //用户id
     private TextView mUserName;
+    //出生日期
+    private TextView mBirthdayText;
     //个人简介layout
     private LinearLayout mIntroduceLayout;
     //个人简介内容
@@ -63,7 +67,9 @@ public class UserDetailActivity extends BaseActivity<UserDetailPresenter, UserDe
         mUserAvatar = findViewById(R.id.img_user_avatar);
         mNickName = findViewById(R.id.tv_nickname);
         mManagerImg = findViewById(R.id.img_manager);
+        mSexImg = findViewById(R.id.img_sex);
         mUserName = findViewById(R.id.tv_username);
+        mBirthdayText = findViewById(R.id.tv_birthday);
         mIntroduceLayout = findViewById(R.id.layout_introduce);
         mIntroduceText = findViewById(R.id.tv_introduce);
         mAddFriendBtn = findViewById(R.id.btn_add_friend);
@@ -99,6 +105,21 @@ public class UserDetailActivity extends BaseActivity<UserDetailPresenter, UserDe
                 mManagerImg.setVisibility(View.VISIBLE);
             } else {
                 mManagerImg.setVisibility(View.GONE);
+            }
+            if (mUser.getSex() == 1){
+                mSexImg.setVisibility(View.VISIBLE);
+                mSexImg.setImageResource(R.drawable.icon_man);
+            } else if (mUser.getSex() == 2){
+                mSexImg.setVisibility(View.VISIBLE);
+                mSexImg.setImageResource(R.drawable.icon_woman);
+            } else {
+                mSexImg.setVisibility(View.GONE);
+            }
+            if (mUser.getBirthday() != null){
+                mBirthdayText.setVisibility(View.VISIBLE);
+                mBirthdayText.setText(mUser.getBirthday());
+            } else {
+                mBirthdayText.setVisibility(View.GONE);
             }
         }
     }
