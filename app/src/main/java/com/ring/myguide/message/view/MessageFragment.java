@@ -146,7 +146,7 @@ public class MessageFragment extends BaseFragment<MessagePresenter, MessageContr
                 emMessages.add(conversation.getLastMessage());
             }
         }
-        mPresenter.updateMessageList(emMessages);
+        mPresenter.updateMessageList(emMessages, getActivity().getCacheDir().getPath());
     }
 
     public void onClick(View view) {
@@ -216,7 +216,7 @@ public class MessageFragment extends BaseFragment<MessagePresenter, MessageContr
 
     public void onMessageReceived(List<EMMessage> messages) {
         //收到消息
-        mPresenter.updateMessageList(messages);
+        mPresenter.updateMessageList(messages, getActivity().getCacheDir().getPath());
     }
 
     public void onCmdMessageReceived(List<EMMessage> messages) {

@@ -24,7 +24,7 @@ public interface FriendsContract {
     }
 
     abstract class Presenter extends BasePresenter<View> {
-        public abstract void getFriends();
+        public abstract void getFriends(String savePath);
     }
 
 }

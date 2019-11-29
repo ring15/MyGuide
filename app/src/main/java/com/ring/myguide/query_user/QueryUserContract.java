@@ -32,7 +32,7 @@ public interface QueryUserContract {
     }
 
     abstract class Presenter extends BasePresenter<View> {
-        public abstract void getUser(String username);
+        public abstract void getUser(String username, String savePath);
 
         public abstract void getUserName();
 

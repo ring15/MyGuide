@@ -218,7 +218,18 @@ public class MeFragment extends BaseFragment<MePresenter, MeContract.View>
     @Override
     public void setUser(User user) {
         isLogin = true;
-        mPresenter.getImg(user.getUserImg(), getActivity().getCacheDir().getPath(), user.getUserName() + ".jpg");
+        if (user.getUserImgPaht() != null) {
+            Glide.with(this)
+                    .load(user.getUserImgPaht())
+                    .error(R.drawable.icon_avatar_default)
+                    .placeholder(R.drawable.icon_avatar_default)
+                    .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                    .skipMemoryCache(true) // 不使用内存缓存
+                    .diskCacheStrategy(DiskCacheStrategy.NONE) // 不使用磁盘缓存
+                    .into(mUserAvatar);
+        } else if (user.getUserImg() != null) {
+            mPresenter.getImg(user.getUserImg(), getActivity().getCacheDir().getPath(), user.getUserName() + ".jpg");
+        }
         mNickName.setText(user.getNickname());
         mUserName.setText(user.getUserName());
         mIntroduceLayout.setVisibility(View.VISIBLE);

@@ -118,8 +118,6 @@ public class CenterModel implements CenterContract.Model {
                     }
                     return user;
                 })
-                .observeOn(Schedulers.io())
-                .doOnNext(CacheUtils::putUser)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<User>() {
 
@@ -143,5 +141,10 @@ public class CenterModel implements CenterContract.Model {
 
                     }
                 });
+    }
+
+    @Override
+    public void putUser(User user) {
+        CacheUtils.putUser(user);
     }
 }

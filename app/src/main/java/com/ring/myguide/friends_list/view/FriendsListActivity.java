@@ -49,7 +49,7 @@ public class FriendsListActivity extends BaseActivity<FriendsListPresenter, Frie
     @Override
     protected void init() {
         //刷新监听事件
-        mRefreshLayout.setOnRefreshListener(() -> mPresenter.getFriends());
+        mRefreshLayout.setOnRefreshListener(() -> mPresenter.getFriends(getCacheDir().getPath()));
         //初始化adapter
         mAdapter = new FriendsAdapter(this);
         //绑定adapter
@@ -62,7 +62,7 @@ public class FriendsListActivity extends BaseActivity<FriendsListPresenter, Frie
     protected void onResume() {
         super.onResume();
         //获取好友列表
-        mPresenter.getFriends();
+        mPresenter.getFriends(getCacheDir().getPath());
     }
 
     public void onClick(View view) {

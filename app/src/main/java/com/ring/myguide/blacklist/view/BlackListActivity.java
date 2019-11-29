@@ -49,7 +49,7 @@ public class BlackListActivity extends BaseActivity<BlackListPresenter, BlacksCo
     @Override
     protected void init() {
         //刷新监听事件
-        mRefreshLayout.setOnRefreshListener(() -> mPresenter.getBlacks());
+        mRefreshLayout.setOnRefreshListener(() -> mPresenter.getBlacks(getCacheDir().getPath()));
         //初始化adapter
         mAdapter = new BlacksAdapter(this);
         //绑定adapter
@@ -62,7 +62,7 @@ public class BlackListActivity extends BaseActivity<BlackListPresenter, BlacksCo
     protected void onResume() {
         super.onResume();
         //获取好友列表
-        mPresenter.getBlacks();
+        mPresenter.getBlacks(getCacheDir().getPath());
     }
 
     public void onClick(View view) {

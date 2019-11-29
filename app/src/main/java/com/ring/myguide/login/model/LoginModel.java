@@ -46,8 +46,6 @@ public class LoginModel implements LoginContract.Model {
                     }
                     return user;
                 })
-                .observeOn(Schedulers.io())
-                .doOnNext(CacheUtils::putUser)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<User>() {
 
@@ -71,5 +69,10 @@ public class LoginModel implements LoginContract.Model {
 
                     }
                 });
+    }
+
+    @Override
+    public void putUser(User user) {
+        CacheUtils.putUser(user);
     }
 }

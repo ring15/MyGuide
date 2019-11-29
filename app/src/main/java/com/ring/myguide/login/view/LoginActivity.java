@@ -86,7 +86,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter, LoginContract.Vi
                 username = mUserNameEdit.getText().toString().trim();
                 password = mPasswordEdit.getText().toString().trim();
                 //登录
-                mPresenter.doLogin(username, password);
+                mPresenter.doLogin(username, password, getCacheDir().getPath());
                 break;
             case R.id.tv_goto_register:
                 //跳转到注册界面

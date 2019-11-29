@@ -16,6 +16,8 @@ public interface CenterContract {
     interface Model extends BaseModel {
         User getUserFromCache();
 
+        void putUser(User user);
+
         void updateUserAvatar(File file, CallbackListener<String> listener);
 
         void updateUser(User user, CallbackListener<User> listener);
@@ -29,15 +31,11 @@ public interface CenterContract {
         void updateSuccess();
 
         void updateFailed();
-
-        void getImgSuccess(String path);
     }
 
     abstract class Presenter extends BasePresenter<View> {
         public abstract void getUser();
 
-        public abstract void changeInfo(User user, String path);
-
-        public abstract void getImg(String photoPath, String savePath, String photoName);
+        public abstract void changeInfo(User user, String path, String savePath);
     }
 }

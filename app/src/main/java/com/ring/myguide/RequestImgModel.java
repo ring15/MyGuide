@@ -6,11 +6,9 @@ import com.ring.myguide.base.CallbackListener;
 import com.ring.myguide.data.RetrofitService;
 import com.ring.myguide.data.RetrofitUtil;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.LinkedHashMap;
 
 import io.reactivex.Observer;
@@ -31,21 +29,15 @@ public class RequestImgModel {
         params.put("photo_path", photoPath);
         service.getImg(params)
                 .subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.io())
                 .map(responseBody -> {
                     File file = new File(savePath, photoName);
                     try {
-                        InputStream inputStream = responseBody.byteStream();
-                        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                        byte[] buffer = new byte[1024];
-                        int len = 0;
-                        while ((len = inputStream.read(buffer)) != -1) {
-                            bos.write(buffer, 0, len);
-                        }
-                        bos.close();
+                        byte[] bytes = responseBody.bytes();
+                        Log.e(TAG, responseBody.contentLength() + "");
                         FileOutputStream fos = new FileOutputStream(file);
-                        fos.write(bos.toByteArray());
+                        fos.write(bytes);
                         fos.close();
-                        inputStream.close();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

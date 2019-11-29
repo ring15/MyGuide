@@ -13,6 +13,8 @@ public interface LoginContract {
 
     interface Model extends BaseModel {
         void requestLogin(String userName, String password, CallbackListener<User> listener);
+
+        void putUser(User user);
     }
 
     interface View extends BaseView {
@@ -24,7 +26,7 @@ public interface LoginContract {
     }
 
     abstract class Presenter extends BasePresenter<View> {
-        public abstract void doLogin(String userName, String password);
+        public abstract void doLogin(String userName, String password, String savePath);
     }
 
 }

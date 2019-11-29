@@ -41,7 +41,7 @@ public interface MessageContract {
 
         public abstract void getMessageList();
 
-        public abstract void updateMessageList(List<EMMessage> messages);
+        public abstract void updateMessageList(List<EMMessage> messages, String savePath);
 
         public abstract void deleteMessageList(LinkedList<MessageList> messageLists);
 

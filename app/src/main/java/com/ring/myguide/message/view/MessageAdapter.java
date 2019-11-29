@@ -14,6 +14,7 @@ import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.hyphenate.chat.EMClient;
@@ -65,10 +66,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
 
             //设置头像图片
             Glide.with(mContext)
-                    .load(user.getUserImg())
+                    .load(user.getUserImgPaht())
                     .error(R.drawable.icon_avatar_default)
                     .placeholder(R.drawable.icon_avatar_default)
                     .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                    .skipMemoryCache(true) // 不使用内存缓存
+                    .diskCacheStrategy(DiskCacheStrategy.NONE) // 不使用磁盘缓存
                     .into(holder.mUserAvatar);
             //设置昵称
             holder.mNickName.setText(user.getNickname());

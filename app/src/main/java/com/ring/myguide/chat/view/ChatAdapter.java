@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.hyphenate.chat.EMMessage;
@@ -103,9 +104,11 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     holder.tvMailContent.setText(((EMTextMessageBody) mEMMessages.get(i).getBody()).getMessage());
                 }
                 Glide.with(mContext)
-                        .load(mUser.getUserImg())
+                        .load(mUser.getUserImgPaht())
                         .placeholder(R.drawable.icon_avatar_default)
                         .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                        .skipMemoryCache(true) // 不使用内存缓存
+                        .diskCacheStrategy(DiskCacheStrategy.NONE) // 不使用磁盘缓存
                         .into(holder.ivUserAvatar);
                 //点击头像跳转到用户详情界面
                 holder.ivUserAvatar.setOnClickListener(v -> {
@@ -128,9 +131,11 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     holder.tvMailContent.setText(((EMTextMessageBody) mEMMessages.get(i).getBody()).getMessage());
                 }
                 Glide.with(mContext)
-                        .load(mOtherUser.getUserImg())
+                        .load(mOtherUser.getUserImgPaht())
                         .placeholder(R.drawable.icon_avatar_default)
                         .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                        .skipMemoryCache(true) // 不使用内存缓存
+                        .diskCacheStrategy(DiskCacheStrategy.NONE) // 不使用磁盘缓存
                         .into(holder.ivUserAvatar);
                 //点击头像跳转到用户详情界面
                 holder.ivUserAvatar.setOnClickListener(v -> {

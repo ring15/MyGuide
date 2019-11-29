@@ -3,6 +3,7 @@ package com.ring.myguide.message.presenter;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMTextMessageBody;
+import com.ring.myguide.RequestImgModel;
 import com.ring.myguide.base.CallbackListener;
 import com.ring.myguide.entity.MessageList;
 import com.ring.myguide.entity.User;
@@ -18,6 +19,7 @@ import java.util.List;
 public class MessagePresenter extends MessageContract.Presenter {
 
     private MessageContract.Model mModel;
+    private String mSavePath;
 
     public MessagePresenter() {
         mModel = new MessageModel();
@@ -48,34 +50,14 @@ public class MessagePresenter extends MessageContract.Presenter {
     }
 
     @Override
-    public void updateMessageList(List<EMMessage> messages) {
+    public void updateMessageList(List<EMMessage> messages, String savePath) {
+        mSavePath = savePath;
         if (messages != null && messages.size() > 0) {
             EMMessage message = messages.get(messages.size() - 1);
             mModel.queryUser(message.getFrom(), new CallbackListener<User>() {
                 @Override
                 public void onSuccess(User data) {
-                    if (isViewAttached()) {
-                        MessageList messageList = new MessageList();
-                        messageList.setUser(data);
-                        messageList.setContent(((EMTextMessageBody) message.getBody()).getMessage());
-                        messageList.setTime(message.getMsgTime());
-                        LinkedList<MessageList> messageLists = mModel.getMessageList();
-                        if (messageLists == null) {
-                            messageLists = new LinkedList<>();
-                            messageLists.add(messageList);
-                            mModel.putMessageList(messageLists);
-                        } else {
-                            LinkedList<MessageList> newMessageLists = new LinkedList<>(messageLists);
-                            for (MessageList list : newMessageLists) {
-                                if (list.getUser().getUid().equals(messageList.getUser().getUid())) {
-                                    messageLists.remove(list);
-                                }
-                            }
-                            messageLists.add(0, messageList);
-                            mModel.putMessageList(messageLists);
-                        }
-                        getMessageList();
-                    }
+                    requestImg(message, data);
                 }
 
                 @Override
@@ -83,6 +65,51 @@ public class MessagePresenter extends MessageContract.Presenter {
 
                 }
             });
+        }
+    }
+
+    private void requestImg(EMMessage message, User user) {
+        if (user.getUserImg() != null && user.getUserImgPaht() == null) {
+            RequestImgModel model = new RequestImgModel();
+            model.requestImg(user.getUserImg(), mSavePath, user.getUserName() + "_other.jpg", new CallbackListener<String>() {
+                @Override
+                public void onSuccess(String data) {
+                    user.setUserImgPaht(data);
+                    setUser(message, user);
+                }
+
+                @Override
+                public void onError(Throwable throwable) {
+                    setUser(message, user);
+                }
+            });
+        } else {
+            setUser(message, user);
+        }
+    }
+
+    private void setUser(EMMessage message, User user) {
+        if (isViewAttached()) {
+            MessageList messageList = new MessageList();
+            messageList.setUser(user);
+            messageList.setContent(((EMTextMessageBody) message.getBody()).getMessage());
+            messageList.setTime(message.getMsgTime());
+            LinkedList<MessageList> messageLists = mModel.getMessageList();
+            if (messageLists == null) {
+                messageLists = new LinkedList<>();
+                messageLists.add(messageList);
+                mModel.putMessageList(messageLists);
+            } else {
+                LinkedList<MessageList> newMessageLists = new LinkedList<>(messageLists);
+                for (MessageList list : newMessageLists) {
+                    if (list.getUser().getUid().equals(messageList.getUser().getUid())) {
+                        messageLists.remove(list);
+                    }
+                }
+                messageLists.add(0, messageList);
+                mModel.putMessageList(messageLists);
+            }
+            getMessageList();
         }
     }
 

@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.ring.myguide.R;
@@ -79,10 +80,12 @@ public class UserDetailActivity extends BaseActivity<UserDetailPresenter, UserDe
 
         if (mUser != null && mUser.getUid() != null) {
             Glide.with(this)
-                    .load(mUser.getUserImg())
+                    .load(mUser.getUserImgPaht())
                     .error(R.drawable.icon_avatar_default)
                     .placeholder(R.drawable.icon_avatar_default)
                     .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                    .skipMemoryCache(true) // 不使用内存缓存
+                    .diskCacheStrategy(DiskCacheStrategy.NONE) // 不使用磁盘缓存
                     .into(mUserAvatar);
             mNickName.setText(mUser.getNickname());
             mUserName.setText(mUser.getUserName());

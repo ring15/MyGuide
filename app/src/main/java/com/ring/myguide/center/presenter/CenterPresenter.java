@@ -1,6 +1,5 @@
 package com.ring.myguide.center.presenter;
 
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.ring.myguide.R;
@@ -21,6 +20,7 @@ public class CenterPresenter extends CenterContract.Presenter {
 
     private CenterContract.Model mModel;
     private File mFile;
+    private String mSavePath;
 
     public CenterPresenter() {
         mModel = new CenterModel();
@@ -40,20 +40,19 @@ public class CenterPresenter extends CenterContract.Presenter {
     }
 
     @Override
-    public void changeInfo(User user, String path) {
+    public void changeInfo(User user, String path, String savePath) {
         if (user == null || user.getUserName() == null) {
             if (isViewAttached()) {
                 mView.get().showToast(R.string.center_error);
             }
             return;
         }
-
+        mSavePath = savePath;
         CallbackListener<User> listener = new CallbackListener<User>() {
             @Override
             public void onSuccess(User data) {
-                if (isViewAttached()) {
-                    mView.get().updateSuccess();
-                    mView.get().showToast(R.string.center_success);
+                if (data != null) {
+                    getImg(data);
                 }
             }
 
@@ -88,30 +87,36 @@ public class CenterPresenter extends CenterContract.Presenter {
         }
     }
 
-    @Override
-    public void getImg(String photoPath, String savePath, String photoName) {
-        if (TextUtils.isEmpty(photoPath)) {
-            mView.get().updateFailed();
-            return;
-        }
-        RequestImgModel model = new RequestImgModel();
-        model.requestImg(photoPath, savePath, photoName, new CallbackListener<String>() {
-            @Override
-            public void onSuccess(String data) {
-                if (isViewAttached()) {
-                    mView.get().getImgSuccess(data);
+    public void getImg(User user) {
+        if (user.getUserImg() != null && user.getUserImgPaht() == null) {
+            RequestImgModel model = new RequestImgModel();
+            model.requestImg(user.getUserImg(), mSavePath, user.getUserName() + ".jpg", new CallbackListener<String>() {
+                @Override
+                public void onSuccess(String data) {
+                    user.setUserImgPaht(data);
+                    mModel.putUser(user);
+                    if (isViewAttached()) {
+                        mView.get().updateSuccess();
+                        mView.get().showToast(R.string.center_success);
+                    }
                 }
-            }
 
-            @Override
-            public void onError(Throwable throwable) {
-                if (isViewAttached()) {
-                    mView.get().updateFailed();
-                    mView.get().showToast(throwable.getMessage());
-                    Log.e(TAG, throwable.getMessage());
+                @Override
+                public void onError(Throwable throwable) {
+                    mModel.putUser(user);
+                    if (isViewAttached()) {
+                        mView.get().updateSuccess();
+                        mView.get().showToast(R.string.center_success);
+                    }
                 }
+            });
+        } else {
+            mModel.putUser(user);
+            if (isViewAttached()) {
+                mView.get().updateSuccess();
+                mView.get().showToast(R.string.center_success);
             }
-        });
+        }
     }
 
     //判断文件是否存在

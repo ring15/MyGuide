@@ -4,6 +4,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.ring.myguide.R;
+import com.ring.myguide.RequestImgModel;
 import com.ring.myguide.base.CallbackListener;
 import com.ring.myguide.entity.User;
 import com.ring.myguide.query_user.QueryUserContract;
@@ -19,23 +20,24 @@ public class QueryUserPresenter extends QueryUserContract.Presenter {
     private static final String TAG = "QueryUserPresenter";
 
     private QueryUserContract.Model mModel;
+    private String mSavePath;
 
     public QueryUserPresenter() {
         mModel = new QueryUserModel();
     }
 
     @Override
-    public void getUser(String username) {
+    public void getUser(String username, String savePath) {
         if (TextUtils.isEmpty(username)) {
             mView.get().showToast(R.string.query_not_empty);
             return;
         }
+        mSavePath = savePath;
         mModel.requestUser(username, new CallbackListener<User>() {
             @Override
             public void onSuccess(User data) {
-                if (isViewAttached()) {
-                    putIntoCache(data);
-                    mView.get().setUser(data);
+                if (data != null) {
+                    requestImg(data);
                 }
             }
 
@@ -48,6 +50,35 @@ public class QueryUserPresenter extends QueryUserContract.Presenter {
                 }
             }
         });
+    }
+
+    private void requestImg(User user) {
+        if (user.getUserImg() != null && user.getUserImgPaht() == null) {
+            RequestImgModel model = new RequestImgModel();
+            model.requestImg(user.getUserImg(), mSavePath, user.getUserName() + "_other.jpg", new CallbackListener<String>() {
+                @Override
+                public void onSuccess(String data) {
+                    user.setUserImgPaht(data);
+                    if (isViewAttached()) {
+                        putIntoCache(user);
+                        mView.get().setUser(user);
+                    }
+                }
+
+                @Override
+                public void onError(Throwable throwable) {
+                    if (isViewAttached()) {
+                        putIntoCache(user);
+                        mView.get().setUser(user);
+                    }
+                }
+            });
+        } else {
+            if (isViewAttached()) {
+                putIntoCache(user);
+                mView.get().setUser(user);
+            }
+        }
     }
 
     private void putIntoCache(User data) {

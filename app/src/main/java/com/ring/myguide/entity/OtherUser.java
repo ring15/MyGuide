@@ -8,9 +8,7 @@ import java.io.Serializable;
  * Created by ring on 2019/11/21.
  */
 public class OtherUser implements Serializable {
-
-    private static final long serialVersionUID = 5595758706377558001L;
-
+    private static final long serialVersionUID = 4749867187090300974L;
     //用户UID
     @JSONField(name = "uuid")
     private String uid;
@@ -44,6 +42,8 @@ public class OtherUser implements Serializable {
     //是否在黑名单中，1是，0不是
     @JSONField(name = "is_black")
     private int isBlack;
+    //头像保存在本地的位置
+    private String userImgPaht;
 
     public String getUid() {
         return uid;
@@ -89,6 +89,10 @@ public class OtherUser implements Serializable {
         return isBlack;
     }
 
+    public String getUserImgPaht() {
+        return userImgPaht;
+    }
+
     public void setUid(String uid) {
         this.uid = uid;
     }
@@ -131,5 +135,9 @@ public class OtherUser implements Serializable {
 
     public void setIsBlack(int isBlack) {
         this.isBlack = isBlack;
+    }
+
+    public void setUserImgPaht(String userImgPaht) {
+        this.userImgPaht = userImgPaht;
     }
 }

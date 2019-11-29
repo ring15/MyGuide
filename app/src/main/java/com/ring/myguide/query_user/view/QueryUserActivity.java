@@ -66,7 +66,7 @@ public class QueryUserActivity extends BaseActivity<QueryUserPresenter, QueryUse
                 break;
             case R.id.img_search:
                 //开始查询
-                mPresenter.getUser(mSearchEdit.getText().toString().trim());
+                mPresenter.getUser(mSearchEdit.getText().toString().trim(), getCacheDir().getPath());
                 break;
         }
     }
@@ -86,7 +86,7 @@ public class QueryUserActivity extends BaseActivity<QueryUserPresenter, QueryUse
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //点击历史记录开始查询
-                mPresenter.getUser(userName.get(position));
+                mPresenter.getUser(userName.get(position), getCacheDir().getPath());
             }
         });
     }

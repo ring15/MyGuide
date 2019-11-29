@@ -24,7 +24,7 @@ public interface BlacksContract {
     }
 
     abstract class Presenter extends BasePresenter<View> {
-        public abstract void getBlacks();
+        public abstract void getBlacks(String savePath);
     }
 
 }

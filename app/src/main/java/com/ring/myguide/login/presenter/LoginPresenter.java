@@ -4,6 +4,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.ring.myguide.R;
+import com.ring.myguide.RequestImgModel;
 import com.ring.myguide.base.CallbackListener;
 import com.ring.myguide.entity.User;
 import com.ring.myguide.login.LoginContract;
@@ -17,13 +18,14 @@ public class LoginPresenter extends LoginContract.Presenter {
     private static final String TAG = "LoginPresenter";
 
     private LoginContract.Model mModel;
+    private String mSavePath;
 
     public LoginPresenter() {
         mModel = new LoginModel();
     }
 
     @Override
-    public void doLogin(String userName, String password) {
+    public void doLogin(String userName, String password, String savePath) {
         if (TextUtils.isEmpty(userName)) {
             if (isViewAttached()) {
                 mView.get().showToast(R.string.login_username_not_null);
@@ -36,18 +38,12 @@ public class LoginPresenter extends LoginContract.Presenter {
             }
             return;
         }
+        mSavePath = savePath;
         mModel.requestLogin(userName, password, new CallbackListener<User>() {
             @Override
             public void onSuccess(User data) {
-                if (isViewAttached()) {
-                    if (data != null) {
-                        mView.get().loginSuccess(data);
-                        if (data.getBadge() == 1) {
-                            mView.get().showToast(R.string.login_manager);
-                        } else {
-                            mView.get().loginChat();
-                        }
-                    }
+                if (data != null) {
+                    requestImg(data);
                 }
             }
 
@@ -60,5 +56,49 @@ public class LoginPresenter extends LoginContract.Presenter {
                 }
             }
         });
+    }
+
+    private void requestImg(User user) {
+        if (user.getUserImg() != null && user.getUserImgPaht() == null) {
+            RequestImgModel model = new RequestImgModel();
+            model.requestImg(user.getUserImg(), mSavePath, user.getUserName() + ".jpg", new CallbackListener<String>() {
+                @Override
+                public void onSuccess(String data) {
+                    user.setUserImgPaht(data);
+                    mModel.putUser(user);
+                    if (isViewAttached()) {
+                        mView.get().loginSuccess(user);
+                        if (user.getBadge() == 1) {
+                            mView.get().showToast(R.string.login_manager);
+                        } else {
+                            mView.get().loginChat();
+                        }
+                    }
+                }
+
+                @Override
+                public void onError(Throwable throwable) {
+                    mModel.putUser(user);
+                    if (isViewAttached()) {
+                        mView.get().loginSuccess(user);
+                        if (user.getBadge() == 1) {
+                            mView.get().showToast(R.string.login_manager);
+                        } else {
+                            mView.get().loginChat();
+                        }
+                    }
+                }
+            });
+        } else {
+            mModel.putUser(user);
+            if (isViewAttached()) {
+                mView.get().loginSuccess(user);
+                if (user.getBadge() == 1) {
+                    mView.get().showToast(R.string.login_manager);
+                } else {
+                    mView.get().loginChat();
+                }
+            }
+        }
     }
 }

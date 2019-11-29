@@ -129,9 +129,9 @@ public class CenterActivity extends BaseActivity<CenterPresenter, CenterContract
 
     private void doUpdateInfo() {
         if (mSelectedImgList != null && mSelectedImgList.size() == 1) {
-            mPresenter.changeInfo(mUser, mSelectedImgList.get(0));
+            mPresenter.changeInfo(mUser, mSelectedImgList.get(0), getCacheDir().getPath());
         } else {
-            mPresenter.changeInfo(mUser, null);
+            mPresenter.changeInfo(mUser, null, getCacheDir().getPath());
         }
     }
 
@@ -250,7 +250,14 @@ public class CenterActivity extends BaseActivity<CenterPresenter, CenterContract
     public void setUser(User user) {
         mUser = user;
         //加载头像
-        mPresenter.getImg(user.getUserImg(), getCacheDir().getPath(), user.getUserName() + ".jpg");
+        Glide.with(this)
+                .load(user.getUserImgPaht())
+                .error(R.drawable.icon_avatar_default)
+                .placeholder(R.drawable.icon_avatar_default)
+                .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                .skipMemoryCache(true) // 不使用内存缓存
+                .diskCacheStrategy(DiskCacheStrategy.NONE) // 不使用磁盘缓存
+                .into(mAvatarImg);
         //昵称
         mNickNmeText.setText(user.getNickname());
         //个人介绍
@@ -298,18 +305,6 @@ public class CenterActivity extends BaseActivity<CenterPresenter, CenterContract
     @Override
     public void updateFailed() {
 
-    }
-
-    @Override
-    public void getImgSuccess(String path) {
-        Glide.with(this)
-                .load(path)
-                .error(R.drawable.icon_avatar_default)
-                .placeholder(R.drawable.icon_avatar_default)
-                .apply(RequestOptions.bitmapTransform(new CircleCrop()))
-                .skipMemoryCache(true) // 不使用内存缓存
-                .diskCacheStrategy(DiskCacheStrategy.NONE) // 不使用磁盘缓存
-                .into(mAvatarImg);
     }
 
     @Override

@@ -8,9 +8,7 @@ import java.io.Serializable;
  * Created by ring on 2019/11/18.
  */
 public class User implements Serializable {
-
-    private static final long serialVersionUID = -6182762570138213816L;
-
+    private static final long serialVersionUID = -8847838413224082308L;
     //用户UID
     @JSONField(name = "uuid")
     private String uid;
@@ -38,6 +36,8 @@ public class User implements Serializable {
     //用户注册时间
     @JSONField(name = "register_time")
     private String registerTime;
+    //头像保存在本地的位置
+    private String userImgPaht;
 
     public String getUid() {
         return uid;
@@ -69,6 +69,10 @@ public class User implements Serializable {
 
     public String getIntroduce() {
         return introduce;
+    }
+
+    public String getUserImgPaht() {
+        return userImgPaht;
     }
 
     public String getRegisterTime() {
@@ -109,5 +113,9 @@ public class User implements Serializable {
 
     public void setRegisterTime(String registerTime) {
         this.registerTime = registerTime;
+    }
+
+    public void setUserImgPaht(String userImgPaht) {
+        this.userImgPaht = userImgPaht;
     }
 }
