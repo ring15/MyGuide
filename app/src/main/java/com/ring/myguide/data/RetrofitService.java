@@ -2,6 +2,7 @@ package com.ring.myguide.data;
 
 import com.ring.myguide.config.Constants;
 
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -153,5 +154,31 @@ public interface RetrofitService {
     @Streaming
     @GET(Constants.GET_IMG)
     Observable<ResponseBody> getImg(@QueryMap Map<String, String> map);
+
+
+    /**
+     * 发帖
+     *
+     * @param map query数据
+     * @return okhttp返回结果
+     */
+    @Streaming
+    @GET(Constants.ADD_POST)
+    Observable<ResponseBody> addPost(@QueryMap Map<String, String> map);
+
+
+    /**
+     * 上传图片
+     *
+     * @param map         query数据
+     * @param description 描述信息
+     * @param files        上传的图片
+     * @return okhttp返回结果
+     */
+    @Multipart
+    @POST(Constants.UPLOAD_PHOTO)
+    Observable<ResponseBody> updatePhoto(@PartMap Map<String, RequestBody> map,
+                                          @Part("description") RequestBody description,
+                                          @Part List<MultipartBody.Part> files);
 
 }

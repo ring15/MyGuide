@@ -17,7 +17,8 @@ public class CacheUtils {
     private final static String TAG = "CacheUtils";
 
     private final static String CACHE_USER = "user";                //最近登录user
-    private final static String QUERY_USER = "query_user";                //最近登录user
+    private final static String QUERY_USER = "query_user";                //用户查询信息
+    private final static String LOCATION = "location";                //用户位置信息
 
     private static ACache mAppCache;
 
@@ -122,5 +123,33 @@ public class CacheUtils {
             Log.e(TAG, "getMessageLists解析失败");
         }
         return messageLists;
+    }
+
+    /**
+     * 缓存位置信息
+     *
+     * @param city
+     */
+    public static void putLocation(String city) {
+        if (mAppCache != null) {
+            mAppCache.put(LOCATION, city);
+        } else {
+            Log.e(TAG, "Cache is null");
+        }
+    }
+
+    /**
+     * 获取位置信息
+     *
+     * @return
+     */
+    public static String getLocation() {
+        String city = null;
+        if (mAppCache != null) {
+            city = mAppCache.getAsString(LOCATION);
+        } else {
+            Log.e(TAG, "Cache is null");
+        }
+        return city;
     }
 }

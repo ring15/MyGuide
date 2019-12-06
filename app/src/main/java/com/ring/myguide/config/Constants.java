@@ -34,5 +34,9 @@ public class Constants {
     public static final String UPDATE_AVATAR = "update_avatar";
     //获取图片
     public static final String GET_IMG= "get_img";
+    //发帖
+    public static final String ADD_POST= "add_post";
+    //上传图片
+    public static final String UPLOAD_PHOTO= "upload_photo";
 
 }

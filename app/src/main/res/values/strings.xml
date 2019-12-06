@@ -28,6 +28,20 @@
     <string name="skip_splash">跳过</string>
 
     <string name="location">天津市</string>
+    <string name="send_post_title">发帖</string>
+    <string name="send_post_send">上传</string>
+    <string name="send_post_post_title">标题</string>
+    <string name="send_post_post_title_hint">请输入标题，标题不能为空</string>
+    <string name="send_post_post_content">内容</string>
+    <string name="send_post_post_content_hint">输入内容，内容不能超过300字</string>
+    <string name="send_post_post_content_num">%d/300</string>
+    <string name="send_post_is_boutique">精品</string>
+    <string name="send_post_city">天津</string>
+    <string name="send_post_food">美食</string>
+    <string name="send_post_place">景点</string>
+    <string name="send_post_user">用户</string>
+    <string name="send_post_item_delete">删除</string>
+    <string name="send_post_item_cancel">取消</string>
 
     <string name="message_not_login">您还没有登录，登录后可接受消息</string>
     <string name="message_already_read">标为已读</string>

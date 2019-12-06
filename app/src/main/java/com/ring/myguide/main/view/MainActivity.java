@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -27,6 +28,8 @@ import com.ring.myguide.R;
 import com.ring.myguide.base.BaseActivity;
 import com.ring.myguide.base.MyFragmentPagerAdapter;
 import com.ring.myguide.blacklist.view.BlackListActivity;
+import com.ring.myguide.city_picker.CityPickerActivity;
+import com.ring.myguide.entity.City;
 import com.ring.myguide.friends_list.view.FriendsListActivity;
 import com.ring.myguide.home.HomeFragment;
 import com.ring.myguide.main.MainContract;
@@ -34,12 +37,16 @@ import com.ring.myguide.main.presenter.MainPresenter;
 import com.ring.myguide.me.view.MeFragment;
 import com.ring.myguide.message.view.MessageFragment;
 import com.ring.myguide.query_user.view.QueryUserActivity;
+import com.ring.myguide.send_post.view.SendPostActivity;
 
 import java.util.List;
 
 public class MainActivity extends BaseActivity<MainPresenter, MainContract.View> implements MainContract.View,
         HomeFragment.OnFragmentInteractionListener, MessageFragment.OnFragmentInteractionListener,
         MeFragment.OnFragmentInteractionListener, PopupMenu.OnMenuItemClickListener {
+
+    //跳转到选择城市界面的请求码
+    public static final int REQUEST_CHOOSE_CITY_CODE = 0x01;
 
     //版块的数量
     public static final int TAB_COUNTS = 3;
@@ -175,6 +182,7 @@ public class MainActivity extends BaseActivity<MainPresenter, MainContract.View>
         super.onResume();
         int num = EMClient.getInstance().chatManager().getUnreadMessageCount();
         mPresenter.init(num);
+        mPresenter.getCity();
     }
 
     public void onClick(View view) {
@@ -204,6 +212,12 @@ public class MainActivity extends BaseActivity<MainPresenter, MainContract.View>
                 //绑定菜单项的点击事件
                 popup.setOnMenuItemClickListener(this);
                 popup.show(); //这一行代码不要忘记了
+                break;
+            case R.id.btn_add:
+                startActivity(new Intent(MainActivity.this, SendPostActivity.class));
+                break;
+            case R.id.layout_local:
+                startActivityForResult(new Intent(MainActivity.this, CityPickerActivity.class), REQUEST_CHOOSE_CITY_CODE);
                 break;
         }
     }
@@ -298,6 +312,11 @@ public class MainActivity extends BaseActivity<MainPresenter, MainContract.View>
     }
 
     @Override
+    public void showCity(String city) {
+        mLocalText.setText(city);
+    }
+
+    @Override
     public void showToast(int resId) {
         Toast.makeText(this, resId, Toast.LENGTH_SHORT).show();
     }
@@ -320,9 +339,9 @@ public class MainActivity extends BaseActivity<MainPresenter, MainContract.View>
         } else if ("true".equals(text)) {
             mMenuImg.setClickable(true);
         }
-        if ("visible".equals(text)){
+        if ("visible".equals(text)) {
             mRedPoint.setVisibility(View.VISIBLE);
-        } else if ("gone".equals(text)){
+        } else if ("gone".equals(text)) {
             mRedPoint.setVisibility(View.GONE);
         }
     }
@@ -387,6 +406,28 @@ public class MainActivity extends BaseActivity<MainPresenter, MainContract.View>
         @Override
         public void onPageScrollStateChanged(int state) {
 
+        }
+    }
+
+    /**
+     * 跳转界面回来的回调
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQUEST_CHOOSE_CITY_CODE) {
+                //跳转到注册界面，注册成功后，将注册的用户名及密码填到输入框中
+                City city = (City) data.getSerializableExtra("city");
+                if (city != null) {
+                    mPresenter.setCity(city.getName());
+                    mLocalText.setText(city.getName());
+                }
+            }
         }
     }
 
