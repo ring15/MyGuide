@@ -9,6 +9,7 @@ import com.ring.myguide.base.CallbackListener;
 import com.ring.myguide.entity.User;
 import com.ring.myguide.login.LoginContract;
 import com.ring.myguide.login.model.LoginModel;
+import com.ring.myguide.utils.FileUtils;
 
 /**
  * Created by ring on 2019/11/19.
@@ -59,36 +60,48 @@ public class LoginPresenter extends LoginContract.Presenter {
     }
 
     private void requestImg(User user) {
-        if (user.getUserImg() != null && user.getUserImgPaht() == null) {
-            RequestImgModel model = new RequestImgModel();
-            model.requestImg(user.getUserImg(), mSavePath, user.getUserName() + ".jpg", new CallbackListener<String>() {
-                @Override
-                public void onSuccess(String data) {
-                    user.setUserImgPaht(data);
-                    mModel.putUser(user);
-                    if (isViewAttached()) {
-                        mView.get().loginSuccess(user);
-                        if (user.getBadge() == 1) {
-                            mView.get().showToast(R.string.login_manager);
-                        } else {
-                            mView.get().loginChat();
+        if (user.getUserImg() != null) {
+            if (user.getUserImgPaht() == null || !FileUtils.fileIsExists(user.getUserImgPaht())) {
+                RequestImgModel model = new RequestImgModel();
+                model.requestImg(user.getUserImg(), mSavePath, user.getUserName() + ".jpg", new CallbackListener<String>() {
+                    @Override
+                    public void onSuccess(String data) {
+                        user.setUserImgPaht(data);
+                        mModel.putUser(user);
+                        if (isViewAttached()) {
+                            mView.get().loginSuccess(user);
+                            if (user.getBadge() == 1) {
+                                mView.get().showToast(R.string.login_manager);
+                            } else {
+                                mView.get().loginChat();
+                            }
                         }
                     }
-                }
 
-                @Override
-                public void onError(Throwable throwable) {
-                    mModel.putUser(user);
-                    if (isViewAttached()) {
-                        mView.get().loginSuccess(user);
-                        if (user.getBadge() == 1) {
-                            mView.get().showToast(R.string.login_manager);
-                        } else {
-                            mView.get().loginChat();
+                    @Override
+                    public void onError(Throwable throwable) {
+                        mModel.putUser(user);
+                        if (isViewAttached()) {
+                            mView.get().loginSuccess(user);
+                            if (user.getBadge() == 1) {
+                                mView.get().showToast(R.string.login_manager);
+                            } else {
+                                mView.get().loginChat();
+                            }
                         }
                     }
+                });
+            } else {
+                mModel.putUser(user);
+                if (isViewAttached()) {
+                    mView.get().loginSuccess(user);
+                    if (user.getBadge() == 1) {
+                        mView.get().showToast(R.string.login_manager);
+                    } else {
+                        mView.get().loginChat();
+                    }
                 }
-            });
+            }
         } else {
             mModel.putUser(user);
             if (isViewAttached()) {

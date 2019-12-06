@@ -8,6 +8,7 @@ import com.ring.myguide.base.CallbackListener;
 import com.ring.myguide.center.CenterContract;
 import com.ring.myguide.center.model.CenterModel;
 import com.ring.myguide.entity.User;
+import com.ring.myguide.utils.FileUtils;
 
 import java.io.File;
 
@@ -88,28 +89,36 @@ public class CenterPresenter extends CenterContract.Presenter {
     }
 
     public void getImg(User user) {
-        if (user.getUserImg() != null && user.getUserImgPaht() == null) {
-            RequestImgModel model = new RequestImgModel();
-            model.requestImg(user.getUserImg(), mSavePath, user.getUserName() + ".jpg", new CallbackListener<String>() {
-                @Override
-                public void onSuccess(String data) {
-                    user.setUserImgPaht(data);
-                    mModel.putUser(user);
-                    if (isViewAttached()) {
-                        mView.get().updateSuccess();
-                        mView.get().showToast(R.string.center_success);
+        if (user.getUserImg() != null) {
+            if (user.getUserImgPaht() == null || !FileUtils.fileIsExists(user.getUserImgPaht())) {
+                RequestImgModel model = new RequestImgModel();
+                model.requestImg(user.getUserImg(), mSavePath, user.getUserName() + ".jpg", new CallbackListener<String>() {
+                    @Override
+                    public void onSuccess(String data) {
+                        user.setUserImgPaht(data);
+                        mModel.putUser(user);
+                        if (isViewAttached()) {
+                            mView.get().updateSuccess();
+                            mView.get().showToast(R.string.center_success);
+                        }
                     }
-                }
 
-                @Override
-                public void onError(Throwable throwable) {
-                    mModel.putUser(user);
-                    if (isViewAttached()) {
-                        mView.get().updateSuccess();
-                        mView.get().showToast(R.string.center_success);
+                    @Override
+                    public void onError(Throwable throwable) {
+                        mModel.putUser(user);
+                        if (isViewAttached()) {
+                            mView.get().updateSuccess();
+                            mView.get().showToast(R.string.center_success);
+                        }
                     }
+                });
+            } else {
+                mModel.putUser(user);
+                if (isViewAttached()) {
+                    mView.get().updateSuccess();
+                    mView.get().showToast(R.string.center_success);
                 }
-            });
+            }
         } else {
             mModel.putUser(user);
             if (isViewAttached()) {

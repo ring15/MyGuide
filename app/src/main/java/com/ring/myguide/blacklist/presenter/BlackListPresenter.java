@@ -7,6 +7,7 @@ import com.ring.myguide.base.CallbackListener;
 import com.ring.myguide.blacklist.BlacksContract;
 import com.ring.myguide.blacklist.model.BlackListModel;
 import com.ring.myguide.entity.User;
+import com.ring.myguide.utils.FileUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,24 +51,30 @@ public class BlackListPresenter extends BlacksContract.Presenter {
     private void requestImg(List<User> users) {
         if (users != null && users.size() > 0) {
             User user = users.get(0);
-            if (user.getUserImg() != null && user.getUserImgPaht() == null) {
-                RequestImgModel model = new RequestImgModel();
-                model.requestImg(user.getUserImg(), mSavePath, user.getUserName() + "_other.jpg", new CallbackListener<String>() {
-                    @Override
-                    public void onSuccess(String data) {
-                        user.setUserImgPaht(data);
-                        mUserList.add(user);
-                        users.remove(user);
-                        requestImg(users);
-                    }
+            if (user.getUserImg() != null) {
+                if (user.getUserImgPaht() == null || !FileUtils.fileIsExists(user.getUserImgPaht())) {
+                    RequestImgModel model = new RequestImgModel();
+                    model.requestImg(user.getUserImg(), mSavePath, user.getUserName() + "_other.jpg", new CallbackListener<String>() {
+                        @Override
+                        public void onSuccess(String data) {
+                            user.setUserImgPaht(data);
+                            mUserList.add(user);
+                            users.remove(user);
+                            requestImg(users);
+                        }
 
-                    @Override
-                    public void onError(Throwable throwable) {
-                        mUserList.add(user);
-                        users.remove(user);
-                        requestImg(users);
-                    }
-                });
+                        @Override
+                        public void onError(Throwable throwable) {
+                            mUserList.add(user);
+                            users.remove(user);
+                            requestImg(users);
+                        }
+                    });
+                } else {
+                    mUserList.add(user);
+                    users.remove(user);
+                    requestImg(users);
+                }
             } else {
                 mUserList.add(user);
                 users.remove(user);

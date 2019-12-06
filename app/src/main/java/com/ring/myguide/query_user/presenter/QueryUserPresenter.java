@@ -9,6 +9,7 @@ import com.ring.myguide.base.CallbackListener;
 import com.ring.myguide.entity.User;
 import com.ring.myguide.query_user.QueryUserContract;
 import com.ring.myguide.query_user.model.QueryUserModel;
+import com.ring.myguide.utils.FileUtils;
 
 import java.util.LinkedList;
 
@@ -53,26 +54,33 @@ public class QueryUserPresenter extends QueryUserContract.Presenter {
     }
 
     private void requestImg(User user) {
-        if (user.getUserImg() != null && user.getUserImgPaht() == null) {
-            RequestImgModel model = new RequestImgModel();
-            model.requestImg(user.getUserImg(), mSavePath, user.getUserName() + "_other.jpg", new CallbackListener<String>() {
-                @Override
-                public void onSuccess(String data) {
-                    user.setUserImgPaht(data);
-                    if (isViewAttached()) {
-                        putIntoCache(user);
-                        mView.get().setUser(user);
+        if (user.getUserImg() != null) {
+            if (user.getUserImgPaht() == null || !FileUtils.fileIsExists(user.getUserImgPaht())) {
+                RequestImgModel model = new RequestImgModel();
+                model.requestImg(user.getUserImg(), mSavePath, user.getUserName() + "_other.jpg", new CallbackListener<String>() {
+                    @Override
+                    public void onSuccess(String data) {
+                        user.setUserImgPaht(data);
+                        if (isViewAttached()) {
+                            putIntoCache(user);
+                            mView.get().setUser(user);
+                        }
                     }
-                }
 
-                @Override
-                public void onError(Throwable throwable) {
-                    if (isViewAttached()) {
-                        putIntoCache(user);
-                        mView.get().setUser(user);
+                    @Override
+                    public void onError(Throwable throwable) {
+                        if (isViewAttached()) {
+                            putIntoCache(user);
+                            mView.get().setUser(user);
+                        }
                     }
+                });
+            } else {
+                if (isViewAttached()) {
+                    putIntoCache(user);
+                    mView.get().setUser(user);
                 }
-            });
+            }
         } else {
             if (isViewAttached()) {
                 putIntoCache(user);

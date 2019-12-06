@@ -15,6 +15,19 @@ import java.util.List;
 
 public class FileUtils {
 
+    //判断文件是否存在
+    public static boolean fileIsExists(String strFile) {
+        try {
+            File file = new File(strFile);
+            if (!file.exists()) {
+                return false;
+            }
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
     public static String getTotalCacheSize(Context context) throws Exception {
         long cacheSize = getFolderSize(context.getCacheDir());
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {

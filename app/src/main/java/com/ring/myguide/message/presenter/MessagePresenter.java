@@ -9,6 +9,7 @@ import com.ring.myguide.entity.MessageList;
 import com.ring.myguide.entity.User;
 import com.ring.myguide.message.MessageContract;
 import com.ring.myguide.message.model.MessageModel;
+import com.ring.myguide.utils.FileUtils;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -69,20 +70,25 @@ public class MessagePresenter extends MessageContract.Presenter {
     }
 
     private void requestImg(EMMessage message, User user) {
-        if (user.getUserImg() != null && user.getUserImgPaht() == null) {
-            RequestImgModel model = new RequestImgModel();
-            model.requestImg(user.getUserImg(), mSavePath, user.getUserName() + "_other.jpg", new CallbackListener<String>() {
-                @Override
-                public void onSuccess(String data) {
-                    user.setUserImgPaht(data);
-                    setUser(message, user);
-                }
+        if (user.getUserImg() != null) {
+            if (user.getUserImgPaht() == null || !FileUtils.fileIsExists(user.getUserImgPaht())) {
 
-                @Override
-                public void onError(Throwable throwable) {
-                    setUser(message, user);
-                }
-            });
+                RequestImgModel model = new RequestImgModel();
+                model.requestImg(user.getUserImg(), mSavePath, user.getUserName() + "_other.jpg", new CallbackListener<String>() {
+                    @Override
+                    public void onSuccess(String data) {
+                        user.setUserImgPaht(data);
+                        setUser(message, user);
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        setUser(message, user);
+                    }
+                });
+            } else {
+                setUser(message, user);
+            }
         } else {
             setUser(message, user);
         }
