@@ -25,6 +25,7 @@ import com.ring.myguide.login.view.LoginActivity;
 import com.ring.myguide.me.MeContract;
 import com.ring.myguide.me.presenter.MePresenter;
 import com.ring.myguide.setting.view.SettingActivity;
+import com.ring.myguide.utils.FileUtils;
 
 import static com.ring.myguide.login.view.LoginActivity.FROM_MEFRAGMENT;
 
@@ -218,7 +219,7 @@ public class MeFragment extends BaseFragment<MePresenter, MeContract.View>
     @Override
     public void setUser(User user) {
         isLogin = true;
-        if (user.getUserImgPaht() != null) {
+        if (user.getUserImgPaht() != null && FileUtils.fileIsExists(user.getUserImgPaht())) {
             Glide.with(this)
                     .load(user.getUserImgPaht())
                     .error(R.drawable.icon_avatar_default)
