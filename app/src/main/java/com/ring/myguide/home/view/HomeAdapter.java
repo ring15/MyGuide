@@ -1,11 +1,11 @@
 package com.ring.myguide.home.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,6 +18,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.ring.myguide.R;
+import com.ring.myguide.WebActivity;
 import com.ring.myguide.entity.Banner;
 import com.ring.myguide.entity.HomePage;
 import com.ring.myguide.entity.Post;
@@ -182,7 +183,11 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 viewHolder.mBanner.setDelegate(new BGABanner.Delegate() {
                     @Override
                     public void onBannerItemClick(BGABanner banner, View itemView, @Nullable Object model, int position) {
-
+                        Intent intent = new Intent();
+                        intent.setClass(mContext, WebActivity.class);
+                        intent.putExtra("web_title", mBanners.get(position).getTitle());
+                        intent.putExtra("web_url", mBanners.get(position).getClickUrl());
+                        mContext.startActivity(intent);
                     }
                 });
                 viewHolder.mBanner.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
