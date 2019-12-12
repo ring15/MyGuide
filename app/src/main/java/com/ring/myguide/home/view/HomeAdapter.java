@@ -37,6 +37,9 @@ import cn.bingoogolapple.bgabanner.BGABanner;
  */
 public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    //首页最多展示条数
+    private static final int MAX_NUM = 2;
+
     //滚动栏加标题
     private static final int BANNER_TITLE = 0;
     //美食推荐的标题
@@ -74,15 +77,21 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
         if (homePage.getFoodPost() != null) {
             mFoodRecommends.clear();
-            mFoodRecommends.addAll(homePage.getFoodPost());
+            for (int i = 0; i < homePage.getFoodPost().size() && i < MAX_NUM; i++) {
+                mFoodRecommends.add(homePage.getFoodPost().get(i));
+            }
         }
         if (homePage.getPlacePost() != null) {
             mPlaceRecommends.clear();
-            mPlaceRecommends.addAll(homePage.getPlacePost());
+            for (int i = 0; i < homePage.getPlacePost().size() && i < MAX_NUM; i++) {
+                mPlaceRecommends.add(homePage.getPlacePost().get(i));
+            }
         }
         if (homePage.getUserPost() != null) {
             mUserRecommends.clear();
-            mUserRecommends.addAll(homePage.getUserPost());
+            for (int i = 0; i < homePage.getUserPost().size() && i < MAX_NUM; i++) {
+                mUserRecommends.add(homePage.getUserPost().get(i));
+            }
         }
     }
 
