@@ -51,6 +51,11 @@
     <string name="home_post_good">114514</string>
     <string name="home_post_reply">450</string>
 
+    <string name="post_list_title">帖子列表</string>
+    <string name="post_list_food">美食推荐</string>
+    <string name="post_list_place">景点推荐</string>
+    <string name="post_list_user">用户推荐</string>
+
     <string name="message_not_login">您还没有登录，登录后可接受消息</string>
     <string name="message_already_read">标为已读</string>
     <string name="message_delete">全部删除</string>

@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.ring.myguide.RequestImgModel;
 import com.ring.myguide.base.CallbackListener;
+import com.ring.myguide.base.RequestImgListener;
 import com.ring.myguide.entity.HomePage;
 import com.ring.myguide.home.HomeContract;
 import com.ring.myguide.home.model.HomeModel;
@@ -99,7 +100,7 @@ public class HomePresenter extends HomeContract.Presenter {
     }
 
     @Override
-    public void requestImg(String img, String name, String savePath, HomeAdapter.RequestImgListener listener) {
+    public void requestImg(String img, String name, String savePath, RequestImgListener listener) {
         RequestImgModel model = new RequestImgModel();
         model.requestImg(img, savePath, name, new CallbackListener<String>() {
             @Override

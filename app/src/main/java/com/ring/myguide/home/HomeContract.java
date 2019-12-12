@@ -4,8 +4,8 @@ import com.ring.myguide.base.BaseModel;
 import com.ring.myguide.base.BasePresenter;
 import com.ring.myguide.base.BaseView;
 import com.ring.myguide.base.CallbackListener;
+import com.ring.myguide.base.RequestImgListener;
 import com.ring.myguide.entity.HomePage;
-import com.ring.myguide.home.view.HomeAdapter;
 
 /**
  * Created by ring on 2019/12/2.
@@ -32,6 +32,6 @@ public interface HomeContract {
 
         public abstract void getCity();
 
-        public abstract void requestImg(String img, String name, String savePath, HomeAdapter.RequestImgListener listener);
+        public abstract void requestImg(String img, String name, String savePath, RequestImgListener listener);
     }
 }

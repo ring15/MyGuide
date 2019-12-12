@@ -19,14 +19,17 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.ring.myguide.R;
 import com.ring.myguide.WebActivity;
+import com.ring.myguide.base.RequestImgListener;
 import com.ring.myguide.entity.Banner;
 import com.ring.myguide.entity.HomePage;
 import com.ring.myguide.entity.Post;
 import com.ring.myguide.entity.User;
 import com.ring.myguide.home.presenter.HomePresenter;
+import com.ring.myguide.post_list.PostListActivity;
 import com.ring.myguide.utils.DateUtil;
 import com.ring.myguide.utils.FileUtils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -224,7 +227,10 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             viewHolder.mMoreText.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Intent intent = new Intent(mContext, PostListActivity.class);
+                    intent.putExtra("title", mContext.getString(R.string.post_list_food));
+                    intent.putExtra("post", (Serializable) mFoodRecommends);
+                    mContext.startActivity(intent);
                 }
             });
         } else if (holder instanceof FoodViewHolder) {
@@ -287,7 +293,10 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             viewHolder.mMoreText.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Intent intent = new Intent(mContext, PostListActivity.class);
+                    intent.putExtra("title", mContext.getString(R.string.post_list_place));
+                    intent.putExtra("post", (Serializable) mPlaceRecommends);
+                    mContext.startActivity(intent);
                 }
             });
         } else if (holder instanceof PlaceViewHolder) {
@@ -349,7 +358,10 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             viewHolder.mMoreText.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Intent intent = new Intent(mContext, PostListActivity.class);
+                    intent.putExtra("title", mContext.getString(R.string.post_list_user));
+                    intent.putExtra("post", (Serializable) mUserRecommends);
+                    mContext.startActivity(intent);
                 }
             });
         } else if (holder instanceof UserViewHolder) {
@@ -582,9 +594,4 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
-    public interface RequestImgListener {
-        void onSuccess();
-
-        void onFailed();
-    }
 }
