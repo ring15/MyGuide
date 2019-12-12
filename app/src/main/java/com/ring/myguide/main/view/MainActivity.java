@@ -31,7 +31,7 @@ import com.ring.myguide.blacklist.view.BlackListActivity;
 import com.ring.myguide.city_picker.CityPickerActivity;
 import com.ring.myguide.entity.City;
 import com.ring.myguide.friends_list.view.FriendsListActivity;
-import com.ring.myguide.home.HomeFragment;
+import com.ring.myguide.home.view.HomeFragment;
 import com.ring.myguide.main.MainContract;
 import com.ring.myguide.main.presenter.MainPresenter;
 import com.ring.myguide.me.view.MeFragment;
@@ -426,6 +426,7 @@ public class MainActivity extends BaseActivity<MainPresenter, MainContract.View>
                 if (city != null) {
                     mPresenter.setCity(city.getName());
                     mLocalText.setText(city.getName());
+                    ((HomeFragment) mFragments[0]).changeCity(city.getName());
                 }
             }
         }

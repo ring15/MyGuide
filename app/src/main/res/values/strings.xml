@@ -27,7 +27,6 @@
 
     <string name="skip_splash">跳过</string>
 
-    <string name="location">天津市</string>
     <string name="send_post_title">发帖</string>
     <string name="send_post_send">上传</string>
     <string name="send_post_post_title">标题</string>
@@ -42,6 +41,15 @@
     <string name="send_post_user">用户</string>
     <string name="send_post_item_delete">删除</string>
     <string name="send_post_item_cancel">取消</string>
+
+    <string name="location">天津</string>
+    <string name="location_list_title">选择</string>
+    <string name="home_more">更多...</string>
+    <string name="home_post_title">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容。</string>
+    <string name="home_post_nickname">昵称</string>
+    <string name="home_post_time">1970-09-06</string>
+    <string name="home_post_good">114514</string>
+    <string name="home_post_reply">450</string>
 
     <string name="message_not_login">您还没有登录，登录后可接受消息</string>
     <string name="message_already_read">标为已读</string>

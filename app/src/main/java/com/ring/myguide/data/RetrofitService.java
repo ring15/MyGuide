@@ -157,6 +157,17 @@ public interface RetrofitService {
 
 
     /**
+     * 获取首页信息
+     *
+     * @param map query数据
+     * @return okhttp返回结果
+     */
+    @Streaming
+    @GET(Constants.GET_HOMEPAGE)
+    Observable<ResponseBody> getHomePage(@QueryMap Map<String, String> map);
+
+
+    /**
      * 发帖
      *
      * @param map query数据

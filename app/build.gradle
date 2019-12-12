@@ -50,4 +50,6 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     //知乎图片选择器
     implementation 'com.zhihu.android:matisse:0.5.2'
+    //滑动banner框架
+    implementation 'cn.bingoogolapple:bga-banner:2.2.4@aar'
 }

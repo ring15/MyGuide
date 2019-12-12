@@ -2,6 +2,8 @@ package com.ring.myguide.data;
 
 import com.ring.myguide.config.Constants;
 
+import java.util.concurrent.TimeUnit;
+
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -18,6 +20,8 @@ public class RetrofitUtil {
     private RetrofitUtil() {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder()
                 .addNetworkInterceptor(new NetInterceptor())
+                .connectTimeout(5, TimeUnit.SECONDS)
+                .callTimeout(20, TimeUnit.SECONDS)
                 .retryOnConnectionFailure(true);
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(Constants.mHost)

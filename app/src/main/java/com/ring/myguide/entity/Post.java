@@ -1,5 +1,7 @@
 package com.ring.myguide.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -11,33 +13,51 @@ public class Post implements Serializable {
     private static final long serialVersionUID = -1043322360397261129L;
 
     //城市
+    @JSONField(name = "city")
     private String city;
     //帖子id
+    @JSONField(name = "thread_id")
     private int threadID;
     //用户简略信息
+    @JSONField(name = "author")
     private User author;
     //帖子标题
+    @JSONField(name = "title")
     private String title;
     //帖子内容
+    @JSONField(name = "content")
     private String content;
     //帖子类型：0用户推荐，1景点推荐，2美食推荐
+    @JSONField(name = "type")
     private int type;
     //图片地址
+    @JSONField(name = "imgs")
     private List<String> imgs;
+    @JSONField(name = "img_paths")
+    private List<String> imgPaths;
     //回复次数
+    @JSONField(name = "reply_num")
     private int replyNum;
     //点赞次数
+    @JSONField(name = "good_num")
     private int goodNum;
     //帖子发布时间 时间戳
+    @JSONField(name = "time")
     private long time;
     //是否赞过 true,赞过 false,未赞过
+    @JSONField(name = "is_good")
     private boolean isGood;
     //是否收藏 true,收藏 false,取消收藏
+    @JSONField(name = "is_favorite")
     private boolean isFavorite;
     //是否被删除 true,被删除 false,未被删除
+    @JSONField(name = "is_delete")
     private boolean isDelete;
     //是否精品 true,是  false,否
+    @JSONField(name = "is_boutique")
     private boolean isBoutique;
+    //图片保存地址
+    private List<String> imgList;
 
     public String getCity() {
         return city;
@@ -95,6 +115,10 @@ public class Post implements Serializable {
         return isBoutique;
     }
 
+    public List<String> getImgList() {
+        return imgList;
+    }
+
     public void setCity(String city) {
         this.city = city;
     }
@@ -149,5 +173,9 @@ public class Post implements Serializable {
 
     public void setBoutique(boolean boutique) {
         isBoutique = boutique;
+    }
+
+    public void setImgList(List<String> imgList) {
+        this.imgList = imgList;
     }
 }
