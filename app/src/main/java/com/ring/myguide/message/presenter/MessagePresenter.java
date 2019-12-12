@@ -74,7 +74,7 @@ public class MessagePresenter extends MessageContract.Presenter {
             if (user.getUserImgPaht() == null || !FileUtils.fileIsExists(user.getUserImgPaht())) {
 
                 RequestImgModel model = new RequestImgModel();
-                model.requestImg(user.getUserImg(), mSavePath, user.getUserName() + "_other.jpg", new CallbackListener<String>() {
+                model.requestImg(user.getUserImg(), mSavePath, user.getUserName() + ".jpg", new CallbackListener<String>() {
                     @Override
                     public void onSuccess(String data) {
                         user.setUserImgPaht(data);
