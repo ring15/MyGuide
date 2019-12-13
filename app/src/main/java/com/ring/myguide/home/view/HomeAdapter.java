@@ -240,12 +240,12 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 User user = post.getAuthor();
                 String path = cachePath + "/" + user.getUserName();
                 if (FileUtils.fileIsExists(path)) {
-                    showImgCircler(path, viewHolder.mUserAvatarImg);
+                    showImgCircle(path, viewHolder.mUserAvatarImg);
                 } else {
                     mPresenter.requestImg(user.getUserImg(), user.getUserName(), cachePath, new RequestImgListener() {
                         @Override
                         public void onSuccess() {
-                            showImgCircler(path, viewHolder.mUserAvatarImg);
+                            showImgCircle(path, viewHolder.mUserAvatarImg);
                         }
 
                         @Override
@@ -306,12 +306,12 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 User user = post.getAuthor();
                 String path = cachePath + "/" + user.getUserName();
                 if (FileUtils.fileIsExists(path)) {
-                    showImgCircler(path, viewHolder.mUserAvatarImg);
+                    showImgCircle(path, viewHolder.mUserAvatarImg);
                 } else {
                     mPresenter.requestImg(user.getUserImg(), user.getUserName(), cachePath, new RequestImgListener() {
                         @Override
                         public void onSuccess() {
-                            showImgCircler(path, viewHolder.mUserAvatarImg);
+                            showImgCircle(path, viewHolder.mUserAvatarImg);
                         }
 
                         @Override
@@ -371,12 +371,12 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 User user = post.getAuthor();
                 String path = cachePath + "/" + user.getUserName();
                 if (FileUtils.fileIsExists(path)) {
-                    showImgCircler(path, viewHolder.mUserAvatarImg);
+                    showImgCircle(path, viewHolder.mUserAvatarImg);
                 } else {
                     mPresenter.requestImg(user.getUserImg(), user.getUserName(), cachePath, new RequestImgListener() {
                         @Override
                         public void onSuccess() {
-                            showImgCircler(path, viewHolder.mUserAvatarImg);
+                            showImgCircle(path, viewHolder.mUserAvatarImg);
                         }
 
                         @Override
@@ -431,11 +431,11 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 .into(imageView);
     }
 
-    private void showImgCircler(String path, ImageView imageView) {
+    private void showImgCircle(String path, ImageView imageView) {
         Glide.with(mContext)
                 .load(path)
-                .error(R.drawable.icon_default_photo)
-                .placeholder(R.drawable.icon_default_photo)
+                .error(R.drawable.icon_avatar_default)
+                .placeholder(R.drawable.icon_avatar_default)
                 .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                 .skipMemoryCache(true) // 不使用内存缓存
                 .diskCacheStrategy(DiskCacheStrategy.NONE) // 不使用磁盘缓存
