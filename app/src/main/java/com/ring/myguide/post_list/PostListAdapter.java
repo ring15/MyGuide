@@ -63,17 +63,17 @@ public class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        if (mPosts.size() > position){
+        if (mPosts.size() > position) {
             Post post = mPosts.get(position);
             User user = post.getAuthor();
             String path = cachePath + "/" + user.getUserName();
             if (FileUtils.fileIsExists(path)) {
-                showImgCircler(path, holder.mUserAvatarImg);
+                showImgCircle(path, holder.mUserAvatarImg);
             } else {
                 mPresenter.requestImg(user.getUserImg(), user.getUserName(), cachePath, new RequestImgListener() {
                     @Override
                     public void onSuccess() {
-                        showImgCircler(path, holder.mUserAvatarImg);
+                        showImgCircle(path, holder.mUserAvatarImg);
                     }
 
                     @Override
@@ -118,10 +118,10 @@ public class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.MyView
         }
     }
 
-    private void showImgCircler(String path, ImageView imageView) {
+    private void showImgCircle(String path, ImageView imageView) {
         Glide.with(mContext)
                 .load(path)
-                .error(R.drawable.icon_default_photo)
+                .error(R.drawable.icon_avatar_default)
                 .placeholder(R.drawable.icon_default_photo)
                 .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                 .skipMemoryCache(true) // 不使用内存缓存
