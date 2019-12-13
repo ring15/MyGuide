@@ -32,6 +32,7 @@ import com.ring.myguide.utils.FileUtils;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import cn.bingoogolapple.bgabanner.BGABanner;
 
@@ -59,6 +60,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int USER_RECOMMEND = 6;
 
     private Context mContext;
+    private HomePage mHomePage;
     //数据源
     private List<Banner> mBanners = new ArrayList<>();
     private List<Post> mFoodRecommends = new ArrayList<>();
@@ -74,29 +76,39 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public void setHomePage(HomePage homePage) {
+        mHomePage = homePage;
         if (homePage.getBanners() != null) {
             mBanners.clear();
             mBanners.addAll(homePage.getBanners());
         }
         if (homePage.getFoodPost() != null) {
             mFoodRecommends.clear();
-            for (int i = 0; i < homePage.getFoodPost().size() && i < MAX_NUM; i++) {
-                mFoodRecommends.add(homePage.getFoodPost().get(i));
-            }
+            mFoodRecommends = getRandomPost(homePage.getFoodPost());
         }
         if (homePage.getPlacePost() != null) {
             mPlaceRecommends.clear();
-            for (int i = 0; i < homePage.getPlacePost().size() && i < MAX_NUM; i++) {
-                mPlaceRecommends.add(homePage.getPlacePost().get(i));
-            }
+            mPlaceRecommends = getRandomPost(homePage.getPlacePost());
         }
         if (homePage.getUserPost() != null) {
             mUserRecommends.clear();
-            for (int i = 0; i < homePage.getUserPost().size() && i < MAX_NUM; i++) {
-                mUserRecommends.add(homePage.getUserPost().get(i));
-            }
+            mUserRecommends = getRandomPost(homePage.getUserPost());
         }
     }
+
+    private List<Post> getRandomPost(List<Post> posts) {
+        Random random = new Random();
+        List<Post> parentPost = new ArrayList<>(posts);
+        List<Post> newPost = new ArrayList<>();
+        for (int i = 0; i < MAX_NUM; i++) {
+            if (parentPost.size() != 0) {
+                int ran = random.nextInt(parentPost.size());
+                newPost.add(parentPost.get(ran));
+                parentPost.remove(ran);
+            }
+        }
+        return newPost;
+    }
+
 
     public void setPresenter(HomePresenter presenter) {
         mPresenter = presenter;
@@ -229,7 +241,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, PostListActivity.class);
                     intent.putExtra("title", mContext.getString(R.string.post_list_food));
-                    intent.putExtra("post", (Serializable) mFoodRecommends);
+                    intent.putExtra("post", (Serializable) mHomePage.getFoodPost());
                     mContext.startActivity(intent);
                 }
             });
@@ -295,7 +307,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, PostListActivity.class);
                     intent.putExtra("title", mContext.getString(R.string.post_list_place));
-                    intent.putExtra("post", (Serializable) mPlaceRecommends);
+                    intent.putExtra("post", (Serializable) mHomePage.getPlacePost());
                     mContext.startActivity(intent);
                 }
             });
@@ -360,7 +372,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, PostListActivity.class);
                     intent.putExtra("title", mContext.getString(R.string.post_list_user));
-                    intent.putExtra("post", (Serializable) mUserRecommends);
+                    intent.putExtra("post", (Serializable) mHomePage.getUserPost());
                     mContext.startActivity(intent);
                 }
             });
