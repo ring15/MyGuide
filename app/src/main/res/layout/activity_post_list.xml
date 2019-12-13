@@ -38,6 +38,21 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+
+    <LinearLayout
+        android:id="@+id/layout_no_post"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="@string/post_list_no_post" />
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_post_list"
         android:layout_width="match_parent"

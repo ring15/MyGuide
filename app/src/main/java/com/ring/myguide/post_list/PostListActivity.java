@@ -2,6 +2,7 @@ package com.ring.myguide.post_list;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ public class PostListActivity extends BaseActivity<PostListPresenter, PostListCo
     private TextView tvTitle;
     private RecyclerView mPostListRecycler;
     private PostListAdapter mAdapter;
+    private LinearLayout mNoPostLayout;
 
     @Override
     protected int getIdResource() {
@@ -43,15 +45,22 @@ public class PostListActivity extends BaseActivity<PostListPresenter, PostListCo
         mAdapter = new PostListAdapter(this);
         mAdapter.setCachePath(getCacheDir().getPath());
         mAdapter.setPresenter(mPresenter);
-        mAdapter.setPosts(posts);
         mPostListRecycler.setAdapter(mAdapter);
         mPostListRecycler.setLayoutManager(new LinearLayoutManager(this));
+        if (posts != null && posts.size() > 0){
+            mNoPostLayout.setVisibility(View.GONE);
+            mAdapter.setPosts(posts);
+            mAdapter.notifyDataSetChanged();
+        } else {
+            mNoPostLayout.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
     public void findView() {
         tvTitle = findViewById(R.id.tv_title);
         mPostListRecycler = findViewById(R.id.recycler_post_list);
+        mNoPostLayout = findViewById(R.id.layout_no_post);
     }
 
     public void onClick(View view) {
