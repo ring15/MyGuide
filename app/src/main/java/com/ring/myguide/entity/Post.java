@@ -33,8 +33,6 @@ public class Post implements Serializable {
     //图片地址
     @JSONField(name = "imgs")
     private List<String> imgs;
-    @JSONField(name = "img_paths")
-    private List<String> imgPaths;
     //回复次数
     @JSONField(name = "reply_num")
     private int replyNum;
@@ -57,6 +55,7 @@ public class Post implements Serializable {
     @JSONField(name = "is_boutique")
     private boolean isBoutique;
     //图片保存地址
+    @JSONField(name = "img_paths")
     private List<String> imgList;
 
     public String getCity() {

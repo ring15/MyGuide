@@ -11,7 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".post_list.PostListActivity"></activity>
+        <activity android:name=".post.view.PostActivity"></activity>
+        <activity android:name=".post_list.PostListActivity" />
         <activity android:name=".WebActivity" />
         <activity android:name=".city_picker.CityPickerActivity" />
         <activity android:name=".send_post.view.SendPostActivity" />

@@ -25,6 +25,7 @@ import com.ring.myguide.entity.HomePage;
 import com.ring.myguide.entity.Post;
 import com.ring.myguide.entity.User;
 import com.ring.myguide.home.presenter.HomePresenter;
+import com.ring.myguide.post.view.PostActivity;
 import com.ring.myguide.post_list.PostListActivity;
 import com.ring.myguide.utils.DateUtil;
 import com.ring.myguide.utils.FileUtils;
@@ -296,7 +297,9 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        Intent intent = new Intent(mContext, PostActivity.class);
+                        intent.putExtra("post", post);
+                        mContext.startActivity(intent);
                     }
                 });
             }
@@ -361,7 +364,9 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        Intent intent = new Intent(mContext, PostActivity.class);
+                        intent.putExtra("post", post);
+                        mContext.startActivity(intent);
                     }
                 });
             }
@@ -426,7 +431,9 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        Intent intent = new Intent(mContext, PostActivity.class);
+                        intent.putExtra("post", post);
+                        mContext.startActivity(intent);
                     }
                 });
             }
