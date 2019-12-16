@@ -46,7 +46,15 @@ public class Constants {
     public static final String UPLOAD_REPLY= "upload_reply";
     //收藏
     public static final String FAVORITE= "favorite";
-    //收藏
+    //点赞
     public static final String CHANGE_GOOD = "change_good";
+    //修改精品非精品
+    public static final String CHANGE_BOUTIQUE = "change_boutique";
+    //修改类型
+    public static final String CHANGE_TYPE = "change_type";
+    //设置删除
+    public static final String CHANGE_DELETE = "change_delete";
+    //删除评论
+    public static final String CHANGE_REPLY = "delete_reply";
 
 }

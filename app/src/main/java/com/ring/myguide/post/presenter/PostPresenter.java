@@ -165,4 +165,86 @@ public class PostPresenter extends PostContract.Presenter {
             }
         });
     }
+
+    @Override
+    public void changeBoutique(int threadId) {
+        mModel.doChangeBoutique(threadId, new CallbackListener<String>() {
+            @Override
+            public void onSuccess(String data) {
+                if (isViewAttached()) {
+                    mView.get().showToast(R.string.post_operate_success);
+                }
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                if (isViewAttached()) {
+                    mView.get().showToast(throwable.getMessage());
+                }
+                Log.i(TAG, throwable.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void changeType(int threadId, int type) {
+        mModel.doChangeType(threadId, type, new CallbackListener<String>() {
+            @Override
+            public void onSuccess(String data) {
+                if (isViewAttached()) {
+                    mView.get().showToast(R.string.post_operate_success);
+                }
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                if (isViewAttached()) {
+                    mView.get().showToast(throwable.getMessage());
+                }
+                Log.i(TAG, throwable.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void changeDelete(int threadId) {
+        mModel.doChangeDelete(threadId, new CallbackListener<String>() {
+            @Override
+            public void onSuccess(String data) {
+                if (isViewAttached()) {
+                    mView.get().showToast(R.string.post_operate_success);
+                    mView.get().finishActivity();
+                }
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                if (isViewAttached()) {
+                    mView.get().showToast(throwable.getMessage());
+                }
+                Log.i(TAG, throwable.getMessage());
+            }
+        });
+    }
+
+    @Override
+    public void deleteReply(int threadId, int floor) {
+        mModel.deleteReply(threadId, floor, new CallbackListener<String>() {
+            @Override
+            public void onSuccess(String data) {
+                if (isViewAttached()) {
+                    mView.get().showToast(R.string.post_operate_success);
+                    getReply(threadId);
+                }
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                if (isViewAttached()) {
+                    mView.get().showToast(throwable.getMessage());
+                }
+                Log.i(TAG, throwable.getMessage());
+            }
+        });
+    }
 }

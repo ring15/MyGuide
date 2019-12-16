@@ -68,6 +68,13 @@
     <string name="post_operate_success">操作成功</string>
     <string name="post_pre_img">预览</string>
 
+    <string name="post_delete">删除</string>
+    <string name="post_boutique">加精/取消加精</string>
+    <string name="post_change_type">修改分类</string>
+    <string name="post_food">美食</string>
+    <string name="post_place">景点</string>
+    <string name="post_user">用户</string>
+
     <string name="message_not_login">您还没有登录，登录后可接受消息</string>
     <string name="message_already_read">标为已读</string>
     <string name="message_delete">全部删除</string>

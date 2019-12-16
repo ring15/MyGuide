@@ -157,4 +157,9 @@ public class PostActivity extends BaseActivity<PostPresenter, PostContract.View>
         mFavoriteImg.setSelected(false);
         isFavorite = false;
     }
+
+    @Override
+    public void finishActivity() {
+        finish();
+    }
 }

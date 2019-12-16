@@ -227,7 +227,7 @@ public interface RetrofitService {
 
 
     /**
-     * 收藏
+     * 点赞
      *
      * @param map query数据
      * @return okhttp返回结果
@@ -235,5 +235,49 @@ public interface RetrofitService {
     @Streaming
     @GET(Constants.CHANGE_GOOD)
     Observable<ResponseBody> doGood(@QueryMap Map<String, String> map);
+
+
+    /**
+     * 修改精品非精品
+     *
+     * @param map query数据
+     * @return okhttp返回结果
+     */
+    @Streaming
+    @GET(Constants.CHANGE_BOUTIQUE)
+    Observable<ResponseBody> doChangeBoutique(@QueryMap Map<String, String> map);
+
+
+    /**
+     * 修改类型
+     *
+     * @param map query数据
+     * @return okhttp返回结果
+     */
+    @Streaming
+    @GET(Constants.CHANGE_TYPE)
+    Observable<ResponseBody> doChangeType(@QueryMap Map<String, String> map);
+
+
+    /**
+     * 设置删除
+     *
+     * @param map query数据
+     * @return okhttp返回结果
+     */
+    @Streaming
+    @GET(Constants.CHANGE_DELETE)
+    Observable<ResponseBody> doChangeDelete(@QueryMap Map<String, String> map);
+
+
+    /**
+     * 删除评论
+     *
+     * @param map query数据
+     * @return okhttp返回结果
+     */
+    @Streaming
+    @GET(Constants.CHANGE_REPLY)
+    Observable<ResponseBody> doDeleteReply(@QueryMap Map<String, String> map);
 
 }

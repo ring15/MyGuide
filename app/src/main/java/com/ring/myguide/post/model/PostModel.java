@@ -214,6 +214,180 @@ public class PostModel implements PostContract.Model {
     }
 
     @Override
+    public void doChangeBoutique(int threadId, CallbackListener<String> listener) {
+        RetrofitService service = RetrofitUtil.getInstance().createService(RetrofitService.class);
+        LinkedHashMap<String, String> params = new LinkedHashMap<>();
+        params.put("thread_id", threadId + "");
+        service.doChangeBoutique(params)
+                .subscribeOn(Schedulers.newThread())
+                .map(responseBody -> {
+                    String result = responseBody.string();
+                    Log.i(TAG, result);
+                    JSONObject root = JSON.parseObject(result);
+                    String status = root.getString("status");
+                    if (status.equals("failed")) {
+                        throw new Exception(root.getString("data"));
+                    } else {
+                        return root.getString("data");
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<String>() {
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+                        listener.onSuccess(s);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        listener.onError(e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
+    public void doChangeType(int threadId, int type, CallbackListener<String> listener) {
+        RetrofitService service = RetrofitUtil.getInstance().createService(RetrofitService.class);
+        LinkedHashMap<String, String> params = new LinkedHashMap<>();
+        params.put("thread_id", threadId + "");
+        params.put("type", type + "");
+        service.doChangeType(params)
+                .subscribeOn(Schedulers.newThread())
+                .map(responseBody -> {
+                    String result = responseBody.string();
+                    Log.i(TAG, result);
+                    JSONObject root = JSON.parseObject(result);
+                    String status = root.getString("status");
+                    if (status.equals("failed")) {
+                        throw new Exception(root.getString("data"));
+                    } else {
+                        return root.getString("data");
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<String>() {
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+                        listener.onSuccess(s);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        listener.onError(e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
+    public void doChangeDelete(int threadId, CallbackListener<String> listener) {
+        RetrofitService service = RetrofitUtil.getInstance().createService(RetrofitService.class);
+        LinkedHashMap<String, String> params = new LinkedHashMap<>();
+        params.put("thread_id", threadId + "");
+        service.doChangeDelete(params)
+                .subscribeOn(Schedulers.newThread())
+                .map(responseBody -> {
+                    String result = responseBody.string();
+                    Log.i(TAG, result);
+                    JSONObject root = JSON.parseObject(result);
+                    String status = root.getString("status");
+                    if (status.equals("failed")) {
+                        throw new Exception(root.getString("data"));
+                    } else {
+                        return root.getString("data");
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<String>() {
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+                        listener.onSuccess(s);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        listener.onError(e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
+    public void deleteReply(int threadId, int floor, CallbackListener<String> listener) {
+        RetrofitService service = RetrofitUtil.getInstance().createService(RetrofitService.class);
+        LinkedHashMap<String, String> params = new LinkedHashMap<>();
+        params.put("thread_id", threadId + "");
+        params.put("floor", floor + "");
+        service.doDeleteReply(params)
+                .subscribeOn(Schedulers.newThread())
+                .map(responseBody -> {
+                    String result = responseBody.string();
+                    Log.i(TAG, result);
+                    JSONObject root = JSON.parseObject(result);
+                    String status = root.getString("status");
+                    if (status.equals("failed")) {
+                        throw new Exception(root.getString("data"));
+                    } else {
+                        return root.getString("data");
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<String>() {
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+                        listener.onSuccess(s);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        listener.onError(e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    @Override
     public User getUserFromCache() {
         return CacheUtils.getUser();
     }

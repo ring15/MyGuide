@@ -23,6 +23,14 @@ public interface PostContract {
 
         void doGood(int threadId, CallbackListener<Boolean> listener);
 
+        void doChangeBoutique(int threadId, CallbackListener<String> listener);
+
+        void doChangeType(int threadId, int type, CallbackListener<String> listener);
+
+        void doChangeDelete(int threadId, CallbackListener<String> listener);
+
+        void deleteReply(int threadId, int floor, CallbackListener<String> listener);
+
         User getUserFromCache();
     }
 
@@ -40,6 +48,8 @@ public interface PostContract {
         void onFavorite();
 
         void onNotFavorite();
+
+        void finishActivity();
     }
 
     abstract class Presenter extends BasePresenter<View> {
@@ -52,5 +62,13 @@ public interface PostContract {
         public abstract void favorite(int threadId);
 
         public abstract void good(int threadId);
+
+        public abstract void changeBoutique(int threadId);
+
+        public abstract void changeType(int threadId, int type);
+
+        public abstract void changeDelete(int threadId);
+
+        public abstract void deleteReply(int threadId, int floor);
     }
 }

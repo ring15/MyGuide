@@ -1,8 +1,11 @@
 package com.ring.myguide.post.view;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -11,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -181,22 +185,73 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 viewHolder.mManagerImg.setVisibility(View.GONE);
             }
             //判断是否为管理员
-            if (user.getBadge() == 1) {
+            boolean isManager = mUser != null && mUser.getBadge() == 1;
+            boolean isOwner = mUser != null && mUser.getUserName().equals(user.getUserName());
+            if (isManager) {
                 viewHolder.mPostMenuBtn.setVisibility(View.VISIBLE);
                 viewHolder.mPostMenuBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //删除
-                        //加精
-                        //修改分类
+                        //创建弹出式菜单对象（最低版本11）
+                        PopupMenu popup = new PopupMenu(mContext, viewHolder.mPostMenuBtn);//第二个参数是绑定的那个view
+                        //获取菜单填充器
+                        MenuInflater inflater = popup.getMenuInflater();
+                        //填充菜单
+                        inflater.inflate(R.menu.menu_manager, popup.getMenu());
+                        //绑定菜单项的点击事件
+                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                switch (item.getItemId()) {
+                                    case R.id.item_delete:
+                                        //删除
+                                        mPresenter.changeDelete(mPost.getThreadID());
+                                        break;
+                                    case R.id.item_boutique:
+                                        //加精
+                                        mPresenter.changeBoutique(mPost.getThreadID());
+                                        break;
+                                    case R.id.item_change_type:
+                                        //修改分类
+                                        String[] list = {mContext.getString(R.string.post_user), mContext.getString(R.string.post_place), mContext.getString(R.string.post_food)};
+                                        AlertDialog dialog = new AlertDialog.Builder(mContext)
+                                                .setTitle(null)
+                                                .setItems(list, (dialog1, which) -> {
+                                                    mPresenter.changeType(mPost.getThreadID(), which);
+                                                }).show();
+                                        break;
+                                }
+                                return false;
+                            }
+                        });
+                        popup.show(); //这一行代码不要忘记了
                     }
                 });
-            } else if (mUser != null && mUser.getUserName().equals(user.getUserName())) {
+            } else if (isOwner) {
                 viewHolder.mPostMenuBtn.setVisibility(View.VISIBLE);
                 viewHolder.mPostMenuBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //删除
+                        //创建弹出式菜单对象（最低版本11）
+                        PopupMenu popup = new PopupMenu(mContext, viewHolder.mPostMenuBtn);//第二个参数是绑定的那个view
+                        //获取菜单填充器
+                        MenuInflater inflater = popup.getMenuInflater();
+                        //填充菜单
+                        inflater.inflate(R.menu.menu_owner, popup.getMenu());
+                        //绑定菜单项的点击事件
+                        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                switch (item.getItemId()) {
+                                    case R.id.item_delete:
+                                        //删除
+                                        mPresenter.changeDelete(mPost.getThreadID());
+                                        break;
+                                }
+                                return false;
+                            }
+                        });
+                        popup.show(); //这一行代码不要忘记了
                     }
                 });
             } else {
@@ -320,22 +375,34 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     viewHolder.mManagerImg.setVisibility(View.GONE);
                 }
                 //判断是否为管理员
-                if (user.getBadge() == 1) {
+                boolean isManager = mUser != null && mUser.getBadge() == 1;
+                boolean isOwner = mUser != null && mUser.getUserName().equals(user.getUserName());
+                boolean isOwnerReply = mUser != null && mUser.getUserName().equals(mPost.getAuthor().getUserName());
+                if (isManager || isOwner || isOwnerReply) {
                     viewHolder.mPostMenuBtn.setVisibility(View.VISIBLE);
                     viewHolder.mPostMenuBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            //删除
-                            //加精
-                            //修改分类
-                        }
-                    });
-                } else if (mUser != null && mUser.getUserName().equals(user.getUserName())) {
-                    viewHolder.mPostMenuBtn.setVisibility(View.VISIBLE);
-                    viewHolder.mPostMenuBtn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            //删除
+                            //创建弹出式菜单对象（最低版本11）
+                            PopupMenu popup = new PopupMenu(mContext, viewHolder.mPostMenuBtn);//第二个参数是绑定的那个view
+                            //获取菜单填充器
+                            MenuInflater inflater = popup.getMenuInflater();
+                            //填充菜单
+                            inflater.inflate(R.menu.menu_owner, popup.getMenu());
+                            //绑定菜单项的点击事件
+                            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                @Override
+                                public boolean onMenuItemClick(MenuItem item) {
+                                    switch (item.getItemId()) {
+                                        case R.id.item_delete:
+                                            //删除
+                                            mPresenter.deleteReply(mPost.getThreadID(), reply.getFloor());
+                                            break;
+                                    }
+                                    return false;
+                                }
+                            });
+                            popup.show(); //这一行代码不要忘记了
                         }
                     });
                 } else {
