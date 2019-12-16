@@ -192,4 +192,48 @@ public interface RetrofitService {
                                           @Part("description") RequestBody description,
                                           @Part List<MultipartBody.Part> files);
 
+
+    /**
+     * 获取评论列表
+     *
+     * @param map query数据
+     * @return okhttp返回结果
+     */
+    @Streaming
+    @GET(Constants.GET_REPLY)
+    Observable<ResponseBody> getReply(@QueryMap Map<String, String> map);
+
+
+    /**
+     * 发表评论
+     *
+     * @param map query数据
+     * @return okhttp返回结果
+     */
+    @Streaming
+    @GET(Constants.UPLOAD_REPLY)
+    Observable<ResponseBody> uploadReply(@QueryMap Map<String, String> map);
+
+
+    /**
+     * 收藏
+     *
+     * @param map query数据
+     * @return okhttp返回结果
+     */
+    @Streaming
+    @GET(Constants.FAVORITE)
+    Observable<ResponseBody> doFavorite(@QueryMap Map<String, String> map);
+
+
+    /**
+     * 收藏
+     *
+     * @param map query数据
+     * @return okhttp返回结果
+     */
+    @Streaming
+    @GET(Constants.CHANGE_GOOD)
+    Observable<ResponseBody> doGood(@QueryMap Map<String, String> map);
+
 }

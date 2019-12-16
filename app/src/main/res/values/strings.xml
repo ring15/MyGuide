@@ -62,6 +62,11 @@
     <string name="post_post_title">标题</string>
     <string name="post_favorite_num">10</string>
     <string name="post_floor_num">第%1d楼</string>
+    <string name="post_send_reply_empty">评论内容不能为空！</string>
+    <string name="post_send_reply_not_login">登录后才能发表评论哦</string>
+    <string name="post_send_reply_success">评论成功</string>
+    <string name="post_operate_success">操作成功</string>
+    <string name="post_pre_img">预览</string>
 
     <string name="message_not_login">您还没有登录，登录后可接受消息</string>
     <string name="message_already_read">标为已读</string>

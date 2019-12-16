@@ -1,6 +1,7 @@
 package com.ring.myguide.post.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +18,18 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.ring.myguide.R;
+import com.ring.myguide.ShowImgActivity;
 import com.ring.myguide.base.RequestImgListener;
 import com.ring.myguide.entity.Post;
+import com.ring.myguide.entity.Reply;
 import com.ring.myguide.entity.User;
 import com.ring.myguide.post.presenter.PostPresenter;
+import com.ring.myguide.user_detail.view.UserDetailActivity;
 import com.ring.myguide.utils.DateUtil;
 import com.ring.myguide.utils.FileUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ring on 2019/12/13.
@@ -48,6 +55,8 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Post mPost;
 
+    private List<Reply> mReplies = new ArrayList<>();
+
     //当前登录user
     private User mUser;
     private PostPresenter mPresenter;
@@ -62,6 +71,12 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         mPost = post;
         if (mPost != null && mPost.getImgList() != null) {
             imgNum = mPost.getImgList().size();
+        }
+    }
+
+    public void setReplies(List<Reply> replies) {
+        if (replies != null) {
+            mReplies.addAll(replies);
         }
     }
 
@@ -202,6 +217,15 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             }
             String date = DateUtil.getDateToString(time * 1000, pattern);
             viewHolder.mPostTimeText.setText(date);
+            //点击头像查看好友详情
+            viewHolder.mUserAvatarImg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, UserDetailActivity.class);
+                    intent.putExtra("user", user);
+                    mContext.startActivity(intent);
+                }
+            });
         } else if (holder instanceof PostTitleViewHolder) {
             PostTitleViewHolder viewHolder = (PostTitleViewHolder) holder;
             viewHolder.mPostTitleText.setText(mPost.getTitle());
@@ -227,13 +251,110 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         }
                     });
                 }
+                viewHolder.mPhotoImg.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, ShowImgActivity.class);
+                        intent.putExtra("path", path);
+                        mContext.startActivity(intent);
+                    }
+                });
             }
         } else if (holder instanceof LikeViewHolder) {
             LikeViewHolder viewHolder = (LikeViewHolder) holder;
+            //设置是否点赞
+            if (mPost.isGood()) {
+                viewHolder.mPostGoodImg.setSelected(true);
+            } else {
+                viewHolder.mPostGoodImg.setSelected(false);
+            }
+            viewHolder.mPostGoodNum.setText(mPost.getGoodNum() + "");
+            viewHolder.mPostGoodImg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mPresenter != null) {
+                        mPresenter.good(mPost.getThreadID());
+                        mPost.setGood(!mPost.isGood());
+                        if (mPost.isGood()) {
+                            viewHolder.mPostGoodImg.setSelected(true);
+                            mPost.setGoodNum(mPost.getGoodNum() + 1);
+                            viewHolder.mPostGoodNum.setText(mPost.getGoodNum() + "");
+                        } else {
+                            viewHolder.mPostGoodImg.setSelected(false);
+                            mPost.setGoodNum(mPost.getGoodNum() - 1);
+                            viewHolder.mPostGoodNum.setText(mPost.getGoodNum() + "");
+                        }
+                    }
+                }
+            });
         } else if (holder instanceof ReplyTitleViewHolder) {
             ReplyTitleViewHolder viewHolder = (ReplyTitleViewHolder) holder;
         } else if (holder instanceof ReplyViewHolder) {
             ReplyViewHolder viewHolder = (ReplyViewHolder) holder;
+            int index = position - imgNum - 5;
+            if (mReplies.size() > index) {
+                Reply reply = mReplies.get(index);
+                User user = reply.getAuthor();
+                String path = cachePath + "/" + user.getUserName();
+                if (FileUtils.fileIsExists(path)) {
+                    showImgCircle(path, viewHolder.mUserAvatarImg);
+                } else {
+                    mPresenter.requestImg(user.getUserImg(), user.getUserName(), cachePath, new RequestImgListener() {
+                        @Override
+                        public void onSuccess() {
+                            showImgCircle(path, viewHolder.mUserAvatarImg);
+                        }
+
+                        @Override
+                        public void onFailed() {
+
+                        }
+                    });
+                }
+                //设置昵称
+                viewHolder.mNicknameText.setText(user.getNickname());
+                //判断是否为管理员
+                if (user.getBadge() == 1) {
+                    viewHolder.mManagerImg.setVisibility(View.VISIBLE);
+                } else {
+                    viewHolder.mManagerImg.setVisibility(View.GONE);
+                }
+                //判断是否为管理员
+                if (user.getBadge() == 1) {
+                    viewHolder.mPostMenuBtn.setVisibility(View.VISIBLE);
+                    viewHolder.mPostMenuBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //删除
+                            //加精
+                            //修改分类
+                        }
+                    });
+                } else if (mUser != null && mUser.getUserName().equals(user.getUserName())) {
+                    viewHolder.mPostMenuBtn.setVisibility(View.VISIBLE);
+                    viewHolder.mPostMenuBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //删除
+                        }
+                    });
+                } else {
+                    viewHolder.mPostMenuBtn.setVisibility(View.GONE);
+                }
+                //内容
+                viewHolder.mPostFloorContentText.setText(reply.getContent());
+                //楼层
+                viewHolder.mPostFloorText.setText(mContext.getString(R.string.post_floor_num, reply.getFloor()));
+                //点击头像查看好友详情
+                viewHolder.mUserAvatarImg.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(mContext, UserDetailActivity.class);
+                        intent.putExtra("user", user);
+                        mContext.startActivity(intent);
+                    }
+                });
+            }
         }
     }
 
@@ -260,7 +381,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return imgNum + 5;
+        return imgNum + 5 + mReplies.size();
     }
 
     class UserViewHolder extends RecyclerView.ViewHolder {
@@ -340,8 +461,6 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     class ReplyViewHolder extends RecyclerView.ViewHolder {
 
-        //是否精品图标
-        private ImageView mBoutiqueImg;
         //发帖人头像
         private ImageView mUserAvatarImg;
         //发帖人昵称
@@ -357,7 +476,6 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         public ReplyViewHolder(@NonNull View itemView) {
             super(itemView);
-            mBoutiqueImg = itemView.findViewById(R.id.img_boutique);
             mUserAvatarImg = itemView.findViewById(R.id.img_user_avatar);
             mNicknameText = itemView.findViewById(R.id.tv_nickname);
             mManagerImg = itemView.findViewById(R.id.img_manager);

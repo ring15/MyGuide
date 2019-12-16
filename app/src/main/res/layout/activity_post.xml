@@ -111,6 +111,7 @@
                 android:clickable="true"
                 android:maxLength="256"
                 android:maxLines="4"
+                android:onClick="onClick"
                 android:paddingLeft="10dp"
                 android:paddingTop="5dp"
                 android:paddingRight="10dp"

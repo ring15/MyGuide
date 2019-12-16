@@ -88,6 +88,11 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeContract.View>
         mHomeRecycler.setAdapter(mAdapter);
         mHomeRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         mRefreshLayout.setOnRefreshListener(() -> mPresenter.getHomePage(province, getActivity().getCacheDir().getPath()));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         mPresenter.getHomePage(province, getActivity().getCacheDir().getPath());
     }
 

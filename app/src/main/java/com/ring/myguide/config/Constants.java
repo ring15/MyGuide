@@ -40,5 +40,13 @@ public class Constants {
     public static final String ADD_POST= "add_post";
     //上传图片
     public static final String UPLOAD_PHOTO= "upload_photo";
+    //获取评论列表
+    public static final String GET_REPLY= "get_reply";
+    //上传评论
+    public static final String UPLOAD_REPLY= "upload_reply";
+    //收藏
+    public static final String FAVORITE= "favorite";
+    //收藏
+    public static final String CHANGE_GOOD = "change_good";
 
 }
