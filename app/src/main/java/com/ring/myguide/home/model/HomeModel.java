@@ -31,7 +31,7 @@ public class HomeModel implements HomeContract.Model {
     public void requestHomePage(String province, CallbackListener<HomePage> listener) {
         RetrofitService service = RetrofitUtil.getInstance().createService(RetrofitService.class);
         LinkedHashMap<String, String> params = new LinkedHashMap<>();
-        if (CacheUtils.getUser() != null){
+        if (CacheUtils.getUser() != null && CacheUtils.getUser().getUserName() != null){
             params.put("username", CacheUtils.getUser().getUserName());
         }
         params.put("province", province);
