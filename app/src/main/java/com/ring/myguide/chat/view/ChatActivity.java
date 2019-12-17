@@ -141,7 +141,7 @@ public class ChatActivity extends BaseActivity<ChatPresenter, ChatContract.View>
     }
 
     private void onConversationInit() {
-        conversation = EMClient.getInstance().chatManager().getConversation(mOtherUser.getNickname(),
+        conversation = EMClient.getInstance().chatManager().getConversation(mOtherUser.getUserName(),
                 EMConversation.EMConversationType.Chat,
                 true);
         conversation.markAllMessagesAsRead();
@@ -194,10 +194,10 @@ public class ChatActivity extends BaseActivity<ChatPresenter, ChatContract.View>
     private void setMessageList() {
         Map<String, EMConversation> map = EMClient.getInstance().chatManager().getAllConversations();
         //获取当前用户发送的信息
-        EMConversation conversation = map.get(mUser.getNickname());
+        EMConversation conversation = map.get(mUser.getUserName());
         //获取聊天用户发送的信息
-        EMConversation otherConversation = map.get(mOtherUser.getNickname());
-        EMConversation emConversation = EMClient.getInstance().chatManager().getConversation(mOtherUser.getNickname(), EMConversation.EMConversationType.Chat, true);
+        EMConversation otherConversation = map.get(mOtherUser.getUserName());
+        EMConversation emConversation = EMClient.getInstance().chatManager().getConversation(mOtherUser.getUserName(), EMConversation.EMConversationType.Chat, true);
         List<EMMessage> messages = new ArrayList<>(emConversation.getAllMessages());
 //        if (conversation != null) {
 //            messages.addAll(conversation.getAllMessages());

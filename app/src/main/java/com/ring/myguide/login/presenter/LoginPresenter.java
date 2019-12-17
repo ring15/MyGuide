@@ -72,6 +72,7 @@ public class LoginPresenter extends LoginContract.Presenter {
                             mView.get().loginSuccess(user);
                             if (user.getBadge() == 1) {
                                 mView.get().showToast(R.string.login_manager);
+                                mView.get().loginChat();
                             } else {
                                 mView.get().loginChat();
                             }
@@ -85,6 +86,7 @@ public class LoginPresenter extends LoginContract.Presenter {
                             mView.get().loginSuccess(user);
                             if (user.getBadge() == 1) {
                                 mView.get().showToast(R.string.login_manager);
+                                mView.get().loginChat();
                             } else {
                                 mView.get().loginChat();
                             }
@@ -97,6 +99,7 @@ public class LoginPresenter extends LoginContract.Presenter {
                     mView.get().loginSuccess(user);
                     if (user.getBadge() == 1) {
                         mView.get().showToast(R.string.login_manager);
+                        mView.get().loginChat();
                     } else {
                         mView.get().loginChat();
                     }
@@ -108,6 +111,7 @@ public class LoginPresenter extends LoginContract.Presenter {
                 mView.get().loginSuccess(user);
                 if (user.getBadge() == 1) {
                     mView.get().showToast(R.string.login_manager);
+                    mView.get().loginChat();
                 } else {
                     mView.get().loginChat();
                 }

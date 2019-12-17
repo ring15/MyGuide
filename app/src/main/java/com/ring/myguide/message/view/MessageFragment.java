@@ -241,6 +241,8 @@ public class MessageFragment extends BaseFragment<MessagePresenter, MessageContr
 
     @Override
     public void setUser(User user) {
+        mReadText.setClickable(true);
+        mDeleteText.setClickable(true);
         mNotLoginLayout.setVisibility(View.GONE);
         setMenuClickable(Uri.parse("true"));
 
