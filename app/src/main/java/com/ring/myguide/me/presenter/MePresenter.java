@@ -3,11 +3,15 @@ package com.ring.myguide.me.presenter;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.ring.myguide.R;
 import com.ring.myguide.RequestImgModel;
 import com.ring.myguide.base.CallbackListener;
+import com.ring.myguide.entity.Post;
 import com.ring.myguide.entity.User;
 import com.ring.myguide.me.MeContract;
 import com.ring.myguide.me.model.MeModel;
+
+import java.util.List;
 
 /**
  * Created by ring on 2019/11/19.
@@ -53,6 +57,66 @@ public class MePresenter extends MeContract.Presenter {
             public void onError(Throwable throwable) {
                 if (isViewAttached()) {
                     mView.get().getImgFailed();
+                    mView.get().showToast(throwable.getMessage());
+                    Log.e(TAG, throwable.getMessage());
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getMyPost() {
+        mModel.requestMyPost(new CallbackListener<List<Post>>() {
+            @Override
+            public void onSuccess(List<Post> data) {
+                if (isViewAttached()){
+                    mView.get().switchActivity(data, R.string.me_post_list_title);
+                }
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                if (isViewAttached()) {
+                    mView.get().showToast(throwable.getMessage());
+                    Log.e(TAG, throwable.getMessage());
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getMyFavorite() {
+        mModel.requestMyFavorite(new CallbackListener<List<Post>>() {
+            @Override
+            public void onSuccess(List<Post> data) {
+                if (isViewAttached()){
+                    mView.get().switchActivity(data, R.string.me_favorite_list_title);
+                }
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                if (isViewAttached()) {
+                    mView.get().showToast(throwable.getMessage());
+                    Log.e(TAG, throwable.getMessage());
+                }
+            }
+        });
+    }
+
+    @Override
+    public void getMyLike() {
+        mModel.requestMyLike(new CallbackListener<List<Post>>() {
+            @Override
+            public void onSuccess(List<Post> data) {
+                if (isViewAttached()){
+                    mView.get().switchActivity(data, R.string.me_like_list_title);
+                }
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                if (isViewAttached()) {
                     mView.get().showToast(throwable.getMessage());
                     Log.e(TAG, throwable.getMessage());
                 }

@@ -280,4 +280,37 @@ public interface RetrofitService {
     @GET(Constants.CHANGE_REPLY)
     Observable<ResponseBody> doDeleteReply(@QueryMap Map<String, String> map);
 
+
+    /**
+     * 获取我的帖子
+     *
+     * @param map query数据
+     * @return okhttp返回结果
+     */
+    @Streaming
+    @GET(Constants.GET_MY_POST)
+    Observable<ResponseBody> requestMyPost(@QueryMap Map<String, String> map);
+
+
+    /**
+     * 获取收藏帖子
+     *
+     * @param map query数据
+     * @return okhttp返回结果
+     */
+    @Streaming
+    @GET(Constants.GET_FAVORITE_POST)
+    Observable<ResponseBody> requestFavotitePost(@QueryMap Map<String, String> map);
+
+
+    /**
+     * 获取点赞帖子
+     *
+     * @param map query数据
+     * @return okhttp返回结果
+     */
+    @Streaming
+    @GET(Constants.GET_LIKE_POST)
+    Observable<ResponseBody> requestLikePost(@QueryMap Map<String, String> map);
+
 }

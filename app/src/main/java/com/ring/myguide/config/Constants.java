@@ -56,5 +56,11 @@ public class Constants {
     public static final String CHANGE_DELETE = "change_delete";
     //删除评论
     public static final String CHANGE_REPLY = "delete_reply";
+    //获取我的帖子
+    public static final String GET_MY_POST = "get_my_post";
+    //获取收藏帖子
+    public static final String GET_FAVORITE_POST = "get_favorite_post";
+    //获取点赞帖子
+    public static final String GET_LIKE_POST = "get_like_post";
 
 }

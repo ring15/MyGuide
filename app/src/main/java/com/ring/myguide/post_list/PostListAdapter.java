@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -119,6 +120,10 @@ public class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.MyView
                     mContext.startActivity(intent);
                 }
             });
+            if (post.isDelete()){
+                holder.itemView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.gray));
+                holder.itemView.setClickable(false);
+            }
         }
     }
 

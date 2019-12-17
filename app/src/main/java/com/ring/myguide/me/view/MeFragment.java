@@ -20,12 +20,17 @@ import com.bumptech.glide.request.RequestOptions;
 import com.ring.myguide.R;
 import com.ring.myguide.base.BaseFragment;
 import com.ring.myguide.center.view.CenterActivity;
+import com.ring.myguide.entity.Post;
 import com.ring.myguide.entity.User;
 import com.ring.myguide.login.view.LoginActivity;
 import com.ring.myguide.me.MeContract;
 import com.ring.myguide.me.presenter.MePresenter;
+import com.ring.myguide.post_list.PostListActivity;
 import com.ring.myguide.setting.view.SettingActivity;
 import com.ring.myguide.utils.FileUtils;
+
+import java.io.Serializable;
+import java.util.List;
 
 import static com.ring.myguide.login.view.LoginActivity.FROM_MEFRAGMENT;
 
@@ -171,10 +176,31 @@ public class MeFragment extends BaseFragment<MePresenter, MeContract.View>
                 }
                 break;
             case R.id.layout_my_post:
+                if (isLogin) {
+                    mPresenter.getMyPost();
+                } else {
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    intent.putExtra("from", FROM_MEFRAGMENT);
+                    startActivity(intent);
+                }
                 break;
             case R.id.layout_favorite:
+                if (isLogin) {
+                    mPresenter.getMyFavorite();
+                } else {
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    intent.putExtra("from", FROM_MEFRAGMENT);
+                    startActivity(intent);
+                }
                 break;
             case R.id.layout_like:
+                if (isLogin) {
+                    mPresenter.getMyLike();
+                } else {
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    intent.putExtra("from", FROM_MEFRAGMENT);
+                    startActivity(intent);
+                }
                 break;
             case R.id.layout_setting:
                 startActivity(new Intent(getActivity(), SettingActivity.class));
@@ -276,6 +302,14 @@ public class MeFragment extends BaseFragment<MePresenter, MeContract.View>
     @Override
     public void getImgFailed() {
 
+    }
+
+    @Override
+    public void switchActivity(List<Post> posts, int title) {
+        Intent intent = new Intent(getActivity(), PostListActivity.class);
+        intent.putExtra("title", getString(title));
+        intent.putExtra("post", (Serializable) posts);
+        startActivity(intent);
     }
 
     /**
