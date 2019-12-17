@@ -11,7 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ShowImgActivity"></activity>
+        <activity android:name=".query_post.view.QueryPostActivity"></activity>
+        <activity android:name=".ShowImgActivity" />
         <activity android:name=".post.view.PostActivity" />
         <activity android:name=".post_list.PostListActivity" />
         <activity android:name=".WebActivity" />

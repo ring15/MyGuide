@@ -99,6 +99,7 @@
             android:layout_gravity="right"
             android:layout_marginEnd="5dp"
             android:background="@null"
+            android:onClick="onClick"
             android:paddingStart="5dp"
             android:paddingTop="10dp"
             android:paddingEnd="5dp"

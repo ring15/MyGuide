@@ -121,6 +121,16 @@ public interface RetrofitService {
 
 
     /**
+     * 查询帖子（搜索）
+     *
+     * @param map query数据
+     * @return okhttp返回结果
+     */
+    @GET(Constants.SEARCH_POST)
+    Observable<ResponseBody> searchPost(@QueryMap Map<String, String> map);
+
+
+    /**
      * 更新用户信息（不带头像）
      *
      * @param map query数据

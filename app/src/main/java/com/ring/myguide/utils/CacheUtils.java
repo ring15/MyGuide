@@ -18,6 +18,7 @@ public class CacheUtils {
 
     private final static String CACHE_USER = "user";                //最近登录user
     private final static String QUERY_USER = "query_user";                //用户查询信息
+    private final static String QUERY_POST = "query_post";                //帖子查询信息
     private final static String LOCATION = "location";                //用户位置信息
 
     private static ACache mAppCache;
@@ -87,6 +88,40 @@ public class CacheUtils {
             Log.e(TAG, "getQueryUser解析失败");
         }
         return username;
+    }
+
+    /**
+     * 缓存帖子查询信息
+     *
+     * @param keywords
+     */
+    public static void putQueryPost(LinkedList<String> keywords) {
+        String jsonStr = JSON.toJSONString(keywords);
+        if (mAppCache != null) {
+            mAppCache.put(QUERY_POST, jsonStr);
+        } else {
+            Log.e(TAG, "Cache is null");
+        }
+    }
+
+    /**
+     * 查询缓存的帖子查询信息
+     *
+     * @return
+     */
+    public static LinkedList<String> getQueryPost() {
+        LinkedList<String> keywords = null;
+        String jsonStr;
+        try {
+            jsonStr = mAppCache.getAsString(QUERY_POST);
+            List<String> list = JSON.parseArray(jsonStr, String.class);
+            if (list != null) {
+                keywords = new LinkedList<>(list);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "getQueryPost解析失败");
+        }
+        return keywords;
     }
 
     /**

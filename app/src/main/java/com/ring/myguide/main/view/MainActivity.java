@@ -36,6 +36,7 @@ import com.ring.myguide.main.MainContract;
 import com.ring.myguide.main.presenter.MainPresenter;
 import com.ring.myguide.me.view.MeFragment;
 import com.ring.myguide.message.view.MessageFragment;
+import com.ring.myguide.query_post.view.QueryPostActivity;
 import com.ring.myguide.query_user.view.QueryUserActivity;
 import com.ring.myguide.send_post.view.SendPostActivity;
 
@@ -201,6 +202,9 @@ public class MainActivity extends BaseActivity<MainPresenter, MainContract.View>
                 mCurrentItem = 2;
                 mViewPager.setCurrentItem(mCurrentItem);
                 mPresenter.setCurrentItem(mCurrentItem);
+                break;
+            case R.id.btn_search:
+                startActivity(new Intent(MainActivity.this, QueryPostActivity.class));
                 break;
             case R.id.btn_menu:
                 //创建弹出式菜单对象（最低版本11）

@@ -95,6 +95,7 @@
     <string name="black_no_blacks">黑名单里空空如也~</string>
 
     <string name="query_search">搜索</string>
+    <string name="query_search_result">搜索结果</string>
     <string name="query_history_title">历史搜索记录</string>
     <string name="query_no_history">暂无搜索记录</string>
     <string name="query_not_empty">搜索不能为空</string>
