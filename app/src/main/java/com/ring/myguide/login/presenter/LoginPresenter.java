@@ -61,12 +61,12 @@ public class LoginPresenter extends LoginContract.Presenter {
 
     private void requestImg(User user) {
         if (user.getUserImg() != null) {
-            if (user.getUserImgPaht() == null || !FileUtils.fileIsExists(user.getUserImgPaht())) {
+            if (user.getUserImgPath() == null || !FileUtils.fileIsExists(user.getUserImgPath())) {
                 RequestImgModel model = new RequestImgModel();
-                model.requestImg(user.getUserImg(), mSavePath, user.getUserName() + ".jpg", new CallbackListener<String>() {
+                model.requestImg(user.getUserImg(), mSavePath, user.getUserImgPath() + ".jpg", new CallbackListener<String>() {
                     @Override
                     public void onSuccess(String data) {
-                        user.setUserImgPaht(data);
+                        user.setUserImgPath(data);
                         mModel.putUser(user);
                         if (isViewAttached()) {
                             mView.get().loginSuccess(user);

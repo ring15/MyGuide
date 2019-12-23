@@ -2,6 +2,7 @@ package com.ring.myguide.main.presenter;
 
 import android.text.TextUtils;
 
+import com.ring.myguide.entity.User;
 import com.ring.myguide.main.MainContract;
 import com.ring.myguide.main.model.MainModel;
 
@@ -40,11 +41,17 @@ public class MainPresenter extends MainContract.Presenter {
 
     @Override
     public void init(int unreadCount) {
+        User user = mModel.getUserFromCache();
         if (isViewAttached()) {
             if (unreadCount <= 0) {
                 mView.get().noUnreadMessage();
             } else {
                 mView.get().hasUnreadMessage();
+            }
+            if (user != null && user.getUserName() != null) {
+                mView.get().setUser();
+            } else {
+                mView.get().setNoUser();
             }
         }
     }

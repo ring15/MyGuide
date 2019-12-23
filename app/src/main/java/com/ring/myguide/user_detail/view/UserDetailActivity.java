@@ -86,7 +86,7 @@ public class UserDetailActivity extends BaseActivity<UserDetailPresenter, UserDe
 
         if (mUser != null && mUser.getUid() != null) {
             Glide.with(this)
-                    .load(getCacheDir().getPath() + "/" + mUser.getUserName())
+                    .load(getCacheDir().getPath() + "/" + mUser.getUserImgPath())
                     .error(R.drawable.icon_avatar_default)
                     .placeholder(R.drawable.icon_avatar_default)
                     .apply(RequestOptions.bitmapTransform(new CircleCrop()))

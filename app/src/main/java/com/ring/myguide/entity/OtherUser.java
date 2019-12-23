@@ -43,7 +43,8 @@ public class OtherUser implements Serializable {
     @JSONField(name = "is_black")
     private int isBlack;
     //头像保存在本地的位置
-    private String userImgPaht;
+    @JSONField(name = "img_path")
+    private String userImgPath;
 
     public String getUid() {
         return uid;
@@ -89,8 +90,8 @@ public class OtherUser implements Serializable {
         return isBlack;
     }
 
-    public String getUserImgPaht() {
-        return userImgPaht;
+    public String getUserImgPath() {
+        return userImgPath;
     }
 
     public void setUid(String uid) {
@@ -137,7 +138,7 @@ public class OtherUser implements Serializable {
         this.isBlack = isBlack;
     }
 
-    public void setUserImgPaht(String userImgPaht) {
-        this.userImgPaht = userImgPaht;
+    public void setUserImgPath(String userImgPath) {
+        this.userImgPath = userImgPath;
     }
 }

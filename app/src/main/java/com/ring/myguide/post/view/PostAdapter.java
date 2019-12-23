@@ -80,6 +80,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public void setReplies(List<Reply> replies) {
         if (replies != null) {
+            mReplies.clear();
             mReplies.addAll(replies);
         }
     }
@@ -160,11 +161,11 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (holder instanceof UserViewHolder) {
             UserViewHolder viewHolder = (UserViewHolder) holder;
             User user = mPost.getAuthor();
-            String path = cachePath + "/" + user.getUserName();
+            String path = cachePath + "/" + user.getUserImgPath();
             if (FileUtils.fileIsExists(path)) {
                 showImgCircle(path, viewHolder.mUserAvatarImg);
             } else {
-                mPresenter.requestImg(user.getUserImg(), user.getUserName(), cachePath, new RequestImgListener() {
+                mPresenter.requestImg(user.getUserImg(), user.getUserImgPath(), cachePath, new RequestImgListener() {
                     @Override
                     public void onSuccess() {
                         showImgCircle(path, viewHolder.mUserAvatarImg);
@@ -350,11 +351,11 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             if (mReplies.size() > index) {
                 Reply reply = mReplies.get(index);
                 User user = reply.getAuthor();
-                String path = cachePath + "/" + user.getUserName();
+                String path = cachePath + "/" + user.getUserImgPath();
                 if (FileUtils.fileIsExists(path)) {
                     showImgCircle(path, viewHolder.mUserAvatarImg);
                 } else {
-                    mPresenter.requestImg(user.getUserImg(), user.getUserName(), cachePath, new RequestImgListener() {
+                    mPresenter.requestImg(user.getUserImg(), user.getUserImgPath(), cachePath, new RequestImgListener() {
                         @Override
                         public void onSuccess() {
                             showImgCircle(path, viewHolder.mUserAvatarImg);

@@ -3,12 +3,15 @@ package com.ring.myguide.main;
 import com.ring.myguide.base.BaseModel;
 import com.ring.myguide.base.BasePresenter;
 import com.ring.myguide.base.BaseView;
+import com.ring.myguide.entity.User;
 
 /**
  * Created by ring on 2019/11/18.
  */
 public interface MainContract {
     interface Model extends BaseModel {
+        User getUserFromCache();
+
         String getCityFromCache();
 
         void putCityIntoCache(String city);
@@ -30,6 +33,10 @@ public interface MainContract {
         void hasUnreadMessage();
 
         void showCity(String city);
+
+        void setUser();
+
+        void setNoUser();
     }
 
     abstract class Presenter extends BasePresenter<View> {

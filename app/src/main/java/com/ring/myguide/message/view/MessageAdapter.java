@@ -66,7 +66,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
 
             //设置头像图片
             Glide.with(mContext)
-                    .load(user.getUserImgPaht())
+                    .load(user.getUserImgPath())
                     .error(R.drawable.icon_avatar_default)
                     .placeholder(R.drawable.icon_avatar_default)
                     .apply(RequestOptions.bitmapTransform(new CircleCrop()))

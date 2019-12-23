@@ -80,11 +80,16 @@ public class MessageModel implements MessageContract.Model {
 
     @Override
     public LinkedList<MessageList> getMessageList() {
-        return CacheUtils.getMessageLists(CacheUtils.getUser().getUserName());
+        if (CacheUtils.getUser() != null && CacheUtils.getUser().getUserName() != null) {
+            return CacheUtils.getMessageLists(CacheUtils.getUser().getUserName());
+        }
+        return null;
     }
 
     @Override
     public void putMessageList(LinkedList<MessageList> messageLists) {
-        CacheUtils.putMessageLists(messageLists, CacheUtils.getUser().getUserName());
+        if (CacheUtils.getUser() != null && CacheUtils.getUser().getUserName() != null) {
+            CacheUtils.putMessageLists(messageLists, CacheUtils.getUser().getUserName());
+        }
     }
 }

@@ -69,11 +69,11 @@ public class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.MyView
         if (mPosts.size() > position) {
             Post post = mPosts.get(position);
             User user = post.getAuthor();
-            String path = cachePath + "/" + user.getUserName();
+            String path = cachePath + "/" + user.getUserImgPath();
             if (FileUtils.fileIsExists(path)) {
                 showImgCircle(path, holder.mUserAvatarImg);
             } else {
-                mPresenter.requestImg(user.getUserImg(), user.getUserName(), cachePath, new RequestImgListener() {
+                mPresenter.requestImg(user.getUserImg(), user.getUserImgPath(), cachePath, new RequestImgListener() {
                     @Override
                     public void onSuccess() {
                         showImgCircle(path, holder.mUserAvatarImg);

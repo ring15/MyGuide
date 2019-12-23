@@ -251,7 +251,7 @@ public class CenterActivity extends BaseActivity<CenterPresenter, CenterContract
         mUser = user;
         //加载头像
         Glide.with(this)
-                .load(user.getUserImgPaht())
+                .load(user.getUserImgPath())
                 .error(R.drawable.icon_avatar_default)
                 .placeholder(R.drawable.icon_avatar_default)
                 .apply(RequestOptions.bitmapTransform(new CircleCrop()))

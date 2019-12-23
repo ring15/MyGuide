@@ -43,10 +43,8 @@ public class PostPresenter extends PostContract.Presenter {
         mModel.requestReply(threadId, new CallbackListener<List<Reply>>() {
             @Override
             public void onSuccess(List<Reply> data) {
-                if (data != null && data.size() > 0) {
-                    if (isViewAttached()) {
-                        mView.get().setReplies(data);
-                    }
+                if (isViewAttached()) {
+                    mView.get().setReplies(data);
                 }
             }
 

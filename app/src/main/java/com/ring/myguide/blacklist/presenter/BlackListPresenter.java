@@ -52,12 +52,12 @@ public class BlackListPresenter extends BlacksContract.Presenter {
         if (users != null && users.size() > 0) {
             User user = users.get(0);
             if (user.getUserImg() != null) {
-                if (user.getUserImgPaht() == null || !FileUtils.fileIsExists(user.getUserImgPaht())) {
+                if (user.getUserImgPath() == null || !FileUtils.fileIsExists(user.getUserImgPath())) {
                     RequestImgModel model = new RequestImgModel();
-                    model.requestImg(user.getUserImg(), mSavePath, user.getUserName() + ".jpg", new CallbackListener<String>() {
+                    model.requestImg(user.getUserImg(), mSavePath, user.getUserImgPath() + ".jpg", new CallbackListener<String>() {
                         @Override
                         public void onSuccess(String data) {
-                            user.setUserImgPaht(data);
+                            user.setUserImgPath(data);
                             mUserList.add(user);
                             users.remove(user);
                             requestImg(users);

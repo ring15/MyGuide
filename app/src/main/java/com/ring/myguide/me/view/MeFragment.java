@@ -245,9 +245,9 @@ public class MeFragment extends BaseFragment<MePresenter, MeContract.View>
     @Override
     public void setUser(User user) {
         isLogin = true;
-        if (user.getUserImgPaht() != null && FileUtils.fileIsExists(user.getUserImgPaht())) {
+        if (user.getUserImgPath() != null && FileUtils.fileIsExists(user.getUserImgPath())) {
             Glide.with(this)
-                    .load(user.getUserImgPaht())
+                    .load(user.getUserImgPath())
                     .error(R.drawable.icon_avatar_default)
                     .placeholder(R.drawable.icon_avatar_default)
                     .apply(RequestOptions.bitmapTransform(new CircleCrop()))
@@ -255,7 +255,7 @@ public class MeFragment extends BaseFragment<MePresenter, MeContract.View>
                     .diskCacheStrategy(DiskCacheStrategy.NONE) // 不使用磁盘缓存
                     .into(mUserAvatar);
         } else if (user.getUserImg() != null) {
-            mPresenter.getImg(user.getUserImg(), getActivity().getCacheDir().getPath(), user.getUserName() + ".jpg");
+            mPresenter.getImg(user.getUserImg(), getActivity().getCacheDir().getPath(), user.getUserImgPath() + ".jpg");
         }
         mNickName.setText(user.getNickname());
         mUserName.setText(user.getUserName());

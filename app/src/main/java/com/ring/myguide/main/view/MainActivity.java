@@ -111,6 +111,9 @@ public class MainActivity extends BaseActivity<MainPresenter, MainContract.View>
         }
     };
 
+    //判断是否登录
+    private boolean isLogin = false;
+
     @Override
     protected int getIdResource() {
         return R.layout.activity_main;
@@ -218,7 +221,11 @@ public class MainActivity extends BaseActivity<MainPresenter, MainContract.View>
                 popup.show(); //这一行代码不要忘记了
                 break;
             case R.id.btn_add:
-                startActivity(new Intent(MainActivity.this, SendPostActivity.class));
+                if (isLogin) {
+                    startActivity(new Intent(MainActivity.this, SendPostActivity.class));
+                } else {
+                    showToast(R.string.send_post_not_login);
+                }
                 break;
             case R.id.layout_local:
                 startActivityForResult(new Intent(MainActivity.this, CityPickerActivity.class), REQUEST_CHOOSE_CITY_CODE);
@@ -318,6 +325,16 @@ public class MainActivity extends BaseActivity<MainPresenter, MainContract.View>
     @Override
     public void showCity(String city) {
         mLocalText.setText(city);
+    }
+
+    @Override
+    public void setUser() {
+        isLogin = true;
+    }
+
+    @Override
+    public void setNoUser() {
+        isLogin = false;
     }
 
     @Override

@@ -11,32 +11,67 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".query_post.view.QueryPostActivity"></activity>
-        <activity android:name=".ShowImgActivity" />
-        <activity android:name=".post.view.PostActivity" />
-        <activity android:name=".post_list.PostListActivity" />
-        <activity android:name=".WebActivity" />
-        <activity android:name=".city_picker.CityPickerActivity" />
-        <activity android:name=".send_post.view.SendPostActivity" />
-        <activity android:name=".center.view.CenterActivity" />
-        <activity android:name=".chat.view.ChatActivity" />
-        <activity android:name=".query_user.view.QueryUserActivity" />
-        <activity android:name=".user_detail.view.UserDetailActivity" />
+        <activity
+            android:name=".query_post.view.QueryPostActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize" />
+        <activity
+            android:name=".ShowImgActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize" />
+        <activity
+            android:name=".post.view.PostActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize" />
+        <activity
+            android:name=".post_list.PostListActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize" />
+        <activity
+            android:name=".WebActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize" />
+        <activity
+            android:name=".city_picker.CityPickerActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize" />
+        <activity
+            android:name=".send_post.view.SendPostActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize" />
+        <activity
+            android:name=".center.view.CenterActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize" />
+        <activity
+            android:name=".chat.view.ChatActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize" />
+        <activity
+            android:name=".query_user.view.QueryUserActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize" />
+        <activity
+            android:name=".user_detail.view.UserDetailActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize" />
         <activity android:name=".blacklist.view.BlackListActivity" />
-        <activity android:name=".friends_list.view.FriendsListActivity" />
-        <activity android:name=".setting.view.SettingActivity" />
-        <activity android:name=".register.view.RegisterActivity" />
-        <activity android:name=".login.view.LoginActivity" />
-        <activity android:name=".SplashActivity">
+        <activity
+            android:name=".friends_list.view.FriendsListActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize" />
+        <activity
+            android:name=".setting.view.SettingActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize" />
+        <activity
+            android:name=".register.view.RegisterActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize" />
+        <activity
+            android:name=".login.view.LoginActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize" />
+        <activity
+            android:name=".SplashActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TestActivity" />
+        <activity
+            android:name=".TestActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize" />
         <activity
             android:name=".main.view.MainActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:launchMode="singleTask" />
 
         <meta-data
@@ -76,6 +111,7 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
     </application>
+
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />

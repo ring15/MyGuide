@@ -37,7 +37,8 @@ public class User implements Serializable {
     @JSONField(name = "register_time")
     private String registerTime;
     //头像保存在本地的位置
-    private String userImgPaht;
+    @JSONField(name = "img_path")
+    private String userImgPath;
 
     public String getUid() {
         return uid;
@@ -71,8 +72,8 @@ public class User implements Serializable {
         return introduce;
     }
 
-    public String getUserImgPaht() {
-        return userImgPaht;
+    public String getUserImgPath() {
+        return userImgPath;
     }
 
     public String getRegisterTime() {
@@ -115,7 +116,7 @@ public class User implements Serializable {
         this.registerTime = registerTime;
     }
 
-    public void setUserImgPaht(String userImgPaht) {
-        this.userImgPaht = userImgPaht;
+    public void setUserImgPath(String userImgPath) {
+        this.userImgPath = userImgPath;
     }
 }

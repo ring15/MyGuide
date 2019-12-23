@@ -251,11 +251,11 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             if (mFoodRecommends.size() > position - 2) {
                 Post post = mFoodRecommends.get(position - 2);
                 User user = post.getAuthor();
-                String path = cachePath + "/" + user.getUserName();
+                String path = cachePath + "/" + user.getUserImgPath();
                 if (FileUtils.fileIsExists(path)) {
                     showImgCircle(path, viewHolder.mUserAvatarImg);
                 } else {
-                    mPresenter.requestImg(user.getUserImg(), user.getUserName(), cachePath, new RequestImgListener() {
+                    mPresenter.requestImg(user.getUserImg(), user.getUserImgPath(), cachePath, new RequestImgListener() {
                         @Override
                         public void onSuccess() {
                             showImgCircle(path, viewHolder.mUserAvatarImg);
@@ -319,11 +319,11 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             if (mPlaceRecommends.size() > position - 3 - mFoodRecommends.size()) {
                 Post post = mPlaceRecommends.get(position - 3 - mFoodRecommends.size());
                 User user = post.getAuthor();
-                String path = cachePath + "/" + user.getUserName();
+                String path = cachePath + "/" + user.getUserImgPath();
                 if (FileUtils.fileIsExists(path)) {
                     showImgCircle(path, viewHolder.mUserAvatarImg);
                 } else {
-                    mPresenter.requestImg(user.getUserImg(), user.getUserName(), cachePath, new RequestImgListener() {
+                    mPresenter.requestImg(user.getUserImg(), user.getUserImgPath(), cachePath, new RequestImgListener() {
                         @Override
                         public void onSuccess() {
                             showImgCircle(path, viewHolder.mUserAvatarImg);
@@ -386,11 +386,11 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             if (mUserRecommends.size() > position - 4 - mFoodRecommends.size() - mPlaceRecommends.size()) {
                 Post post = mUserRecommends.get(position - 4 - mFoodRecommends.size() - mPlaceRecommends.size());
                 User user = post.getAuthor();
-                String path = cachePath + "/" + user.getUserName();
+                String path = cachePath + "/" + user.getUserImgPath();
                 if (FileUtils.fileIsExists(path)) {
                     showImgCircle(path, viewHolder.mUserAvatarImg);
                 } else {
-                    mPresenter.requestImg(user.getUserImg(), user.getUserName(), cachePath, new RequestImgListener() {
+                    mPresenter.requestImg(user.getUserImg(), user.getUserImgPath(), cachePath, new RequestImgListener() {
                         @Override
                         public void onSuccess() {
                             showImgCircle(path, viewHolder.mUserAvatarImg);

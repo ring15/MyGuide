@@ -104,7 +104,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     holder.tvMailContent.setText(((EMTextMessageBody) mEMMessages.get(i).getBody()).getMessage());
                 }
                 Glide.with(mContext)
-                        .load(mUser.getUserImgPaht())
+                        .load(mUser.getUserImgPath())
                         .placeholder(R.drawable.icon_avatar_default)
                         .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                         .skipMemoryCache(true) // 不使用内存缓存
@@ -131,7 +131,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     holder.tvMailContent.setText(((EMTextMessageBody) mEMMessages.get(i).getBody()).getMessage());
                 }
                 Glide.with(mContext)
-                        .load(mOtherUser.getUserImgPaht())
+                        .load(mOtherUser.getUserImgPath())
                         .placeholder(R.drawable.icon_avatar_default)
                         .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                         .skipMemoryCache(true) // 不使用内存缓存

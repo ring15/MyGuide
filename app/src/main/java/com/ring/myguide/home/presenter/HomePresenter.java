@@ -151,19 +151,19 @@ public class HomePresenter extends HomeContract.Presenter {
 //            }
 ////            if (foodRecommends != null && foodRecommends.size() > 0) {
 ////                for (Post post : foodRecommends) {
-////                    post.getAuthor().setUserImgPaht(mImgPath.get(n));
+////                    post.getAuthor().setUserImgPath(mImgPath.get(n));
 ////                    n++;
 ////                }
 ////            }
 ////            if (placeRecommends != null && placeRecommends.size() > 0) {
 ////                for (Post post : placeRecommends) {
-////                    post.getAuthor().setUserImgPaht(mImgPath.get(n));
+////                    post.getAuthor().setUserImgPath(mImgPath.get(n));
 ////                    n++;
 ////                }
 ////            }
 ////            if (userRecommends != null && userRecommends.size() > 0) {
 ////                for (Post post : userRecommends) {
-////                    post.getAuthor().setUserImgPaht(mImgPath.get(n));
+////                    post.getAuthor().setUserImgPath(mImgPath.get(n));
 ////                    n++;
 ////                }
 ////            }
