@@ -52,19 +52,15 @@ public class QueryPostModel implements QueryPostContract.Model {
                 .subscribeOn(Schedulers.newThread())
                 .map(responseBody -> {
                     List<Post> posts = new ArrayList<>();
-                    try {
-                        String result = responseBody.string();
-                        Log.i(TAG, result);
-                        JSONObject data = JsonParse.parseString(result);
-                        JSONArray replyArray = data.getJSONArray("list");
-                        for (int i = 0; i < replyArray.size(); i++) {
-                            String string = replyArray.getString(i);
-                            JSONObject object = JSON.parseObject(string);
-                            Post post = JSON.toJavaObject(object, Post.class);
-                            posts.add(post);
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                    String result = responseBody.string();
+                    Log.i(TAG, result);
+                    JSONObject data = JsonParse.parseString(result);
+                    JSONArray replyArray = data.getJSONArray("list");
+                    for (int i = 0; i < replyArray.size(); i++) {
+                        String string = replyArray.getString(i);
+                        JSONObject object = JSON.parseObject(string);
+                        Post post = JSON.toJavaObject(object, Post.class);
+                        posts.add(post);
                     }
                     return posts;
                 })

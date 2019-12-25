@@ -35,14 +35,10 @@ public class RegisterModel implements RegisterContract.Model {
                 .subscribeOn(Schedulers.newThread())
                 .map(responseBody -> {
                     User user = null;
-                    try {
-                        String result = responseBody.string();
-                        Log.i(TAG, result);
-                        JSONObject data = JsonParse.parseString(result);
-                        user = JSON.toJavaObject(data, User.class);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    String result = responseBody.string();
+                    Log.i(TAG, result);
+                    JSONObject data = JsonParse.parseString(result);
+                    user = JSON.toJavaObject(data, User.class);
                     return user;
                 })
                 .observeOn(AndroidSchedulers.mainThread())

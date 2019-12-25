@@ -8,7 +8,6 @@ import com.ring.myguide.data.RetrofitUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.LinkedHashMap;
 
 import io.reactivex.Observer;
@@ -32,15 +31,11 @@ public class RequestImgModel {
                 .observeOn(Schedulers.io())
                 .map(responseBody -> {
                     File file = new File(savePath, photoName);
-                    try {
-                        byte[] bytes = responseBody.bytes();
-                        Log.e(TAG, responseBody.contentLength() + "");
-                        FileOutputStream fos = new FileOutputStream(file);
-                        fos.write(bytes);
-                        fos.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    byte[] bytes = responseBody.bytes();
+                    Log.e(TAG, responseBody.contentLength() + "");
+                    FileOutputStream fos = new FileOutputStream(file);
+                    fos.write(bytes);
+                    fos.close();
                     return file.getPath();
                 })
                 .observeOn(AndroidSchedulers.mainThread())

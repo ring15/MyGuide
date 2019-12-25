@@ -10,7 +10,6 @@ import com.ring.myguide.data.JsonParse;
 import com.ring.myguide.data.RetrofitService;
 import com.ring.myguide.data.RetrofitUtil;
 import com.ring.myguide.entity.Post;
-import com.ring.myguide.entity.Reply;
 import com.ring.myguide.entity.User;
 import com.ring.myguide.me.MeContract;
 import com.ring.myguide.utils.CacheUtils;
@@ -45,19 +44,15 @@ public class MeModel implements MeContract.Model {
                 .subscribeOn(Schedulers.newThread())
                 .map(responseBody -> {
                     List<Post> posts = new ArrayList<>();
-                    try {
-                        String result = responseBody.string();
-                        Log.i(TAG, result);
-                        JSONObject data = JsonParse.parseString(result);
-                        JSONArray replyArray = data.getJSONArray("list");
-                        for (int i = 0; i < replyArray.size(); i++) {
-                            String string = replyArray.getString(i);
-                            JSONObject object = JSON.parseObject(string);
-                            Post post = JSON.toJavaObject(object, Post.class);
-                            posts.add(post);
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                    String result = responseBody.string();
+                    Log.i(TAG, result);
+                    JSONObject data = JsonParse.parseString(result);
+                    JSONArray replyArray = data.getJSONArray("list");
+                    for (int i = 0; i < replyArray.size(); i++) {
+                        String string = replyArray.getString(i);
+                        JSONObject object = JSON.parseObject(string);
+                        Post post = JSON.toJavaObject(object, Post.class);
+                        posts.add(post);
                     }
                     return posts;
                 })

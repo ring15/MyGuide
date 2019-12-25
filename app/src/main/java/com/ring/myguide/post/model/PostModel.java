@@ -84,19 +84,15 @@ public class PostModel implements PostContract.Model {
                 .subscribeOn(Schedulers.newThread())
                 .map(responseBody -> {
                     List<Reply> replies = new ArrayList<>();
-                    try {
-                        String result = responseBody.string();
-                        Log.i(TAG, result);
-                        JSONObject data = JsonParse.parseString(result);
-                        JSONArray replyArray = data.getJSONArray("list");
-                        for (int i = 0; i < replyArray.size(); i++) {
-                            String string = replyArray.getString(i);
-                            JSONObject object = JSON.parseObject(string);
-                            Reply reply = JSON.toJavaObject(object, Reply.class);
-                            replies.add(reply);
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                    String result = responseBody.string();
+                    Log.i(TAG, result);
+                    JSONObject data = JsonParse.parseString(result);
+                    JSONArray replyArray = data.getJSONArray("list");
+                    for (int i = 0; i < replyArray.size(); i++) {
+                        String string = replyArray.getString(i);
+                        JSONObject object = JSON.parseObject(string);
+                        Reply reply = JSON.toJavaObject(object, Reply.class);
+                        replies.add(reply);
                     }
                     return replies;
                 })

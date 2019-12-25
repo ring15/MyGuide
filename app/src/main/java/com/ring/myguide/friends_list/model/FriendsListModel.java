@@ -38,19 +38,15 @@ public class FriendsListModel implements FriendsContract.Model {
                 .subscribeOn(Schedulers.newThread())
                 .map(responseBody -> {
                     List<User> userList = new ArrayList<>();
-                    try {
-                        String result = responseBody.string();
-                        Log.i(TAG, result);
-                        JSONObject data = JsonParse.parseString(result);
-                        JSONArray friendsList = data.getJSONArray("list");
-                        for (int i = 0; i < friendsList.size(); i++) {
-                            String string = friendsList.getString(i);
-                            JSONObject object = JSON.parseObject(string);
-                            User user = JSON.toJavaObject(object, User.class);
-                            userList.add(user);
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                    String result = responseBody.string();
+                    Log.i(TAG, result);
+                    JSONObject data = JsonParse.parseString(result);
+                    JSONArray friendsList = data.getJSONArray("list");
+                    for (int i = 0; i < friendsList.size(); i++) {
+                        String string = friendsList.getString(i);
+                        JSONObject object = JSON.parseObject(string);
+                        User user = JSON.toJavaObject(object, User.class);
+                        userList.add(user);
                     }
                     return userList;
                 })

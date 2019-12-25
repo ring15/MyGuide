@@ -42,14 +42,10 @@ public class UserDetailModel implements UserDetailContract.Model {
                 .subscribeOn(Schedulers.newThread())
                 .map(responseBody -> {
                     OtherUser user = null;
-                    try {
-                        String result = responseBody.string();
-                        Log.i(TAG, result);
-                        JSONObject data = JsonParse.parseString(result);
-                        user = JSON.toJavaObject(data, OtherUser.class);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    String result = responseBody.string();
+                    Log.i(TAG, result);
+                    JSONObject data = JsonParse.parseString(result);
+                    user = JSON.toJavaObject(data, OtherUser.class);
                     return user;
                 })
                 .observeOn(AndroidSchedulers.mainThread())

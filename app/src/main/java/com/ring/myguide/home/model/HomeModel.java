@@ -9,7 +9,6 @@ import com.ring.myguide.data.JsonParse;
 import com.ring.myguide.data.RetrofitService;
 import com.ring.myguide.data.RetrofitUtil;
 import com.ring.myguide.entity.HomePage;
-import com.ring.myguide.entity.User;
 import com.ring.myguide.home.HomeContract;
 import com.ring.myguide.utils.CacheUtils;
 
@@ -31,7 +30,7 @@ public class HomeModel implements HomeContract.Model {
     public void requestHomePage(String province, CallbackListener<HomePage> listener) {
         RetrofitService service = RetrofitUtil.getInstance().createService(RetrofitService.class);
         LinkedHashMap<String, String> params = new LinkedHashMap<>();
-        if (CacheUtils.getUser() != null && CacheUtils.getUser().getUserName() != null){
+        if (CacheUtils.getUser() != null && CacheUtils.getUser().getUserName() != null) {
             params.put("username", CacheUtils.getUser().getUserName());
         }
         params.put("province", province);
@@ -39,14 +38,10 @@ public class HomeModel implements HomeContract.Model {
                 .subscribeOn(Schedulers.newThread())
                 .map(responseBody -> {
                     HomePage homePage = null;
-                    try {
-                        String result = responseBody.string();
-                        Log.i(TAG, result);
-                        JSONObject data = JsonParse.parseString(result);
-                        homePage = JSON.toJavaObject(data, HomePage.class);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    String result = responseBody.string();
+                    Log.i(TAG, result);
+                    JSONObject data = JsonParse.parseString(result);
+                    homePage = JSON.toJavaObject(data, HomePage.class);
                     return homePage;
                 })
                 .observeOn(AndroidSchedulers.mainThread())
